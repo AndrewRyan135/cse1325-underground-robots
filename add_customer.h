@@ -1,6 +1,5 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
-#include <vector>
 #include <string>
 #include <sstream>
 using namespace std;
