@@ -28,6 +28,7 @@ protected:
     string image_filename;
 public:
     Robot_part();
+};
 
 class Head : public Robot_part{
 private:

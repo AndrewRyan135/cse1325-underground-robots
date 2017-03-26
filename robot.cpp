@@ -1,5 +1,4 @@
 #include "robot.h"
-using namespace std;
 
 Robot_model : Robot_model(string _name, int _model_number, Robot_part _torso, 
         Robot_part _head, Robot_part _locomotor, Robot_part _arm, Robot_part _battery) : 

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "catologe.h"
+#include "robot.h"
 using namespace std;
 
 class View
