@@ -3,7 +3,7 @@
 string Customer::to_string()
 {
 	string output = "";
-	output = "\nCustomer info: \n\n";
+	output = "Customer info: \n\n";
 	output = output + "Name: " + name + "\n";
 	
 	string str;
@@ -15,7 +15,7 @@ string Customer::to_string()
 
 	output = output + "Phone number: " + phonenumber + "\n";
 
-	output = output + "E-mail: " +email + "\n";
+	output = output + "E-mail: " +email;
 
 	return output;
 }
