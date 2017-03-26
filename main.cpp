@@ -3,6 +3,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
+#include "catologe.h"
 using namespace std;
 
 class View
@@ -71,7 +72,8 @@ class Controller
 		}
 		void add_customer()
 		{
-			string name, number, phone_number, email;
+			string name, phone_number, email;
+			int number;
 			cout << "Enter the customers name" << endl;
 			cin >> name;
 			cout << "Enter the customers number" << endl;
