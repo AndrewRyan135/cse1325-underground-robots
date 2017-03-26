@@ -2,6 +2,23 @@
 #define ROBOT_H
 #include <string>
 using namespace std;
+class Robot_model{
+private:
+    string name;
+    int model_number;
+    Robot_part torso;
+    Robot_part head;
+    Robot_part locomotor;
+    Robot_part arm;
+    Robot_part battery;
+public:
+    Robot_model();
+    double cost();
+    double max_speed();
+    double max_battery_life();
+    
+};
+
 class Robot_part{
 protected:
     string name;
