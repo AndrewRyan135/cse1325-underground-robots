@@ -7,8 +7,11 @@ debug: executable
 
 rebuild:clean executable
 
-executable: main.o
+executable: main.o add_customer.o
 	$(CXX) $(CXXFLAGS) main.o
+
+add_customer.o: add_customer.cpp add_customer.h
+	$(CXX) $(CXXFLAGS) -c add_customer.cpp
 
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) -c -o main.o main.cpp
