@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "catologe.h"
 #include "customer.h"
+#include "sales_associate.h"
 //#include "robot.h"
 using namespace std;
 
@@ -93,6 +94,7 @@ class Controller
 				 	     }
 
 				 	     SalesAssociate associate(name,number);
+				 	     catologe.add_associate(associate);
 				     }
 				 
 				     break;
