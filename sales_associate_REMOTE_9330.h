@@ -4,7 +4,6 @@
 #include <sstream>
 using namespace std;
 
-
 class SalesAssociate
 {
 	public :

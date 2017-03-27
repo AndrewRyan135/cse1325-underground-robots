@@ -2,8 +2,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-using namespace std;
-
+using namespace std
 
 class SalesAssociate
 {
@@ -14,4 +13,3 @@ class SalesAssociate
 		string _name;
 		int _employee_number;
 };
-
