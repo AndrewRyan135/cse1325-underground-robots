@@ -13,6 +13,8 @@ class Catalog
 	void add_part(Robot_part part);
 	void add_customer(Customer cus);
 	void add_associate(SalesAssociate ass);
+	int part_vector_size();
+	string part_to_string(int index);
 	string customer_to_string(int customer_number);
 	private:
 	vector<Robot_model> robot_model_vector;
