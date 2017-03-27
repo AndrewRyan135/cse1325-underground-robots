@@ -2,6 +2,7 @@
 #define ROBOT_H
 #include <string>
 using namespace std;
+
 class Robot_model{
 private:
     string name;
