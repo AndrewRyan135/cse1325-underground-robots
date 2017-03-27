@@ -75,8 +75,8 @@ class Controller
 					     cin >> email;
 					     
 					     Customer customer(name, number, phone_number, email);
-					     //cout << customer.to_string() << endl;
-					     //catologe.add_customer(customer);
+					     cout << customer.to_string() << endl;
+					     catologe.add_customer(customer);
 				 	     //new customer
 				     }
 				     else if (cmd == 2)

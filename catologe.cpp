@@ -7,5 +7,10 @@ string Catologe::customer_to_string(int customer_number)
 
 void Catologe::add_customer(Customer cus)
 {
-	customer.push_back(cus);
+	customer_vector.push_back(cus);
+}
+
+void Catologe::add_associate(SalesAssociate ass)
+{
+	associate_vector.push_back(ass);
 }
