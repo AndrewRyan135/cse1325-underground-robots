@@ -2,7 +2,11 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+<<<<<<< HEAD
 using namespace std
+=======
+using namespace std;
+>>>>>>> 0554bcd7b3fe0ce08d899d1bc452f14d3cda3785
 
 class SalesAssociate
 {
@@ -13,3 +17,4 @@ class SalesAssociate
 		string _name;
 		int _employee_number;
 };
+

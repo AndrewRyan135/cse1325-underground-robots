@@ -1,5 +1,4 @@
 #include "sales_associate.h"
-using namespace std
 
 string SalesAssociate::to_string()
 {
