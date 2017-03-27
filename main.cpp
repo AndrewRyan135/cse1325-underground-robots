@@ -6,7 +6,7 @@
 #include "catalog.h"
 #include "customer.h"
 #include "sales_associate.h"
-//#include "robot.h"
+#include "robot.h"
 using namespace std;
 
 Catalog catalog;
@@ -53,11 +53,14 @@ class Controller
 					 cin >> cmd;
 				     if (cmd == 1)
 				     {
+
 				 	 	//new robot part
 				     }
 				     else if (cmd == 2)
 				     {
+					     	//for now, just pre build robots
 				 	 	//new robot model
+						
 				     }
 				     break;
 			case 4 : cout << "1. Create new customer" << endl

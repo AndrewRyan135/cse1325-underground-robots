@@ -1,4 +1,3 @@
-
 CXXFLAGS = -std=c++11 
 
 
@@ -10,8 +9,8 @@ debug: executable
 rebuild:clean executable
 
 
-executable: main.o customer.o catalog.o sales_associate.o #robot.o
-	$(CXX) $(CXXFLAGS) main.o customer.o catalog.o sales_associate.o
+executable: main.o customer.o  sales_associate.o robot.o catalog.o
+	$(CXX) $(CXXFLAGS) main.o customer.o sales_associate.o robot.o catalog.o
 
 
 customer.o: customer.cpp customer.h
@@ -30,7 +29,7 @@ main.o: main.cpp
 	$(CXX) $(CXXFLAGS) -c -o main.o main.cpp
 
 clean:
-	rm -f *.o a.out
+	rm -f *.o *.h.gch a.out
 
 #layout for this make file:
 #if you want to add a header and .cpp to link against main, for example: file.cpp and file.h

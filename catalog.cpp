@@ -1,8 +1,13 @@
 #include "catalog.h"
 
+void Catalog::add_model(Robot_model model)
+{
+	robot_model_vector.push_back(model);
+}
+
 string Catalog::customer_to_string(int customer_number)
 {
-	//return customer[customer_number].to_string();
+	return customer_vector[customer_number].to_string();
 }
 
 void Catalog::add_customer(Customer cus)
