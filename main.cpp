@@ -30,12 +30,16 @@ class View
 	void menu_choice(int cmd)
 	{
 		switch(cmd) {
-			case 1 : cout << "Browse robot cataloge" << endl; break;
-			case 2 : cout << "To be finish in later sprint" << endl; break;
+			case 1 : cout << "Browse robot cataloge" << endl; 
+					 break;
+			case 2 : cout << "To be finish in later sprint" << endl;
+					 break;
 			case 3 : cout << "1. Create robot part" << endl
-					      << "2. Create new robot model" << endl; break;
+					      << "2. Create new robot model" << endl; 
+					 break;
 			case 4 : cout << "1. Create new customer" << endl
-				          << "2. Create new sales associate" << endl; break;
+				          << "2. Create new sales associate" << endl;
+				     break;
 			default : cout << "Invalid Input" << endl; 
 		}
 	}
@@ -52,8 +56,8 @@ class Controller
 		{
 			cin >> cmd;
 			switch(cmd) {
-			case 1 : //call to print out cataloge 
-			case 2 : 
+			case 1 : {}//call to print out cataloge 
+			case 2 : {}
 			case 3 : cin >> cmd;
 				     if (cmd == 1)
 				     {
@@ -63,6 +67,7 @@ class Controller
 				     {
 				 	 	//new robot model
 				     }
+				     break;
 			case 4 : cin >> cmd;
 				     if (cmd == 1)
 				     {
@@ -86,6 +91,7 @@ class Controller
 				     {
 				 	     //new sales associate
 				     }
+				     break;
 			default : {}
 			}
 	       }
