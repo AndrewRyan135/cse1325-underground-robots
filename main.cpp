@@ -19,8 +19,8 @@ class View
 	string get_menu()
 	{
 		stringstream os;
-		os << "========================"
-		   << "Robbie Robot Shop System"
+		os << "========================\n"
+		   << "Robbie Robot Shop System\n"
 		   << "========================"
 		   << "\n"
 		   << "\n1. Customer"
@@ -30,22 +30,6 @@ class View
 		   << "\n5. Exit";
 		return os.str();
 	}
-	//void menu_choice(int cmd)
-	//{
-	//	switch(cmd) {
-	//		case 1 : cout << "Browse robot cataloge" << endl; 
-	//		break;
-	//		case 2 : cout << "To be finish in later sprint" << endl; 
-	//		break;
-	//		case 3 : cout << "1. Create robot part" << endl
-	//				      << "2. Create new robot model" << endl; 
-	//				      break;
-	//		case 4 : cout << "1. Create new customer" << endl
-	//			          << "2. Create new sales associate" << endl; 
-	//			          break;
-	//		default : cout << "Invalid Input" << endl; 
-	//	}
-	//}
 	string show_cataloge()
 	{
 		//print out the vector
@@ -104,6 +88,7 @@ class Controller
 				 	     cin >> employee_number;
 
 				 	     SalesAssociate associate(name,employee_number);
+				 	     catologe.add_associate(associate);
 				     }
 				     break;
 			case 5 : exit(0);
