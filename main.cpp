@@ -17,31 +17,15 @@ class View
 	string get_menu()
 	{
 		stringstream os;
-		os << "========================"
-		   << "Robbie Robot Shop System"
-		   << "========================"
+		os << "========================" << "\n"
+		   << "Robbie Robot Shop System" << "\n"
+		   << "========================" << "\n"
 		   << "\n"
 		   << "\n1. Customer"
 		   << "\n2. Sales Associate"
 		   << "\n3. Product Manager"
 		   << "\n4. Boss";
 		return os.str();
-	}
-	void menu_choice(int cmd)
-	{
-		switch(cmd) {
-			case 1 : cout << "Browse robot cataloge" << endl; 
-					 break;
-			case 2 : cout << "To be finish in later sprint" << endl;
-					 break;
-			case 3 : cout << "1. Create robot part" << endl
-					      << "2. Create new robot model" << endl; 
-					 break;
-			case 4 : cout << "1. Create new customer" << endl
-				          << "2. Create new sales associate" << endl;
-				     break;
-			default : cout << "Invalid Input" << endl; 
-		}
 	}
 	string show_cataloge()
 	{
@@ -56,9 +40,15 @@ class Controller
 		{
 			cin >> cmd;
 			switch(cmd) {
-			case 1 : {}//call to print out cataloge 
-			case 2 : {}
-			case 3 : cin >> cmd;
+			case 1 : 
+					  cout << "Browse robot cataloge" << endl;
+					  break;
+					            //call to print out cataloge 
+			case 2 : cout << "To be finish in later sprint" << endl;
+					 break;
+			case 3 : cout << "1. Create robot part" << endl
+					      << "2. Create new robot model" << endl;
+					 cin >> cmd;
 				     if (cmd == 1)
 				     {
 				 	 	//new robot part
@@ -68,7 +58,9 @@ class Controller
 				 	 	//new robot model
 				     }
 				     break;
-			case 4 : cin >> cmd;
+			case 4 : cout << "1. Create new customer" << endl
+				          << "2. Create new sales associate" << endl;
+					 cin >> cmd;
 				     if (cmd == 1)
 				     {
 					     string name, phone_number, email;
@@ -83,7 +75,7 @@ class Controller
 					     cin >> email;
 					     
 					     Customer customer(name, number, phone_number, email);
-					     cout << customer.to_string() << endl;
+					     //cout << customer.to_string() << endl;
 					     //catologe.add_customer(customer);
 				 	     //new customer
 				     }
@@ -91,6 +83,7 @@ class Controller
 				     {
 				 	     //new sales associate
 				     }
+				 
 				     break;
 			default : {}
 			}
@@ -106,7 +99,5 @@ int main()
 	View view;
 	Controller controller;
 	cout << view.get_menu() << endl;
-	cin >> cmd;
-	view.menu_choice(cmd);
 	controller.menu_choice(cmd);
 }
