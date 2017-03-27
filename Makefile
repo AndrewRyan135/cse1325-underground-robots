@@ -7,7 +7,7 @@ debug: executable
 
 rebuild:clean executable
 
-executable: main.o customer.o catologe.o #robot.o
+executable: main.o customer.o catologe.o robot.o
 	$(CXX) $(CXXFLAGS) main.o
 
 customer.o: customer.cpp customer.h
@@ -16,8 +16,8 @@ customer.o: customer.cpp customer.h
 catologe.o: catologe.cpp catologe.h
 	$(CXX) $(CXXFLAGS) -c catologe.cpp
 
-#robot.o: robot.cpp robot.h
-#	$(CXX) $(CXXFLAGS) -c robot.cpp
+robot.o: robot.cpp robot.h
+	$(CXX) $(CXXFLAGS) -c robot.cpp
 
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) -c -o main.o main.cpp
