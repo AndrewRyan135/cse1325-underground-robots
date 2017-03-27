@@ -21,6 +21,7 @@ private:
 public:
     Head(string _name, int _model_number, double _cost, string _description,
             string _image_filename, double _power);
+    string to_string();
 };
 
 class Torso : public Robot_part{
@@ -30,6 +31,7 @@ private:
 public:
     Torso(string _name, int _model_number, double _cost, string _description,
             string _image_filename, int _battery_compartments, int _max_arms);
+    string to_string();
 };
 
 class Arm : public Robot_part{
@@ -38,6 +40,7 @@ private:
 public:
     Arm(string _name, int _model_number, double _cost, string _description,
             string _image_filename, double _max_power);
+    string to_string();
 };
 
 class Locomotor : public Robot_part{
@@ -46,6 +49,7 @@ private:
 public:
     Locomotor(string _name, int _model_number, double _cost, string _description,
             string _image_filename, double _max_power);
+    string to_string();
 };
 
 class Battery : public Robot_part{
@@ -55,6 +59,7 @@ private:
 public:
     Battery(string _name, int _model_number, double _cost, string _description,
             string _image_filename, double _power_availible, double _max_energy);
+    string to_string();
 };
 
 class Robot_model{
@@ -69,6 +74,7 @@ private:
 public:
     Robot_model(string _name, int _model_number, Robot_part _torso, 
         Robot_part _head, Robot_part _locomotor, Robot_part _arm, Robot_part _battery);
+    string to_string();
     double cost();
     double max_speed();
     double max_battery_life();
