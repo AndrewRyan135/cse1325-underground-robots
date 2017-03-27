@@ -41,11 +41,24 @@ class Controller
 	public :
 		void menu_choice(int cmd)
 		{
-			cin >> cmd;
+			flag = 1;
+			while (flag == 1)
+			{
+				cin >> cmd;
+				if (cin.fail())
+				{
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(),'\n');
+				cout << "Invalid input: Please re enter: " << endl;
+				continue;
+				}
+			flag = 0;
+			}
+			
 			switch(cmd) {
-			case 1 :  cout << "Browse robot cataloge" << endl; 
+			case 1 :  cout << "Browse robot cataloge\n" << endl; 
 					  break;
-			case 2 :  cout << "To be finish in later sprint" << endl; 
+			case 2 :  cout << "To be finish in later sprint\n" << endl; 
 					  break;
 			case 3 : cout << "1. Create robot part" << endl
 					      << "2. Create new robot model" << endl; 
@@ -97,7 +110,7 @@ class Controller
 	       }
 
 		private :
-		int cmd;
+		int cmd, flag;
 };
 
 int main()
@@ -177,6 +190,7 @@ void create_part()
 				 }
 				 flag = 1;
 				 Head head(_name,_model_number,_cost,_description,_image_file,_power);
+				 catologe.add_part(head);
 				 break;}
 		case 2 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
@@ -241,6 +255,7 @@ void create_part()
 				 }
 				 flag = 1;
 				 Torso torso(_name,_model_number,_cost,_description,_image_file,_battery_compartments,_max_arms);
+				 catologe.add_part(torso);
 				 break;}
 		case 3 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
@@ -291,6 +306,7 @@ void create_part()
 				 }
 				 flag =1;
 				 Arm arm(_name,_model_number,_cost,_description,_image_file,_max_power);
+				 catologe.add_part(arm);
 				 break;}
 		case 4 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
@@ -341,6 +357,7 @@ void create_part()
 				 }
 				 flag =1;
 				 Locomotor locomotor(_name,_model_number,_cost,_description,_image_file,_max_power);
+				 catologe.add_part(locomotor);
 				 break;}
 		case 5 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
@@ -404,7 +421,8 @@ void create_part()
 				 flag = 0;
 				 }
 				 flag =1;
-				 Battery stuff5(_name,_model_number,_cost,_description,_image_file,_power_available,_max_energy);
+				 Battery battery(_name,_model_number,_cost,_description,_image_file,_power_available,_max_energy);
+				 catologe.add_part(battery);
 				 break;}
 		default : {}
 	}
