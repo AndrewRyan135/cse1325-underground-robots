@@ -1,15 +1,14 @@
-CXXFLAGES = -std=c++11 
+CXXFLAGS = -std=c++11
 
 all: executable
 
-debug: CXXFLAGES += -g
+debug: CXXFLAGS += -g
 debug: executable
 
 rebuild:clean executable
 
 executable: main.o customer.o catologe.o sales_associate.o #robot.o
-executable: main.o customer.o catologe.o robot.o
-	$(CXX) $(CXXFLAGS) main.o
+	$(CXX) $(CXXFLAGS) main.o customer.o catologe.o sales_associate.o
 
 customer.o: customer.cpp customer.h
 	$(CXX) $(CXXFLAGS) -c customer.cpp

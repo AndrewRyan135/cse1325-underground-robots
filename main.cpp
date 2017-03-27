@@ -25,7 +25,8 @@ class View
 		   << "\n1. Customer"
 		   << "\n2. Sales Associate"
 		   << "\n3. Product Manager"
-		   << "\n4. Boss";
+		   << "\n4. Boss"
+		   << "\n5. Quit";
 		return os.str();
 	}
 	string show_cataloge()
@@ -98,7 +99,8 @@ class Controller
 				     }
 				 
 				     break;
-				 
+			case 5 : exit(0);
+					 break;
 			default : {}
 			}
 	       }
@@ -109,9 +111,12 @@ class Controller
 
 int main()
 {
+	while (true)
+	{
 	int cmd = 0;
 	View view;
 	Controller controller;
 	cout << view.get_menu() << endl;
 	controller.menu_choice(cmd);
+	}
 }
