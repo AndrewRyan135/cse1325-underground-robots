@@ -81,7 +81,18 @@ class Controller
 				     }
 				     else if (cmd == 2)
 				     {
-				 	     //new sales associate
+				 	     string name;
+				 	     int number;
+				 	     cout << "Enter the employee's name: " << endl;
+				 	     cin >> name;
+				 	     cout << "Enter the employees's employee number: " << endl;
+				 	     cin >> number;
+				 	     if (cin.fail())
+				 	     {
+				 	     	cout << "Not a valid employee number" << endl;
+				 	     }
+
+				 	     SalesAssociate associate(name,number);
 				     }
 				 
 				     break;

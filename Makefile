@@ -7,7 +7,11 @@ debug: executable
 
 rebuild:clean executable
 
+<<<<<<< HEAD
 executable: main.o customer.o catologe.o sales_associate.o #robot.o
+=======
+executable: main.o customer.o catologe.o robot.o
+>>>>>>> 87c13132eecd65a50bf69c6dbc9e92960dad232f
 	$(CXX) $(CXXFLAGS) main.o
 
 customer.o: customer.cpp customer.h
@@ -19,8 +23,8 @@ sales_associate.o: sales_associate.cpp sales_associate.h
 catologe.o: catologe.cpp catologe.h
 	$(CXX) $(CXXFLAGS) -c catologe.cpp
 
-#robot.o: robot.cpp robot.h
-#	$(CXX) $(CXXFLAGS) -c robot.cpp
+robot.o: robot.cpp robot.h
+	$(CXX) $(CXXFLAGS) -c robot.cpp
 
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) -c -o main.o main.cpp
