@@ -1,12 +1,12 @@
-#ifndef CATOLOGE_H
-#define CATOLOGE_H
+#ifndef CATALOG_H
+#define CATALOG_H
 #include <vector>
 #include "customer.h"
 #include "sales_associate.h"
 //#include "robot.h"
 //#include <add warrens robot model .h file>
 //using namespace std;
-class Catologe
+class Catalog
 {
 	public:
 	//void add_model(Robot_model model);

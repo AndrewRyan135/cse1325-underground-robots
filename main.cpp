@@ -3,13 +3,13 @@
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
-#include "catologe.h"
+#include "catalog.h"
 #include "customer.h"
 #include "sales_associate.h"
 //#include "robot.h"
 using namespace std;
 
-Catologe catologe;
+Catalog catalog;
 
 
 class View
@@ -29,7 +29,7 @@ class View
 		   << "\n5. Quit";
 		return os.str();
 	}
-	string show_cataloge()
+	string show_catalog()
 	{
 		//print out the vector
 	}
@@ -43,9 +43,9 @@ class Controller
 			cin >> cmd;
 			switch(cmd) {
 			case 1 : 
-					  cout << "Browse robot cataloge" << endl;
+					  cout << "Browse robot catalog" << endl;
 					  break;
-					            //call to print out cataloge 
+					            //call to print out catalog 
 			case 2 : cout << "To be finish in later sprint" << endl;
 					 break;
 			case 3 : cout << "1. Create robot part" << endl
@@ -78,7 +78,7 @@ class Controller
 					     
 					     Customer customer(name, number, phone_number, email);
 					     cout << customer.to_string() << endl;
-					     catologe.add_customer(customer);
+					     catalog.add_customer(customer);
 				 	     //new customer
 				     }
 				     else if (cmd == 2)
@@ -87,7 +87,7 @@ class Controller
 				 	     int number;
 				 	     cout << "Enter the employee's name: " << endl;
 				 	     cin >> name;
-				 	     cout << "Enter the employees's employee number: " << endl;
+				 	     cout << "Enter the employee's employee number: " << endl;
 				 	     cin >> number;
 				 	     if (cin.fail())
 				 	     {
@@ -95,7 +95,7 @@ class Controller
 				 	     }
 
 				 	     SalesAssociate associate(name,number);
-				 	     catologe.add_associate(associate);
+				 	     catalog.add_associate(associate);
 				     }
 				 
 				     break;
