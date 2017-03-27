@@ -69,6 +69,10 @@ class Controller
 				     }
 				     else if (cmd == 2)
 				     {
+				     	for (int i = 0; i < catologe.part_vector_size(); i++)
+				     	{
+				     		cout << catologe.part_to_string(i) << endl;
+				     	}
 				     	//create_model
 				     }
 				     break;
