@@ -15,7 +15,7 @@ Catalog catologe;
 void create_part();
 int int_validation(int input);
 double double_validation(double input);
-void part_picker();
+void part_picker(int index);
 
 class View
 {
@@ -31,38 +31,42 @@ class View
 		   << "\n2. Sales Associate"
 		   << "\n3. Product Manager"
 		   << "\n4. Boss"
-		   << "\n5. Exit";
+		   << "\n5. Exit\n";
 		return os.str();
 	}
 	void show_parts_list()
 	{
 		int i = 0;
-		cout << "Head: " << endl;
+		cout << "Head: \n" << endl;
 		for (i = 0; i < catologe.head_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << " " << catologe.head_to_string(i) << endl;
+			cout << "Part Number: " << i << " " << catologe.head_to_string(i) << "\n" << endl;
 		}
-		cout << "\nTorso: " << endl;
+		part_picker(1);
+		cout << "\nTorso: \n" << endl;
 		for (i = 0; i < catologe.torso_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << " " << catologe.torso_to_string(i) << endl;
+			cout << "Part Number: " << i << " " << catologe.torso_to_string(i) << "\n" <<endl;
 		}
-		cout << "\nArm: " << endl;
+		part_picker(2);
+		cout << "\nArm: \n" << endl;
 		for (i = 0; i < catologe.arm_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << " " << catologe.arm_to_string(i) << endl;
+			cout << "Part Number: " << i << " " << catologe.arm_to_string(i) << "\n" <<endl;
 		}
-		cout << "\nLocomotor: " << endl;
+		part_picker(3);
+		cout << "\nLocomotor: \n" << endl;
 		for (i = 0; i < catologe.locomotor_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << " " << catologe.locomotor_to_string(i) << endl;
+			cout << "Part Number: " << i << " " << catologe.locomotor_to_string(i) << "\n" <<endl;
 		}
-		cout << "\nBattery: " << endl;
+		part_picker(4);
+		cout << "\nBattery: \n" << endl;
 		for (i = 0; i < catologe.battery_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << " " << catologe.battery_to_string(i) << endl;
+			cout << "Part Number: " << i << " " << catologe.battery_to_string(i) << "\n" << endl;
 		}
-		part_picker();
+		part_picker(5);
 	}
 	void show_catalog()
 	{
@@ -90,7 +94,8 @@ class Controller
 			case 2 :  cout << "To be finish in later sprint\n" << endl; 
 					  break;
 			case 3 : cout << "1. Create robot part" << endl
-					      << "2. Create new robot model" << endl; 
+					      << "2. Create new robot model" << endl
+					      << "3. Exit\n" << endl;
 					 cin >> cmd;
 				     if (cmd == 1)
 				     {
@@ -98,11 +103,24 @@ class Controller
 				     }
 				     else if (cmd == 2)
 				     {
-				     	view.show_parts_list();
+				     	if (catologe.head_vector_size() != 0 && catologe.torso_vector_size() != 0 && catologe.arm_vector_size() != 0 &&
+				     		catologe.locomotor_vector_size() != 0 && catologe.battery_vector_size() != 0)
+				     	{
+				     		view.show_parts_list();
+				     	}
+				     	else
+				     	{
+				     		cout << "Cannot create a new model with out parts to complete it(No created parts of a certain type)\n" << endl;
+				     	}
+				     }
+				     else if (cmd == 3)
+				     {
+				     	break;
 				     }
 				     break;
 			case 4 : cout << "1. Create new customer" << endl
-				          << "2. Create new sales associate" << endl;
+				          << "2. Create new sales associate" << endl
+				          << "3. Exit" << endl;
 					 cin >> cmd;
 				     if (cmd == 1)
 				     {
@@ -132,6 +150,15 @@ class Controller
 				 	     SalesAssociate associate(name,employee_number);
 				 	     catologe.add_associate(associate);
 				     }
+				     else if (cmd == 3)
+				     {
+				     	break;
+				     }
+				     else
+				     {
+				     	cout << "Invalid input\n" << endl;
+				     	break;
+				     }
 				     break;
 			case 5 : exit(0);
 			default : {}
@@ -153,34 +180,30 @@ int main()
 	}
 }
 
-void part_picker()
+void part_picker(int index)
 {
 	string name;
-	int model_number;
-	int head, torso, arm, locomotor, battery;
-	cout << "Enter your head selection: " << endl;
-	cin >> head;
-	cout << "Enter your torso selection: " << endl;
-	cin >> torso;
-	cout << "Enter your arm selection: " << endl;
-	cin >> arm;
-	cout << "Enter your locomotor selection: " << endl;
-	cin >> locomotor;
-	cout << "Enter your battery selection: " << endl;
-	cin >> battery;
-	//switch(index) {
-	//	case 1 : head = catologe.get_head(choice - 1);
-	//			 break;
-	//	case 2 : torso = catologe.get_torso(choice - 1);
-	//			 break;
-	//	case 3 : arm = catologe.get_arm(choice - 1);
-	//			 break;
-	//	case 4 : locomotor = catologe.get_locomotor(choice - 1);
-	//			 break;
-	//	case 5 : battery = catologe.get_battery(choice - 1);
-	//			 break;
-	//	default: {}
-	//}
+	static int model_number;
+	static int head, torso, arm, locomotor, battery;
+	switch(index) {
+
+	    case 1 : cout << "Enter the head part number: " << endl;
+		          cin >> head;
+		          break;
+		case 2 : cout << "Enter the torso part number: " << endl;
+		         cin >> torso;
+		         break;
+		case 3 : cout << "Enter the arm part number: " << endl;
+		         cin >> arm;
+		         break;
+		case 4 : cout << "Enter the locomotor part number: " << endl;
+		         cin >> locomotor;
+		         break;
+		case 5 : cout << "Enter the battery part number: " << endl;
+		         cin >> battery;
+		         break;
+		default : {}
+	}
 	cout << "Please enter the robots name" << endl;
 	cin >> name;
 	cout << "Please enter the model number" << endl;
