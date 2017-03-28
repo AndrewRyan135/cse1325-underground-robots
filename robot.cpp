@@ -13,12 +13,12 @@ Head :: Head(string _name, int _model_number, double _cost, string _description,
 string Head::to_string()
 {
     stringstream os;
-    os << "Name: " << _name << "\n"
-       << "Model Number: " << _model_number << "\n"
-       << "Cost: " << _cost << "\n"
-       << "Description: " << _description << "\n"
-       << "Image Filename: " << _image_filename << "\n"
-       << "Power: " << _power << "\n";
+    os << "Name: " << name << "\n"
+       << "Model Number: " << model_number << "\n"
+       << "Cost: " << cost << "\n"
+       << "Description: " << description << "\n"
+       << "Image Filename: " << image_filename << "\n"
+       << "Power: " << power << "\n";
     return os.str();
 }
 
@@ -28,12 +28,12 @@ Torso :: Torso(string _name, int _model_number, double _cost, string _descriptio
 string Torso::to_string()
 {
     stringstream os;
-    os << "Name: " << _name << "\n"
-       << "Model Number: " << _model_number << "\n"
-       << "Cost: " << _cost << "\n"
-       << "Description: " << _description << "\n"
-       << "Image Filename: " << _image_filename << "\n"
-       << "Battery Compartments: " << _battery_compartments << "\n";
+    os << "Name: " << name << "\n"
+       << "Model Number: " << model_number << "\n"
+       << "Cost: " << cost << "\n"
+       << "Description: " << description << "\n"
+       << "Image Filename: " << image_filename << "\n"
+       << "Battery Compartments: " << battery_compartments << "\n";
     return os.str();
 }
 
@@ -43,12 +43,12 @@ Arm :: Arm(string _name, int _model_number, double _cost, string _description,
 string Arm::to_string()
 {
     stringstream os;
-    os << "Name: " << _name << "\n"
-       << "Model Number: " << _model_number << "\n"
-       << "Cost: " << _cost << "\n"
-       << "Description: " << _description << "\n"
-       << "Image Filename: " << _image_filename << "\n"
-       << "Max Power: " << _max_power << "\n";
+    os << "Name: " << name << "\n"
+       << "Model Number: " << model_number << "\n"
+       << "Cost: " << cost << "\n"
+       << "Description: " << description << "\n"
+       << "Image Filename: " << image_filename << "\n"
+       << "Max Power: " << max_power << "\n";
     return os.str();
 }
 
@@ -58,12 +58,12 @@ Locomotor :: Locomotor(string _name, int _model_number, double _cost, string _de
 string Locomotor::to_string()
 {
     stringstream os;
-    os << "Name: " << _name << "\n"
-       << "Model Number: " << _model_number << "\n"
-       << "Cost: " << _cost << "\n"
-       << "Description: " << _description << "\n"
-       << "Image Filename: " << _image_filename << "\n"
-       << "Max Power: " << _max_power << "\n";
+    os << "Name: " << name << "\n"
+       << "Model Number: " << model_number << "\n"
+       << "Cost: " << cost << "\n"
+       << "Description: " << description << "\n"
+       << "Image Filename: " << image_filename << "\n"
+       << "Max Power: " << max_power << "\n";
     return os.str();
 }
 
@@ -73,13 +73,13 @@ Battery :: Battery(string _name, int _model_number, double _cost, string _descri
 string Head::to_string()
 {
     stringstream os;
-    os << "Name: " << _name << "\n"
-       << "Model Number: " << _model_number << "\n"
-       << "Cost: " << _cost << "\n"
-       << "Description: " << _description << "\n"
-       << "Image Filename: " << _image_filename << "\n"
-       << "Power Availible: " << _power_availible << "\n"
-       << "Max Energy: " << _max_energy << "\n";
+    os << "Name: " << name << "\n"
+       << "Model Number: " << model_number << "\n"
+       << "Cost: " << cost << "\n"
+       << "Description: " << description << "\n"
+       << "Image Filename: " << image_filename << "\n"
+       << "Power Available: " << power_availible << "\n"
+       << "Max Energy: " << max_energy << "\n";
     return os.str();
 }
 
@@ -90,11 +90,11 @@ name(_name), model_number(_model_number), torso(_torso), head(_head), locomotor(
 string Robot_model::to_string()
 {
     stringstream os;
-    os << "Name: " << _name << "\n"
-       << "Model Number: " << _model_number << "\n"
-       << _torso.to_string() << "\n" << _head.to_string() << "\n"
-       << _locomotor.to_string() << "\n" << _arm.to_string() << "\n"
-       << _battery.to_string() << "\n";
+    os << "Name: " << name << "\n"
+       << "Model Number: " << model_number << "\n"
+       << torso.to_string() << "\n" << head.to_string() << "\n"
+       << locomotor.to_string() << "\n" << arm.to_string() << "\n"
+       << battery.to_string() << "\n";
        return os.str();
 }
 double Robot_model :: cost(){}
