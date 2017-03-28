@@ -38,6 +38,7 @@ string Torso::to_string()
 }
 
 Arm :: Arm(string _name, int _model_number, double _cost, string _description,
+<<<<<<< HEAD
             string _image_filename, double _max_power) : Robot_part(_name, _model_number,
                     _cost, _description, _image_filename), max_power(_max_power){}
 string Arm::to_string()
@@ -51,6 +52,10 @@ string Arm::to_string()
        << "Max Power: " << max_power << "\n";
     return os.str();
 }
+=======
+            string _image_filename, double _max_power) 
+            : Robot_part(_name, _model_number, _cost, _description, _image_filename), max_power(_max_power){}
+>>>>>>> origin/master
 
 Locomotor :: Locomotor(string _name, int _model_number, double _cost, string _description,
             string _image_filename, double _max_power) : Robot_part(_name, _model_number,
