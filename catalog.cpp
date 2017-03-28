@@ -45,6 +45,11 @@ string Catalog::customer_to_string(int customer_number)
 	return customer_vector[customer_number].to_string();
 }
 
+string Catalog::robot_model_to_string(int model_index)
+{
+	return robot_model_vector[model_index].to_string();
+}
+
 string Catalog::head_to_string(int head_index)
 {
 	return head_part_vector[head_index].to_string();

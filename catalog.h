@@ -19,6 +19,7 @@ class Catalog
 	void add_associate(SalesAssociate ass);
 
 	string customer_to_string(int customer_number);
+	string robot_model_to_string(int model_index);
 	string head_to_string(int head_index);
 	string torso_to_string(int torso_index);
 	string arm_to_string(int arm_index);
