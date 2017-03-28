@@ -12,6 +12,8 @@ using namespace std;
 Catalog catologe;
 
 void create_part();
+int int_validation(int input);
+double double_validation(double input);
 
 class View
 {
@@ -30,6 +32,10 @@ class View
 		   << "\n5. Exit";
 		return os.str();
 	}
+	//string show parts list()
+	//{
+
+	//}
 	string show_cataloge()
 	{
 		//print out the vector
@@ -41,20 +47,7 @@ class Controller
 	public :
 		void menu_choice(int cmd)
 		{
-			flag = 1;
-			while (flag == 1)
-			{
-				cin >> cmd;
-				if (cin.fail())
-				{
-				cin.clear();
-				cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				cout << "Invalid input: Please re enter: " << endl;
-				continue;
-				}
-			flag = 0;
-			}
-			
+			cmd = int_validation(cmd);
 			switch(cmd) {
 			case 1 :  cout << "Browse robot cataloge\n" << endl; 
 					  break;
@@ -69,10 +62,10 @@ class Controller
 				     }
 				     else if (cmd == 2)
 				     {
-				     	for (int i = 0; i < catologe.part_vector_size(); i++)
-				     	{
-				     		cout << catologe.part_to_string(i) << endl;
-				     	}
+				     	//for (int i = 0; i < catologe.part_vector_size()-1; i++)
+				     	//{
+				     	//	cout << catologe.part_to_string(i) << endl;
+				     	//}
 				     	//create_model
 				     }
 				     break;
@@ -129,6 +122,42 @@ int main()
 	}
 }
 
+int int_validation(int input)
+{
+	int flag = 1;
+	while (flag == 1)
+	{
+		cin >> input;
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
+			cout << "Invalid input: Please re enter: " << endl;
+			continue;
+		}
+	    flag = 0;
+	}
+	return input;
+}
+
+double double_validation(double input)
+{
+	int flag = 1;
+	while (flag == 1)
+	{
+		cin >> input;
+		if (cin.fail())
+		{
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(),'\n');
+			cout << "Invalid input: Please re enter: " << endl;
+			continue;
+		}
+	    flag = 0;
+	}
+	return input;
+}
+
 void create_part()
 {
 	int cmd, _model_number, _battery_compartments, _max_arms;
@@ -148,285 +177,81 @@ void create_part()
 		case 1 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
 				 cout << "Enter the model number: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _model_number;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _cost;
-				   if (cin.fail())
-				   {
-				    	cin.clear();
-				    	cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				    	cout << "Invalid input: Pease re enter: " << endl;
-				    	continue;
-				   }
-				 flag = 0;
-				 }
-				 flag = 1;
+				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
 				 cin >> _description;
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file;
 				 cout << "Enter the part power: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _power;
-				   if (cin.fail())
-				   {
-				   		cin.clear();
-				    	cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				    	cout << "Invalid input: Pease re enter: " << endl;
-				    	continue;
-				   }
-				 flag = 0;
-				 }
-				 flag = 1;
+				 _power = double_validation(_power);
 				 Head head(_name,_model_number,_cost,_description,_image_file,_power);
-				 catologe.add_part(head);
+				 //catologe.add_part(head);
 				 break;}
 		case 2 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
 				 cout << "Enter the model number: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _model_number;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _cost;
-				   if (cin.fail())
-				   {
-				    	cin.clear();
-				    	cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				    	cout << "Invalid input: Pease re enter: " << endl;
-				    	continue;
-				   }
-				 flag = 0;
-				 }
-				 flag = 1;
+				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
 				 cin >> _description;
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file; 
 				 cout << "Enter the number of battery compartments: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _battery_compartments;
-				   if (cin.fail())
-				   {
-				   		cin.clear();
-				   		cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				   		cout << "Invalid input: Please re enter: " <<endl;
-				   		continue;
-				   }
-				 flag = 0;
-				 }
-				 flag = 1;
+				 _battery_compartments = int_validation(_battery_compartments);
 				 cout << "Enter the number of arms: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _max_arms;
-				   if (cin.fail())
-				   {
-				   		cin.clear();
-				   		cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				   		cout << "Invalid input: Please re enter: " <<endl;
-				   		continue;
-				   }
-				 flag = 0;
-				 }
-				 flag = 1;
+				 _max_arms = int_validation(_max_arms);
 				 Torso torso(_name,_model_number,_cost,_description,_image_file,_battery_compartments,_max_arms);
-				 catologe.add_part(torso);
+				 //catologe.add_part(torso);
 				 break;}
 		case 3 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
 				 cout << "Enter the model number: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _model_number;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _cost;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
 				 cin >> _description;
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file;
 				 cout << "Enter the max power of the arm: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _max_power;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _max_power = double_validation(_max_power);
 				 Arm arm(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 catologe.add_part(arm);
+				 //catologe.add_part(arm);
 				 break;}
 		case 4 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
 				 cout << "Enter the model number: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _model_number;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _cost;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
 				 cin >> _description;
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file;
 				 cout << "Enter the max power of the locomotor: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _max_power;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _max_power = double_validation(_max_power);
 				 Locomotor locomotor(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 catologe.add_part(locomotor);
+				 //catologe.add_part(locomotor);
 				 break;}
 		case 5 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
 				 cout << "Enter the model number: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _model_number;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _cost;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
 				 cin >> _description;
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file;
 				 cout << "Enter the power available" << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _power_available;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				  _power_available = double_validation(_power_available);
 				 cout << "Enter the max energy: " << endl;
-				 while (flag == 1)
-				 {
-				   cin >> _max_energy;
-				   if (cin.fail())
-				   {
-				 	  cin.clear();
-				 	  cin.ignore(numeric_limits<streamsize>::max(),'\n');
-				 	  cout << "Invalid input: Please re enter: " << endl;
-				 	  continue;
-				   }
-				 flag = 0;
-				 }
-				 flag =1;
+				 _max_energy = double_validation(_max_energy);
 				 Battery battery(_name,_model_number,_cost,_description,_image_file,_power_available,_max_energy);
-				 catologe.add_part(battery);
+				 //catologe.add_part(battery);
 				 break;}
 		default : {}
 	}
