@@ -41,30 +41,35 @@ class View
 		for (i = 0; i < catologe.head_vector_size(); i++)
 		{
 			cout << "Part Number: " << i << " " << catologe.head_to_string(i) << "\n" << endl;
+			cout << "=====================================" << endl;
 		}
 		part_picker(1);
 		cout << "\nTorso: \n" << endl;
 		for (i = 0; i < catologe.torso_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << " " << catologe.torso_to_string(i) << "\n" <<endl;
+			cout << "Part Number: " << i << " " << catologe.torso_to_string(i) << "\n" << endl;
+			cout << "=====================================" << endl;
 		}
 		part_picker(2);
 		cout << "\nArm: \n" << endl;
 		for (i = 0; i < catologe.arm_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << " " << catologe.arm_to_string(i) << "\n" <<endl;
+			cout << "Part Number: " << i << " " << catologe.arm_to_string(i) << "\n" << endl;
+			cout << "=====================================" << endl;
 		}
 		part_picker(3);
 		cout << "\nLocomotor: \n" << endl;
 		for (i = 0; i < catologe.locomotor_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << " " << catologe.locomotor_to_string(i) << "\n" <<endl;
+			cout << "Part Number: " << i << " " << catologe.locomotor_to_string(i) << "\n" << endl;
+			cout << "=====================================" << endl;
 		}
 		part_picker(4);
 		cout << "\nBattery: \n" << endl;
 		for (i = 0; i < catologe.battery_vector_size(); i++)
 		{
 			cout << "Part Number: " << i << " " << catologe.battery_to_string(i) << "\n" << endl;
+			cout << "=====================================" << endl;
 		}
 		part_picker(5);
 	}
