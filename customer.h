@@ -1,5 +1,4 @@
-#ifndef CUSTOMER_H
-#define CUSTOMER_H
+#pragma once
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -23,5 +22,3 @@ class Customer
 	  string email;
 	
 };
-
-#endif

@@ -1,29 +1,35 @@
-CXXFLAGES = -std=c++11
+CXXFLAGS = -std=c++11 
+
 
 all: executable
 
-debug: CXXFLAGES += -g
+debug: CXXFLAGS += -g
 debug: executable
 
 rebuild:clean executable
 
-executable: main.o customer.o catologe.o #robot.o
-	$(CXX) $(CXXFLAGS) main.o
+
+executable: main.o customer.o  sales_associate.o robot.o catalog.o
+	$(CXX) $(CXXFLAGS) main.o customer.o sales_associate.o robot.o catalog.o
+
 
 customer.o: customer.cpp customer.h
 	$(CXX) $(CXXFLAGS) -c customer.cpp
 
-catologe.o: catologe.cpp catologe.h
-	$(CXX) $(CXXFLAGS) -c catologe.cpp
+sales_associate.o: sales_associate.cpp sales_associate.h
+	$(CXX) $(CXXFLAGS) -c sales_associate.cpp
 
-#robot.o: robot.cpp robot.h
-#	$(CXX) $(CXXFLAGS) -c robot.cpp
+catalog.o: catalog.cpp catalog.h
+	$(CXX) $(CXXFLAGS) -c catalog.cpp
+
+robot.o: robot.cpp robot.h
+	$(CXX) $(CXXFLAGS) -c robot.cpp
 
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) -c -o main.o main.cpp
 
 clean:
-	rm -f *.o a.out
+	rm -f *.o *.h.gch a.out
 
 #layout for this make file:
 #if you want to add a header and .cpp to link against main, for example: file.cpp and file.h
