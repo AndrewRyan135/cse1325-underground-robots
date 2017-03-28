@@ -19,6 +19,11 @@ class Catalog
 	void add_associate(SalesAssociate ass);
 
 	string customer_to_string(int customer_number);
+	string head_to_string(int head_index);
+	string torso_to_string(int torso_index);
+	string arm_to_string(int arm_index);
+	string locomotor_to_string(int locomotor_index);
+	string battery_to_string(int battery_index);
 
 	int model_vector_size();
 	int head_vector_size();
