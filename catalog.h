@@ -31,13 +31,20 @@ class Catalog
 	int arm_vector_size();
 	int locomotor_vector_size();
 	int battery_vector_size();
+
+	Head get_head(int head_index);
+	Torso get_torso(int torso_index);
+	Arm get_arm(int arm_index);
+	Locomotor get_locomotor(int locomotor_index);
+	Battery get_battery(int battery_index);
+
 	private:
 	vector<Robot_model> robot_model_vector;
 	vector<Head> head_part_vector;
 	vector<Torso> torso_part_vector;
 	vector<Arm> arm_part_vector;
 	vector<Locomotor> locomotor_part_vector;
-	vector<Battery> battery_part_vector
+	vector<Battery> battery_part_vector;
 	vector<Customer> customer_vector;
 	vector<SalesAssociate> associate_vector;
 };

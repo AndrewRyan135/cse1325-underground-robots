@@ -100,6 +100,31 @@ int battery_vector_size()
 	return battery_part_vector.size();
 }
 
+Head get_head(int head_index)
+{
+	return head_part_vector[head_index];
+}
+
+Torso get_torso(int torso_index)
+{
+	return torso_part_vector[torso_index];
+}
+
+Arm get_arm(int arm_index)
+{
+	return arm_part_vector[arm_index];
+}
+
+Locomotor get_locomotor(int locomotor_index)
+{
+	return locomotor_part_vector[locomotor_index];
+}
+
+Battery get_battery(int battery_index);
+{
+	return battery_part_vector[battery_index];
+}
+
 
 
 
