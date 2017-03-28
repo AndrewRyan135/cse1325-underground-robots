@@ -70,7 +70,7 @@ string Locomotor::to_string()
 Battery :: Battery(string _name, int _model_number, double _cost, string _description,
             string _image_filename, double _power_availible, double _max_energy) : Robot_part(_name, _model_number,
                     _cost, _description, _image_filename), power_availible(_power_availible), max_energy(_max_energy){}
-string Head::to_string()
+string Battery::to_string()
 {
     stringstream os;
     os << "Name: " << name << "\n"
@@ -83,8 +83,8 @@ string Head::to_string()
     return os.str();
 }
 
-Robot_model :: Robot_model(string _name, int _model_number, Robot_part _torso, 
-        Robot_part _head, Robot_part _locomotor, Robot_part _arm, Robot_part _battery) : 
+Robot_model :: Robot_model(string _name, int _model_number, Torso _torso, 
+        Head _head, Locomotor _locomotor, Arm _arm, Battery _battery) : 
 name(_name), model_number(_model_number), torso(_torso), head(_head), locomotor(_locomotor),
         arm(_arm), battery(_battery){}
 string Robot_model::to_string()

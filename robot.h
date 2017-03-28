@@ -66,14 +66,14 @@ class Robot_model{
 private:
     string name;
     int model_number;
-    Robot_part torso;
-    Robot_part head;
-    Robot_part locomotor;
-    Robot_part arm;
-    Robot_part battery;
+    Torso torso;
+    Head head;
+    Locomotor locomotor;
+    Arm arm;
+    Battery battery;
 public:
-    Robot_model(string _name, int _model_number, Robot_part _torso, 
-        Robot_part _head, Robot_part _locomotor, Robot_part _arm, Robot_part _battery);
+    Robot_model(string _name, int _model_number, Torso _torso, 
+        Head _head, Locomotor _locomotor, Arm _arm, Battery _battery);
     string to_string();
     double cost();
     double max_speed();
