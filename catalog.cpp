@@ -70,57 +70,57 @@ string Catalog::battery_to_string(int battery_index)
 	return battery_part_vector[battery_index].to_string();
 }
 
-int model_vector_size()
+int Catalog::model_vector_size()
 {
 	return robot_model_vector.size();
 }
 
-int head_vector_size()
+int Catalog::head_vector_size()
 {
 	return head_part_vector.size();
 }
 
-int torso_vector_size()
+int Catalog::torso_vector_size()
 {
 	return torso_part_vector.size();
 }
 
-int arm_vector_size()
+int Catalog::arm_vector_size()
 {
 	return arm_part_vector.size();
 }
 
-int locomotor_vector_size()
+int Catalog::locomotor_vector_size()
 {
 	return locomotor_part_vector.size();
 }
 
-int battery_vector_size()
+int Catalog::battery_vector_size()
 {
 	return battery_part_vector.size();
 }
 
-Head get_head(int head_index)
+Head Catalog::get_head(int head_index)
 {
 	return head_part_vector[head_index];
 }
 
-Torso get_torso(int torso_index)
+Torso Catalog::get_torso(int torso_index)
 {
 	return torso_part_vector[torso_index];
 }
 
-Arm get_arm(int arm_index)
+Arm Catalog::get_arm(int arm_index)
 {
 	return arm_part_vector[arm_index];
 }
 
-Locomotor get_locomotor(int locomotor_index)
+Locomotor Catalog::get_locomotor(int locomotor_index)
 {
 	return locomotor_part_vector[locomotor_index];
 }
 
-Battery get_battery(int battery_index);
+Battery Catalog::get_battery(int battery_index)
 {
 	return battery_part_vector[battery_index];
 }
