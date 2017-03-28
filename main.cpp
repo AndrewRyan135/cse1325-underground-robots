@@ -14,6 +14,7 @@ Catalog catologe;
 void create_part();
 int int_validation(int input);
 double double_validation(double input);
+void part_picker(int index);
 
 class View
 {
@@ -32,15 +33,47 @@ class View
 		   << "\n5. Exit";
 		return os.str();
 	}
-	//string show parts list()
-	//{
+	void show_parts_list()
+	{
+		int i = 0;
+		cout << "Head: " << endl;
+		for (i = 0; i < catologe.head_vector_size() - 1; i++)
+		{
 
-	//}
+		}
+		part_picker(1);
+		cout << "\nTorso: " << endl;
+		for (i = 0; i < catologe.torso_vector_size() -1; i++)
+		{
+
+		}
+		part_picker(2);
+		cout << "\nArm: " << endl;
+		for (i = 0; i < catologe.arm_vector_size() -1; i++)
+		{
+
+		}
+		part_picker(3);
+		cout << "\nLocomotor: " << endl;
+		for (i = 0; i < catologe.locomotor_vector_size() - 1; i++)
+		{
+
+		}
+		part_picker(4);
+		cout << "\nBattery: " << endl;
+		for (i = 0; i < catologe.battery_vector_size() - 1; i++)
+		{
+
+		}
+		part_picker(5);
+	}
 	string show_cataloge()
 	{
 		//print out the vector
 	}
 };
+
+View view;
 
 class Controller
 {
@@ -62,11 +95,7 @@ class Controller
 				     }
 				     else if (cmd == 2)
 				     {
-				     	//for (int i = 0; i < catologe.part_vector_size()-1; i++)
-				     	//{
-				     	//	cout << catologe.part_to_string(i) << endl;
-				     	//}
-				     	//create_model
+				     	view.show_parts_list();
 				     }
 				     break;
 			case 4 : cout << "1. Create new customer" << endl
@@ -115,11 +144,46 @@ int main()
 	while (true)
 	{
 	int cmd = 0;
-	View view;
 	Controller controller;
 	cout << view.get_menu() << endl;
 	controller.menu_choice(cmd);
 	}
+}
+
+void part_picker(int index)
+{
+	string name;
+	int model_number;
+	int head, torso, arm, locomotor, battery;
+	cout << "Enter your head selection: " << endl;
+	cin >> head;
+	cout << "Enter your torso selection: " << endl;
+	cin >> torso;
+	cout << "Enter your arm selection: " << endl;
+	cin >> arm;
+	cout << "Enter your locomotor selection: " << endl;
+	cin >> locomotor;
+	cout << "Enter your battery selection: " << endl;
+	cin >> battery;
+	//switch(index) {
+	//	case 1 : head = catologe.get_head(choice - 1);
+	//			 break;
+	//	case 2 : torso = catologe.get_torso(choice - 1);
+	//			 break;
+	//	case 3 : arm = catologe.get_arm(choice - 1);
+	//			 break;
+	//	case 4 : locomotor = catologe.get_locomotor(choice - 1);
+	//			 break;
+	//	case 5 : battery = catologe.get_battery(choice - 1);
+	//			 break;
+	//	default: {}
+	//}
+	cout << "Please enter the robots name" << endl;
+	cin >> name;
+	cout << "Please enter the model number" << endl;
+	cin >> model_number;
+	Robot_model model(name, model_number, catologe.get_torso(torso-1), catologe.get_head(head-1), catologe.get_locomotor(locomotor-1), catologe.get_arm(arm-1), catologe.get_battery(battery-1));
+	catologe.add_model(model);
 }
 
 int int_validation(int input)
@@ -187,7 +251,7 @@ void create_part()
 				 cout << "Enter the part power: " << endl;
 				 _power = double_validation(_power);
 				 Head head(_name,_model_number,_cost,_description,_image_file,_power);
-				 //catologe.add_part(head);
+				 catologe.add_head(head);
 				 break;}
 		case 2 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
@@ -204,7 +268,7 @@ void create_part()
 				 cout << "Enter the number of arms: " << endl;
 				 _max_arms = int_validation(_max_arms);
 				 Torso torso(_name,_model_number,_cost,_description,_image_file,_battery_compartments,_max_arms);
-				 //catologe.add_part(torso);
+				 catologe.add_torso(torso);
 				 break;}
 		case 3 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
@@ -219,7 +283,7 @@ void create_part()
 				 cout << "Enter the max power of the arm: " << endl;
 				 _max_power = double_validation(_max_power);
 				 Arm arm(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 //catologe.add_part(arm);
+				 catologe.add_arm(arm);
 				 break;}
 		case 4 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
@@ -234,7 +298,7 @@ void create_part()
 				 cout << "Enter the max power of the locomotor: " << endl;
 				 _max_power = double_validation(_max_power);
 				 Locomotor locomotor(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 //catologe.add_part(locomotor);
+				 catologe.add_locomotor(locomotor);
 				 break;}
 		case 5 : {cout << "Enter the part name: " << endl;
 				 cin >> _name;
@@ -251,7 +315,7 @@ void create_part()
 				 cout << "Enter the max energy: " << endl;
 				 _max_energy = double_validation(_max_energy);
 				 Battery battery(_name,_model_number,_cost,_description,_image_file,_power_available,_max_energy);
-				 //catologe.add_part(battery);
+				 catologe.add_battery(battery);
 				 break;}
 		default : {}
 	}
