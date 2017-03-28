@@ -38,35 +38,35 @@ class View
 	{
 		int i = 0;
 		cout << "Head: " << endl;
-		for (i = 0; i < catologe.head_vector_size() - 1; i++)
+		for (i = 0; i < catologe.head_vector_size(); i++)
 		{
-			catologe.head_to_string(i);
+			cout << "Part Number: " << i << " " << catologe.head_to_string(i) << endl;
 		}
 		cout << "\nTorso: " << endl;
-		for (i = 0; i < catologe.torso_vector_size() -1; i++)
+		for (i = 0; i < catologe.torso_vector_size(); i++)
 		{
-			catologe.torso_to_string(i);
+			cout << "Part Number: " << i << " " << catologe.torso_to_string(i) << endl;
 		}
 		cout << "\nArm: " << endl;
-		for (i = 0; i < catologe.arm_vector_size() -1; i++)
+		for (i = 0; i < catologe.arm_vector_size(); i++)
 		{
-			catologe.arm_to_string(i);
+			cout << "Part Number: " << i << " " << catologe.arm_to_string(i) << endl;
 		}
 		cout << "\nLocomotor: " << endl;
-		for (i = 0; i < catologe.locomotor_vector_size() - 1; i++)
+		for (i = 0; i < catologe.locomotor_vector_size(); i++)
 		{
-			catologe.locomotor_to_string(i);
+			cout << "Part Number: " << i << " " << catologe.locomotor_to_string(i) << endl;
 		}
 		cout << "\nBattery: " << endl;
-		for (i = 0; i < catologe.battery_vector_size() - 1; i++)
+		for (i = 0; i < catologe.battery_vector_size(); i++)
 		{
-			catologe.battery_to_string(i);
+			cout << "Part Number: " << i << " " << catologe.battery_to_string(i) << endl;
 		}
 		part_picker();
 	}
 	void show_catalog()
 	{
-		for (int i = 0; i < catologe.model_vector_size() - 1; i++)
+		for (int i = 0; i < catologe.model_vector_size(); i++)
 		{
 			cout << catologe.robot_model_to_string(i) << endl;
 		}
@@ -185,8 +185,7 @@ void part_picker()
 	cin >> name;
 	cout << "Please enter the model number" << endl;
 	cin >> model_number;
-	Robot_model model(name, model_number, catologe.get_torso(torso-1), catologe.get_head(head-1), 
-		              catologe.get_locomotor(locomotor-1), catologe.get_arm(arm-1), catologe.get_battery(battery-1));
+	Robot_model model(name, model_number, catologe.get_torso(torso), catologe.get_head(head), catologe.get_locomotor(locomotor), catologe.get_arm(arm), catologe.get_battery(battery));
 	catologe.add_model(model);
 }
 
