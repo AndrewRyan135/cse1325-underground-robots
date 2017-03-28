@@ -10,15 +10,29 @@ class Catalog
 {
 	public:
 	void add_model(Robot_model model);
-	void add_part(Robot_part part);
+	void add_head(Head head);
+	void add_torso(Torso torso);
+	void add_arm(Arm arm);
+	void add_locomotor(Locomotor locomotor);
+	void add_battery(Battery battery);
 	void add_customer(Customer cus);
 	void add_associate(SalesAssociate ass);
-	int part_vector_size();
-	string part_to_string(int index);
+
 	string customer_to_string(int customer_number);
+
+	int model_vector_size();
+	int head_vector_size();
+	int torso_vector_size();
+	int arm_vector_size();
+	int locomotor_vector_size();
+	int battery_vector_size();
 	private:
 	vector<Robot_model> robot_model_vector;
-	vector<Robot_part> robot_part_vector;
+	vector<Head> head_part_vector;
+	vector<Torso> torso_part_vector;
+	vector<Arm> arm_part_vector;
+	vector<Locomotor> locomotor_part_vector;
+	vector<Battery> battery_part_vector
 	vector<Customer> customer_vector;
 	vector<SalesAssociate> associate_vector;
 };
