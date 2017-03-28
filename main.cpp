@@ -7,6 +7,7 @@
 #include "catalog.h"
 #include "customer.h"
 #include "robot.h"
+#include "sales_associate.h"
 using namespace std;
 
 Catalog catologe;
@@ -14,7 +15,7 @@ Catalog catologe;
 void create_part();
 int int_validation(int input);
 double double_validation(double input);
-void part_picker(int index);
+void part_picker();
 
 class View
 {
@@ -39,42 +40,43 @@ class View
 		cout << "Head: " << endl;
 		for (i = 0; i < catologe.head_vector_size() - 1; i++)
 		{
-
+			catologe.head_to_string(i);
 		}
-		part_picker(1);
 		cout << "\nTorso: " << endl;
 		for (i = 0; i < catologe.torso_vector_size() -1; i++)
 		{
-
+			catologe.torso_to_string(i);
 		}
-		part_picker(2);
 		cout << "\nArm: " << endl;
 		for (i = 0; i < catologe.arm_vector_size() -1; i++)
 		{
-
+			catologe.arm_to_string(i);
 		}
-		part_picker(3);
 		cout << "\nLocomotor: " << endl;
 		for (i = 0; i < catologe.locomotor_vector_size() - 1; i++)
 		{
-
+			catologe.locomotor_to_string(i);
 		}
-		part_picker(4);
 		cout << "\nBattery: " << endl;
 		for (i = 0; i < catologe.battery_vector_size() - 1; i++)
 		{
-
+			catologe.battery_to_string(i);
 		}
-		part_picker(5);
+		part_picker();
 	}
-	string show_cataloge()
+	void show_catalog()
 	{
-		//print out the vector
+		for (int i = 0; i < catologe.model_vector_size() - 1; i++)
+		{
+			cout << catologe.robot_model_to_string(i) << endl;
+		}
 	}
 };
 
 View view;
-
+//==================================
+//           CONTROLLER
+//==================================
 class Controller
 {
 	public :
@@ -82,7 +84,8 @@ class Controller
 		{
 			cmd = int_validation(cmd);
 			switch(cmd) {
-			case 1 :  cout << "Browse robot cataloge\n" << endl; 
+			case 1 :  cout << "\t\tBrowse robot cataloge\n" << endl; 
+					  view.show_catalog();
 					  break;
 			case 2 :  cout << "To be finish in later sprint\n" << endl; 
 					  break;
@@ -150,7 +153,7 @@ int main()
 	}
 }
 
-void part_picker(int index)
+void part_picker()
 {
 	string name;
 	int model_number;
@@ -182,7 +185,8 @@ void part_picker(int index)
 	cin >> name;
 	cout << "Please enter the model number" << endl;
 	cin >> model_number;
-	Robot_model model(name, model_number, catologe.get_torso(torso-1), catologe.get_head(head-1), catologe.get_locomotor(locomotor-1), catologe.get_arm(arm-1), catologe.get_battery(battery-1));
+	Robot_model model(name, model_number, catologe.get_torso(torso-1), catologe.get_head(head-1), 
+		              catologe.get_locomotor(locomotor-1), catologe.get_arm(arm-1), catologe.get_battery(battery-1));
 	catologe.add_model(model);
 }
 
@@ -239,13 +243,15 @@ void create_part()
 	cin >> cmd;
 	switch(cmd) {
 		case 1 : {cout << "Enter the part name: " << endl;
-				 cin >> _name;
+				 cin.ignore();
+				 getline(cin,_name);
 				 cout << "Enter the model number: " << endl;
 				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
 				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
-				 cin >> _description;
+				 cin.ignore();
+				 getline(cin,_description);
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file;
 				 cout << "Enter the part power: " << endl;
@@ -254,13 +260,15 @@ void create_part()
 				 catologe.add_head(head);
 				 break;}
 		case 2 : {cout << "Enter the part name: " << endl;
-				 cin >> _name;
+				 cin.ignore();
+				 getline(cin,_name);
 				 cout << "Enter the model number: " << endl;
 				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
 				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
-				 cin >> _description;
+				 cin.ignore();
+				 getline(cin,_description);
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file; 
 				 cout << "Enter the number of battery compartments: " << endl;
@@ -271,13 +279,15 @@ void create_part()
 				 catologe.add_torso(torso);
 				 break;}
 		case 3 : {cout << "Enter the part name: " << endl;
-				 cin >> _name;
+				 cin.ignore();
+				 getline(cin,_name);
 				 cout << "Enter the model number: " << endl;
 				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
 				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
-				 cin >> _description;
+				 cin.ignore();
+				 getline(cin,_description);
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file;
 				 cout << "Enter the max power of the arm: " << endl;
@@ -286,13 +296,15 @@ void create_part()
 				 catologe.add_arm(arm);
 				 break;}
 		case 4 : {cout << "Enter the part name: " << endl;
-				 cin >> _name;
+				 cin.ignore();
+				 getline(cin,_name);
 				 cout << "Enter the model number: " << endl;
 				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
 				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
-				 cin >> _description;
+				 cin.ignore();
+				 getline(cin,_description);
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file;
 				 cout << "Enter the max power of the locomotor: " << endl;
@@ -301,13 +313,15 @@ void create_part()
 				 catologe.add_locomotor(locomotor);
 				 break;}
 		case 5 : {cout << "Enter the part name: " << endl;
-				 cin >> _name;
+				 cin.ignore();
+				 getline(cin,_name);
 				 cout << "Enter the model number: " << endl;
 				 _model_number = int_validation(_model_number);
 				 cout << "Enter the cost of the part: " << endl;
 				 _cost = int_validation(_cost);
 				 cout << "Enter the part description: " << endl;
-				 cin >> _description;
+				 cin.ignore();
+				 getline(cin,_description);
 				 cout << "Enter the image file name: " << endl;
 				 cin >> _image_file;
 				 cout << "Enter the power available" << endl;
