@@ -72,7 +72,8 @@ class View
 	{
 		for (int i = 0; i < catologe.model_vector_size(); i++)
 		{
-			cout << catologe.robot_model_to_string(i) << endl;
+			cout << catologe.robot_model_to_string(i) << "\n" << endl;
+			cout << "=========================================\n" << endl;
 		}
 	}
 };
@@ -127,11 +128,13 @@ class Controller
 					     string name, phone_number, email;
 					     int number;
 					     cout << "Enter the customer's name: " << endl;
-					     cin >> name;
+					     cin.ignore();
+					     getline(cin,name);
 					     cout << "Enter the customer's number: " << endl;
-					     cin >> number;
+					     number = int_validation(number);
 					     cout << "Enter the customer's phone number: " << endl;
-					     cin >> phone_number;
+					     cin.ignore();
+					     getline(cin,phone_number);
 					     cout << "Enter the customer's email: " << endl;
 					     cin >> email;
 					     
@@ -143,9 +146,10 @@ class Controller
 				 	     string name;
 				 	     int employee_number;
 				 	     cout << "Enter the employee's name: " << endl;
-				 	     cin >> name;
+				 	     cin.ignore();
+				 	     getline(cin, name);
 				 	     cout << "Enter the employee's employee number: " << endl;
-				 	     cin >> employee_number;
+				 	     employee_number = int_validation(employee_number);
 
 				 	     SalesAssociate associate(name,employee_number);
 				 	     catologe.add_associate(associate);
@@ -199,17 +203,23 @@ void part_picker(int index)
 		case 4 : cout << "Enter the locomotor part number: " << endl;
 		         cin >> locomotor;
 		         break;
-		case 5 : cout << "Enter the battery part number: " << endl;
+		case 5 : {cout << "Enter the battery part number: " << endl;
 		         cin >> battery;
-		         break;
+		         cout << "Please enter the robots name" << endl;
+				 cin >> name;
+				 cout << "Please enter the model number" << endl;
+				 cin >> model_number;
+				 Robot_model model(name, model_number, catologe.get_torso(torso), catologe.get_head(head), catologe.get_locomotor(locomotor), catologe.get_arm(arm), catologe.get_battery(battery));
+				 catologe.add_model(model);
+		         break;}
 		default : {}
 	}
-	cout << "Please enter the robots name" << endl;
-	cin >> name;
-	cout << "Please enter the model number" << endl;
-	cin >> model_number;
-	Robot_model model(name, model_number, catologe.get_torso(torso), catologe.get_head(head), catologe.get_locomotor(locomotor), catologe.get_arm(arm), catologe.get_battery(battery));
-	catologe.add_model(model);
+	//cout << "Please enter the robots name" << endl;
+	//cin >> name;
+	//cout << "Please enter the model number" << endl;
+	//cin >> model_number;
+	//Robot_model model(name, model_number, catologe.get_torso(torso), catologe.get_head(head), catologe.get_locomotor(locomotor), catologe.get_arm(arm), catologe.get_battery(battery));
+	//catologe.add_model(model);
 }
 
 int int_validation(int input)
