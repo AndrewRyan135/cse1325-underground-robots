@@ -45,6 +45,31 @@ string Catalog::customer_to_string(int customer_number)
 	return customer_vector[customer_number].to_string();
 }
 
+string Catalog::head_to_string(int head_index)
+{
+	return head_part_vector[head_index].to_string();
+}
+
+string Catalog::torso_to_string(int torso_index)
+{
+	return torso_part_vector[torso_index].to_string();
+}
+
+string Catalog::arm_to_string(int arm_index)
+{
+	return arm_part_vector[arm_index].to_string();
+}
+
+string Catalog::locomotor_to_string(int locomotor_index)
+{
+	return locomotor_part_vector[locomotor_index].to_string();
+}
+
+string Catalog::battery_to_string(int battery_index)
+{
+	return battery_part_vector[battery_index].to_string();
+}
+
 int model_vector_size()
 {
 	return robot_model_vector.size();
