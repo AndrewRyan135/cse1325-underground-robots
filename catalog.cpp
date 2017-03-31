@@ -105,6 +105,11 @@ int Catalog::battery_vector_size()
 	return battery_part_vector.size();
 }
 
+Robot_model Catalog::get_model(int model_index)
+{
+	return robot_model_vector[model_index];
+}
+
 Head Catalog::get_head(int head_index)
 {
 	return head_part_vector[head_index];

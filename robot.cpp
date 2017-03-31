@@ -7,6 +7,11 @@ Robot_part :: Robot_part(string _name, int _model_number, double _cost, string _
             string _image_filename) : name(_name), model_number(_model_number),
                     cost(_cost), description(_description), image_filename(_image_filename){}
 
+double Robot_part::get_cost()
+{
+	return cost; 
+}
+
 Head :: Head(string _name, int _model_number, double _cost, string _description,
             string _image_filename, double _power) : Robot_part(_name, _model_number,
                     _cost, _description, _image_filename), power(_power){}
@@ -97,6 +102,17 @@ string Robot_model::to_string()
        << battery.to_string() << "\n";
        return os.str();
 }
-double Robot_model :: cost(){}
+
+double Robot_model :: cost()
+{
+	double total = 0;
+	total += head.get_cost();
+	total += torso.get_cost();
+	total += arm.get_cost();
+	total += locomotor.get_cost();
+	total += battery.get_cost();
+	return total;
+}
+
 double Robot_model :: max_speed(){}
 double Robot_model :: max_battery_life(){}

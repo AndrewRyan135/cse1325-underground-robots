@@ -263,6 +263,16 @@ double double_validation(double input)
 	return input;
 }
 
+
+double calculate_total_price(int model_index, int multiplyer)
+{
+	double total;
+	Robot_model model = catologe.get_model(model_index);
+
+	total = multiplyer * model.cost();	
+}
+
+
 void create_part()
 {
 	int cmd, _model_number, _battery_compartments, _max_arms;

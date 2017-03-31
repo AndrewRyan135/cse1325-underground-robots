@@ -13,6 +13,7 @@ protected:
 public:
     Robot_part(string _name, int _model_number, double _cost, string _description,
             string _image_filename);
+    double get_cost();
 };
 
 class Head : public Robot_part{
