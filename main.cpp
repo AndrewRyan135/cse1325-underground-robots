@@ -9,7 +9,7 @@
 #include "robot.h"
 #include "sales_associate.h"
 using namespace std;
-
+	
 Catalog catologe;
 
 void create_part();
