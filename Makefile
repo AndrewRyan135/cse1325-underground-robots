@@ -9,8 +9,8 @@ debug: executable
 rebuild:clean executable
 
 
-executable: main.o customer.o  sales_associate.o robot.o catalog.o
-	$(CXX) $(CXXFLAGS) main.o customer.o sales_associate.o robot.o catalog.o
+executable: main.o customer.o  sales_associate.o robot.o order.o catalog.o
+	$(CXX) $(CXXFLAGS) main.o customer.o sales_associate.o robot.o order.o catalog.o
 
 
 customer.o: customer.cpp customer.h
@@ -24,6 +24,9 @@ catalog.o: catalog.cpp catalog.h
 
 robot.o: robot.cpp robot.h
 	$(CXX) $(CXXFLAGS) -c robot.cpp
+
+order.o: order.cpp order.h
+	$(CXX) $(CXXFLAGS) -c order.cpp
 
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) -c -o main.o main.cpp
