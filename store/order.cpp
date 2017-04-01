@@ -10,3 +10,8 @@ double Order :: robot_cost()
 {
 	return quantity * robot_model.cost();
 }
+
+double Order :: extended_price()
+{
+	return 1.2 * quantity * robot_model.cost();
+}
