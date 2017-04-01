@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <stdio.h>
 #include <stdlib.h>
 #include <limits>
+#include <fstream>
+#include <stdexcept>
 #include "catalog.h"
 #include "customer.h"
 #include "robot.h"
@@ -16,6 +17,7 @@ void create_part();
 int int_validation(int input);
 double double_validation(double input);
 void part_picker(int index);
+//void save_data();
 
 class View
 {
@@ -96,6 +98,7 @@ class Controller
 			switch(cmd) {
 			case 1 :  cout << "\t\tBrowse robot cataloge\n" << endl; 
 					  view.show_catalog();
+				  	  
 					  break;
 			case 2 :  cout << "To be finish in later sprint\n" << endl; 
 					  break;
@@ -245,6 +248,26 @@ int int_validation(int input)
 	return input;
 }
 
+//saves store orders that have been places
+/*
+void save_data()
+{
+	cout << "Enter the file name to save in: " << endl;
+	string output_filename;
+	cin >> output_filename;
+	ofstream ofs {output_filename};
+	if(!ofs)
+	{
+		throw runtime_error("Can't open file...");
+		return;
+	}
+
+	ofs << "Works";
+	return;
+}
+*/
+
+
 double double_validation(double input)
 {
 	int flag = 1;
@@ -263,15 +286,15 @@ double double_validation(double input)
 	return input;
 }
 
-
-double calculate_total_price(int model_index, int multiplyer)
+/*
+double calculate_total_price(int model_index, int quantity)
 {
 	double total;
 	Robot_model model = catologe.get_model(model_index);
 
-	total = multiplyer * model.cost();	
+	total = quantity * model.cost();	
 }
-
+*/
 
 void create_part()
 {
