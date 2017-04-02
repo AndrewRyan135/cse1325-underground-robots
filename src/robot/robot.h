@@ -1,6 +1,8 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 #include <string>
+#include <fstream>
+#include <iostream>
 using namespace std;
 
 class Robot_part{
@@ -73,12 +75,12 @@ private:
     Arm arm;
     Battery battery;
 public:
-    Robot_model(string _name, int _model_number, Torso _torso, 
+    Robot_model(string _name, int _model_number, Torso _torso,
         Head _head, Locomotor _locomotor, Arm _arm, Battery _battery);
     string to_string();
     double cost();
     double max_speed();
     double max_battery_life();
-    
+
 };
 #endif

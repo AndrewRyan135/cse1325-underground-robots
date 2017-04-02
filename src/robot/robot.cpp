@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 Robot_part :: Robot_part(string _name, int _model_number, double _cost, string _description,
             string _image_filename) : name(_name), model_number(_model_number),
@@ -9,7 +10,7 @@ Robot_part :: Robot_part(string _name, int _model_number, double _cost, string _
 
 double Robot_part::get_cost()
 {
-	return cost; 
+	return cost;
 }
 
 Head :: Head(string _name, int _model_number, double _cost, string _description,
@@ -88,8 +89,8 @@ string Battery::to_string()
     return os.str();
 }
 
-Robot_model :: Robot_model(string _name, int _model_number, Torso _torso, 
-        Head _head, Locomotor _locomotor, Arm _arm, Battery _battery) : 
+Robot_model :: Robot_model(string _name, int _model_number, Torso _torso,
+        Head _head, Locomotor _locomotor, Arm _arm, Battery _battery) :
 name(_name), model_number(_model_number), torso(_torso), head(_head), locomotor(_locomotor),
         arm(_arm), battery(_battery){}
 string Robot_model::to_string()
