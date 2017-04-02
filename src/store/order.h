@@ -4,7 +4,7 @@
 #include "customer.h"
 #include "sales_associate.h"
 #include <fstream>
-#include <iosteam>
+#include <iostream>
 using namespace std;
 
 class Order
@@ -21,7 +21,7 @@ class Order
 	  int get_quantity();
 	  Customer get_customer();
 	  int get_status();
-	  Sales_associate get_sales_associate();
+	  SalesAssociate get_sales_associate();
 	  //File insertion
 	  friend ostream& operator<<(ostream& os, const Order x);
 	  //File extraction

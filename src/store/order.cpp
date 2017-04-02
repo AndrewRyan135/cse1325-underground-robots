@@ -37,25 +37,25 @@ int Order :: get_status()
 {
     return status;
 }
-Sales_associate Order :: get_sales_associate()
+SalesAssociate Order :: get_sales_associate()
 {
     return sales_associate;
 }
 //File insertion friend function
-ostream& operator<<(ostream& os, const Order x)
-{
-    os << x.order_number() << endl;
-    os << x.date() << endl;
-    os << x.robot_model() << endl;
-    os << x.quantity() << endl;
-    os << x.customer() << endl;
-    os << x.status() << endl;
-    os << x.sales_associate() << endl;
-    return os;
-}
+//ostream& operator<<(ostream& os, const Order x)
+//{
+//    os << x.order_number << endl;
+//    os << x.date << endl;
+//    os << x.robot_model << endl;
+//    os << x.quantity << endl;
+//    os << x.customer << endl;
+//    os << x.status << endl;
+//    os << x.sales_associate << endl;
+//    return os;
+//}
 //File extraction friend function
-istream& operator>>(istream& is, Order x)
-{
-    is >> x.order_number >> x.date >> x.robot_model >> x.quantity >> x.customer >> x.status >> x.sales_associate;
-    return is;
-}
+//istream& operator>>(istream& is, Order x)
+//{
+//    is >> x.order_number >> x.date >> x.robot_model >> x.quantity >> x.customer >> x.status >> x.sales_associate;
+//    return is;
+//}
