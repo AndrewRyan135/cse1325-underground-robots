@@ -11,9 +11,14 @@ Store :: Store(){}
 void Store :: save(string filename)
 {
     ofstream ofs(filename.c_str());
-	
+	save_catalog(ofs);
     //save_orders(ofs);
     ofs.close();
+}
+
+void Store :: save_catalog(ostream& ofs)
+{
+
 }
 
 //void Store :: save_orders(ostream& ofs)

@@ -8,9 +8,30 @@ Robot_part :: Robot_part(string _name, int _model_number, double _cost, string _
             string _image_filename) : name(_name), model_number(_model_number),
                     cost(_cost), description(_description), image_filename(_image_filename){}
 
-double Robot_part::get_cost()
+//double Robot_part::get_cost()
+//{
+//	return cost;
+//}
+//getters
+string Robot_part :: get_name()
 {
-	return cost;
+    return name;
+}
+int Robot_part :: get_model_number()
+{
+    return model_number;
+}
+double Robot_part :: get_cost()
+{
+    return cost;
+}
+string Robot_part :: get_description()
+{
+    return description;
+}
+string Robot_part :: get_image_filename()
+{
+    return image_filename;
 }
 
 Head :: Head(string _name, int _model_number, double _cost, string _description,
@@ -28,6 +49,11 @@ string Head::to_string()
     return os.str();
 }
 
+double Head::get_power()
+{
+    return power;
+}
+
 Torso :: Torso(string _name, int _model_number, double _cost, string _description,
             string _image_filename, int _battery_compartments, int _max_arms) : Robot_part(_name, _model_number,
                     _cost, _description, _image_filename), battery_compartments(_battery_compartments), max_arms(_max_arms){}
@@ -41,6 +67,15 @@ string Torso::to_string()
        << "Image Filename: " << image_filename << "\n"
        << "Battery Compartments: " << battery_compartments << "\n";
     return os.str();
+}
+
+int Torso :: get_battery_compartments()
+{
+    return battery_compartments;
+}
+int Torso :: get_max_arms()
+{
+    return max_arms;
 }
 
 Arm :: Arm(string _name, int _model_number, double _cost, string _description,
@@ -58,6 +93,12 @@ string Arm::to_string()
     return os.str();
 }
 
+double Arm :: get_max_power()
+{
+    return max_power;
+}
+
+
 Locomotor :: Locomotor(string _name, int _model_number, double _cost, string _description,
             string _image_filename, double _max_power) : Robot_part(_name, _model_number,
                     _cost, _description, _image_filename), max_power(_max_power){}
@@ -71,6 +112,11 @@ string Locomotor::to_string()
        << "Image Filename: " << image_filename << "\n"
        << "Max Power: " << max_power << "\n";
     return os.str();
+}
+
+double Locomotor :: get_max_power()
+{
+    return max_power;
 }
 
 Battery :: Battery(string _name, int _model_number, double _cost, string _description,
@@ -87,6 +133,15 @@ string Battery::to_string()
        << "Power Available: " << power_availible << "\n"
        << "Max Energy: " << max_energy << "\n";
     return os.str();
+}
+
+double Battery :: get_power_availible()
+{
+    return power_availible;
+}
+double Battery :: get_max_energy()
+{
+    return max_energy;
 }
 
 Robot_model :: Robot_model(string _name, int _model_number, Torso _torso,

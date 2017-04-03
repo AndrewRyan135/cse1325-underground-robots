@@ -19,6 +19,7 @@ public:
     Store();
     void save(string filename);
     void save_orders(ostream& ofs);
+    void save_catalog(ostream& ofs);
     void open(string filename);
     void open_orders(istream& ifs);
     void add_order(Order _order);

@@ -9,8 +9,9 @@
 #include "customer.h"
 #include "robot.h"
 #include "sales_associate.h"
+#include "store.h"
 using namespace std;
-	
+
 Catalog catologe;
 
 void create_part();
@@ -96,11 +97,11 @@ class Controller
 		{
 			cmd = int_validation(cmd);
 			switch(cmd) {
-			case 1 :  cout << "\t\tBrowse robot cataloge\n" << endl; 
+			case 1 :  cout << "\t\tBrowse robot cataloge\n" << endl;
 					  view.show_catalog();
-				  	  
+
 					  break;
-			case 2 :  cout << "To be finish in later sprint\n" << endl; 
+			case 2 :  cout << "To be finish in later sprint\n" << endl;
 					  break;
 			case 3 : cout << "1. Create robot part" << endl
 					      << "2. Create new robot model" << endl
@@ -145,7 +146,7 @@ class Controller
 					     getline(cin,phone_number);
 					     cout << "Enter the customer's email: " << endl;
 					     cin >> email;
-					     
+
 					     Customer customer(name, number, phone_number, email);
 					     catologe.add_customer(customer);
 				     }
@@ -292,7 +293,7 @@ double calculate_total_price(int model_index, int quantity)
 	double total;
 	Robot_model model = catologe.get_model(model_index);
 
-	total = quantity * model.cost();	
+	total = quantity * model.cost();
 }
 */
 
@@ -340,7 +341,7 @@ void create_part()
 				 cin.ignore();
 				 getline(cin,_description);
 				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file; 
+				 cin >> _image_file;
 				 cout << "Enter the number of battery compartments: " << endl;
 				 _battery_compartments = int_validation(_battery_compartments);
 				 cout << "Enter the number of arms: " << endl;
