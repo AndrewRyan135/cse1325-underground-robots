@@ -157,5 +157,33 @@ string Catalog::catalog_to_string()
 	}
 }
 
+void Catalog :: save_catalog(ostream& ofs)
+{
+	for (int i = 0; i < head_vector_size(); i++) {
+		(get_head(i)).save_head(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < torso_vector_size(); i++) {
+		(get_torso(i)).save_torso(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < arm_vector_size(); i++) {
+		(get_arm(i)).save_arm(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < locomotor_vector_size(); i++) {
+		(get_locomotor(i)).save_locomotor(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < battery_vector_size(); i++) {
+		(get_battery(i)).save_battery(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < model_vector_size(); i++) {
+		(get_model(i)).save_robot_model(ofs);
+		ofs << "-1" << endl;
+	}
+}
+
 
 
