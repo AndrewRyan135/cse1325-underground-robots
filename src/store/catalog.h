@@ -41,6 +41,7 @@ class Catalog
 	Battery get_battery(int battery_index);
 
 	string catalog_to_string();
+	void save_catalog(ostream& ofs);
 
 	private:
 	vector<Robot_model> robot_model_vector;

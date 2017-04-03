@@ -11,8 +11,9 @@
 #include "sales_associate.h"
 #include "store.h"
 using namespace std;
-
+Store store; // added for file IO
 Catalog catologe;
+
 
 void create_part();
 int int_validation(int input);
@@ -35,7 +36,8 @@ class View
 		   << "\n3. Product Manager"
 		   << "\n4. Boss"
 		   << "\n5. Exit\n"
-		   << "6. Save data (testing)";
+		   << "6. Save data (testing)\n"
+		   << "7. Open data (testing)";
 		return os.str();
 	}
 	void show_parts_list()
@@ -176,9 +178,13 @@ class Controller
 				     break;
 			case 5 : exit(0);
 			case 6 : {
-                        Store store;
                         store.add_catalog(catologe);
                         store.save("testing.txt");//testing save
+                        break;
+                     }
+            case 7:  {
+                        store.add_catalog(catologe);
+                        store.open("testing.txt");//testing open
                         break;
                      }
 			default : {}
