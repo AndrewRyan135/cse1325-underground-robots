@@ -1,5 +1,7 @@
 #include "catalog.h"
-
+#include <string>
+#include <iostream>
+#include <sstream>
 void Catalog::add_model(Robot_model model)
 {
 	robot_model_vector.push_back(model);
@@ -135,6 +137,25 @@ Battery Catalog::get_battery(int battery_index)
 	return battery_part_vector[battery_index];
 }
 
+string Catalog::catalog_to_string()
+{
+	stringstream os;
+	for (int i = 0; i < head_vector_size(); i++) {
+		os << head_to_string(i);
+	}
+	for (int i = 0; i < torso_vector_size(); i++) {
+		os << torso_to_string(i);
+	}
+	for (int i = 0; i < arm_vector_size(); i++) {
+		os << arm_to_string(i);
+	}
+	for (int i = 0; i < locomotor_vector_size(); i++) {
+		os << locomotor_to_string(i);
+	}
+	for (int i = 0; i < battery_vector_size(); i++) {
+		os << battery_to_string(i);
+	}
+}
 
 
 
