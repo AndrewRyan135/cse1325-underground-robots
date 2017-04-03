@@ -18,7 +18,7 @@ void Store :: save(string filename)
 
 void Store :: save_catalog(ostream& ofs)
 {
-
+    catalog.get_arm(0).save_arm(ofs);
 }
 
 //void Store :: save_orders(ostream& ofs)
@@ -54,6 +54,20 @@ void Store :: open(string filename)
 
 }
 
+void Store :: open_arm(istream& ifs)
+{
+    string name;
+    int model_number;
+    double cost;
+    string description;
+    string image_filename;
+    double max_power;
+    //This doesnt work, but this is the idea
+    //ifs >> name >> model_number >> cost >> image_filename >> max_power >> endl;
+    Arm arm(name, model_number, cost, description, image_filename, max_power);
+    catalog.add_arm(arm);
+}
+
 //void Store :: open_orders(istream& ifs)
 //{
 //    string line;
@@ -72,5 +86,9 @@ void Store :: open(string filename)
 //        }
 //    }
 //}
+void Store :: add_catalog(Catalog new_catalog)
+{
+    catalog = new_catalog;
+}
 
 

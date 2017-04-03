@@ -21,6 +21,7 @@ public:
     double get_cost();
     string get_description();
     string get_image_filename();
+    void save_part(ostream& ofs);
 };
 
 class Head : public Robot_part{
@@ -31,6 +32,7 @@ public:
             string _image_filename, double _power);
     string to_string();
     double get_power();
+    void save_head(ostream& ofs);
 };
 
 class Torso : public Robot_part{
@@ -43,6 +45,7 @@ public:
     string to_string();
     int get_battery_compartments();
     int get_max_arms();
+    void save_torso(ostream& ofs);
 };
 
 class Arm : public Robot_part{
@@ -53,6 +56,7 @@ public:
             string _image_filename, double _max_power);
     string to_string();
     double get_max_power();
+    void save_arm(ostream& ofs);
 };
 
 class Locomotor : public Robot_part{
@@ -63,6 +67,7 @@ public:
             string _image_filename, double _max_power);
     string to_string();
     double get_max_power();
+    void save_locomotor(ostream& ofs);
 };
 
 class Battery : public Robot_part{
@@ -75,6 +80,7 @@ public:
     string to_string();
     double get_power_availible();
     double get_max_energy();
+    void save_battery(ostream& ofs);
 };
 
 class Robot_model{
@@ -93,6 +99,7 @@ public:
     double cost();
     double max_speed();
     double max_battery_life();
+    void save_robot_model(ostream& ofs);
 
 };
 #endif

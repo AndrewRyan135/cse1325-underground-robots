@@ -21,6 +21,7 @@ public:
     void save_orders(ostream& ofs);
     void save_catalog(ostream& ofs);
     void open(string filename);
+    void open_arm(istream& ifs);
     void open_orders(istream& ifs);
     void add_order(Order _order);
     void add_catalog(Catalog _catalog);

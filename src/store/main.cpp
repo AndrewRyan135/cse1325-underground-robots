@@ -34,7 +34,8 @@ class View
 		   << "\n2. Sales Associate"
 		   << "\n3. Product Manager"
 		   << "\n4. Boss"
-		   << "\n5. Exit\n";
+		   << "\n5. Exit\n"
+		   << "6. Save data (testing)";
 		return os.str();
 	}
 	void show_parts_list()
@@ -97,7 +98,7 @@ class Controller
 		{
 			cmd = int_validation(cmd);
 			switch(cmd) {
-			case 1 :  cout << "\t\tBrowse robot cataloge\n" << endl;
+			case 1 :  cout << "\t\tBrowse robot catalog\n" << endl;
 					  view.show_catalog();
 
 					  break;
@@ -174,6 +175,12 @@ class Controller
 				     }
 				     break;
 			case 5 : exit(0);
+			case 6 : {
+                        Store store;
+                        store.add_catalog(catologe);
+                        store.save("testing.txt");//testing save
+                        break;
+                     }
 			default : {}
 			}
 	       }
