@@ -40,6 +40,8 @@ class Catalog
 	Locomotor get_locomotor(int locomotor_index);
 	Battery get_battery(int battery_index);
 
+	string catalog_to_string();
+
 	private:
 	vector<Robot_model> robot_model_vector;
 	vector<Head> head_part_vector;
