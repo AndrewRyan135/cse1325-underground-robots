@@ -1,7 +1,7 @@
 #Makefile design adapted for use on this project from example given by Manzillo on stackoverflow.com, URL: http://stackoverflow.com/questions/231229/how-to-generate-a-makefile-with-source-in-sub-directories-using-just-one-makefil
 
 CC		  := g++ -std=c++11
-LD		  := g++ -L/usr/local/lib -lfltk -lXext -lX11 -lm
+LD		  := -L/usr/local/lib -lfltk -lfltk_images -lXext -lX11 -lm
 
 MODULES   := store robot store_associates
 SRC_DIR   := $(addprefix src/,$(MODULES))
@@ -25,7 +25,7 @@ endef
 all: checkdirs build/demo
 
 build/demo: $(OBJ)
-	$(LD) $^ -o $@
+	$(CC) $(fltk-config --cxxflags) $^ -o $@ $(LD)
 
 checkdirs: $(BUILD_DIR)
 
