@@ -20,9 +20,12 @@
 #include "customer.h"
 #include "robot.h"
 #include "sales_associate.h"
+#include "store.h"
 using namespace std;
 	
 Catalog catologe;
+Store store;
+store.add_catalog(catologe);
 
 void create_part();
 int int_validation(int input);
@@ -121,7 +124,6 @@ class View
 };
 
 View view;
-
 //==================================
 //           CONTROLLER
 //==================================
@@ -546,7 +548,7 @@ void robot_head_dialog_hideCB(Fl_Widget* w, void* p)
 void create_robot_headCB(Fl_Widget* w, void* p)
 {
 	Head head(robot_head_dlg->name(),robot_head_dlg->model_number(),robot_head_dlg->cost(),robot_head_dlg->description(),robot_head_dlg->file(),robot_head_dlg->power());
-	catologe.add_head(head);
+	store.get_catalog().add_head(head);
 	fl_message("Created part");
 	robot_head_dlg->hide();
 }
@@ -828,11 +830,21 @@ void create_robot_batteryCB(Fl_Widget* w, void* p)
 	robot_battery_dlg->hide();
 }
 
+void saveCB(Fl_Widget* w, void* p)
+{
+	store.save("save_file.txt");
+}
+
+void openCB(Fl_Widget* w, void* p)
+{
+	store.open("save_file.txt");
+}
+
 //robot_part_dialog *robot_part_dlg;
 Fl_Menu_Item menuitems[] = {
 	{"&File", 0,0,0,FL_SUBMENU},
-		//{"&Open", FL_ALT + 'o', (Fl_Callback *)/*open*/},
-		//{"&Save", FL_ALT + 's', (Fl_Callback *)/*save*/},
+		{"&Open", FL_ALT + 'o', (Fl_Callback *) openCB},
+		{"&Save", FL_ALT + 's', (Fl_Callback *) saveCB},
 		{"&Quit", FL_ALT + 'q', (Fl_Callback *) Quit},
 		{0},
 	{"&Report", 0,0,0,FL_SUBMENU},
@@ -905,10 +917,10 @@ int main()
 		menubar->menu(menuitems);
 		win->end();
 		win->show();
-		int cmd = 0;
-		Controller controller;
-		cout << view.get_menu() << endl;
-		controller.menu_choice(cmd);
+		//int cmd = 0;
+		//Controller controller;
+		//cout << view.get_menu() << endl;
+		//controller.menu_choice(cmd);
 		return Fl::run();
 		//int cmd = 0;
 		//Controller controller;
