@@ -11,7 +11,7 @@
 #include "sales_associate.h"
 #include "store.h"
 using namespace std;
-Store store; // added for file IO
+	
 Catalog catologe;
 
 
@@ -95,73 +95,70 @@ View view;
 //==================================
 class Controller
 {
-	public :
-		void menu_choice(int cmd)
-		{
-			cmd = int_validation(cmd);
-			switch(cmd) {
-			case 1 :  cout << "\t\tBrowse robot catalog\n" << endl;
-					  view.show_catalog();
-
-					  break;
-			case 2 :  cout << "To be finish in later sprint\n" << endl;
-					  break;
-			case 3 : cout << "1. Create robot part" << endl
-					      << "2. Create new robot model" << endl
-					      << "3. Exit\n" << endl;
-					 cin >> cmd;
-				     if (cmd == 1)
-				     {
-				     	create_part();
-				     }
-				     else if (cmd == 2)
-				     {
-				     	if (catologe.head_vector_size() != 0 && catologe.torso_vector_size() != 0 && catologe.arm_vector_size() != 0 &&
-				     		catologe.locomotor_vector_size() != 0 && catologe.battery_vector_size() != 0)
-				     	{
-				     		view.show_parts_list();
-				     	}
-				     	else
-				     	{
-				     		cout << "Cannot create a new model with out parts to complete it(No created parts of a certain type)\n" << endl;
-				     	}
-				     }
-				     else if (cmd == 3)
-				     {
-				     	break;
-				     }
-				     break;
-			case 4 : cout << "1. Create new customer" << endl
-				          << "2. Create new sales associate" << endl
-				          << "3. Exit" << endl;
-					 cin >> cmd;
-				     if (cmd == 1)
-				     {
-					     string name, phone_number, email;
-					     int number;
-					     cout << "Enter the customer's name: " << endl;
-					     cin.ignore();
-					     getline(cin,name);
-					     cout << "Enter the customer's number: " << endl;
-					     number = int_validation(number);
-					     cout << "Enter the customer's phone number: " << endl;
-					     cin.ignore();
-					     getline(cin,phone_number);
-					     cout << "Enter the customer's email: " << endl;
-					     cin >> email;
-
-					     Customer customer(name, number, phone_number, email);
-					     catologe.add_customer(customer);
-				     }
-				     else if (cmd == 2)
-				     {
-				 	     string name;
-				 	     int employee_number;
-				 	     cout << "Enter the employee's name: " << endl;
-				 	     cin.ignore();
-				 	     getline(cin, name);
-				 	     cout << "Enter the employee's employee number: " << endl;
-				 	     employee_number = int_validation(employee_number);
+	int cmd = int_validation(cmd);
+	switch(cmd) {
+	case 1 :  cout << "\t\tBrowse robot cataloge\n" << endl; 
+			  view.show_catalog();
+				  	  
+			  break;
+	case 2 :  cout << "To be finish in later sprint\n" << endl; 
+			  break;
+	case 3 : cout << "1. Create robot part" << endl
+			      << "2. Create new robot model" << endl
+			      << "3. Exit\n" << endl;
+			 cin >> cmd;
+		     if (cmd == 1)
+		     {
+		     	create_part();
+		     }
+		     else if (cmd == 2)
+		     {
+		     	if (catologe.head_vector_size() != 0 && catologe.torso_vector_size() != 0 && catologe.arm_vector_size() != 0 &&
+		     		catologe.locomotor_vector_size() != 0 && catologe.battery_vector_size() != 0)
+		     	{
+		     		view.show_parts_list();
+		     	}
+		     	else
+		     	{
+		     		cout << "Cannot create a new model with out parts to complete it(No created parts of a certain type)\n" << endl;
+		     	}
+		     }
+		     else if (cmd == 3)
+		     {
+		     	break;
+		     }
+		     break;
+	case 4 : cout << "1. Create new customer" << endl
+		          << "2. Create new sales associate" << endl
+		          << "3. Exit" << endl;
+			 cin >> cmd;
+		     if (cmd == 1)
+		     {
+			     string name, phone_number, email;
+			     int number;
+			     cout << "Enter the customer's name: " << endl;
+			     cin.ignore();
+			     getline(cin,name);
+			     cout << "Enter the customer's number: " << endl;
+			     number = int_validation(number);
+			     cout << "Enter the customer's phone number: " << endl;
+			     cin.ignore();
+			     getline(cin,phone_number);
+			     cout << "Enter the customer's email: " << endl;
+			     cin >> email;
+			     
+			     Customer customer(name, number, phone_number, email);
+			     catologe.add_customer(customer);
+		     }
+		     else if (cmd == 2)
+		     {
+		 	     string name;
+		 	     int employee_number;
+		 	     cout << "Enter the employee's name: " << endl;
+		 	     cin.ignore();
+		 	     getline(cin, name);
+		 	     cout << "Enter the employee's employee number: " << endl;
+		 	     employee_number = int_validation(employee_number);
 
 				 	     SalesAssociate associate(name,employee_number);
 				 	     catologe.add_associate(associate);
@@ -306,7 +303,7 @@ double calculate_total_price(int model_index, int quantity)
 	double total;
 	Robot_model model = catologe.get_model(model_index);
 
-	total = quantity * model.cost();
+	total = quantity * model.cost();	
 }
 */
 
@@ -354,7 +351,7 @@ void create_part()
 				 cin.ignore();
 				 getline(cin,_description);
 				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
+				 cin >> _image_file; 
 				 cout << "Enter the number of battery compartments: " << endl;
 				 _battery_compartments = int_validation(_battery_compartments);
 				 cout << "Enter the number of arms: " << endl;
@@ -417,4 +414,54 @@ void create_part()
 				 break;}
 		default : {}
 	}
+}
+
+void robot_part_dialogCB(Fl_Widget* w, void* p) 
+{
+	Fl_Window *dialog;
+	Fl_Return_Button *rp_head;//, *rp_torso, *rp_arm, *rp_locomotor, *rp_battery;
+		dialog = new Fl_Window(340,270,"Robot Parts");
+		rp_head = new Fl_Return_Button(100, 50, 120, 25, "Head");
+		rp_head->callback((Fl_Callback *)create_robot_headCB, 0);
+
+		//rp_torso = new Fl_Return_Button(100, 80, 120, 25, "Torso");
+		//rp_torso->callback((Fl_Callback *)create_robot_torsoCB, 0);
+
+		//rp_arm = new Fl_Return_Button(100, 110, 120, 25, "Arm");
+		//rp_arm->callback((Fl_Callback *)create_robot_armCB, 0);
+
+		//rp_locomotor = new Fl_Return_Button(100, 140, 120, 25, "Locomotor");
+		//rp_locomotor->callback((Fl_Callback *)create_robot_locomotorCB, 0);
+
+		//rp_battery = new Fl_Return_Button(100, 170, 120, 25, "Battery");
+		//rp_battery->callbcak((Fl_Callback *)create_robot_batteryCB, 0);
+		dialog->end();
+		dialog->set_non_modal();
+}
+
+
+void create_robot_headCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *dialog;
+	Fl_Input *rp_name, *rp_part_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
+	dialog = new Fl_Window(340, 270, "Robot Head");
+	rp_name = new Fl_Input(120, 10, 210, 25, "Name:");
+	rp_name->align(FL_ALIGN_LEFT);
+
+	rp_part_number = new Fl_Input(120, 40, 210, 25, "Model Number:");
+	rp_part_number->align(FL_ALIGN_LEFT);
+
+	rp_cost = new Fl_Input(120, 70, 210, 25, "Cost:");
+	rp_cost->align(FL_ALIGN_LEFT);
+
+	rp_description = new Fl_Multiline_Input(120, 100, 210, 75, "Description:");
+	rp_description->align(FL_ALIGN_LEFT);
+
+	rp_file_name = new Fl_Input(120, 190, 210, 25, "File name:");
+	rp_file_name->align(FL_ALIGN_LEFT);
+
+	rp_power = new Fl_Input(120, 220, 210, 25, "Power:");
+	rp_power->align(FL_ALIGN_LEFT);
+	dialog->end();
+		dialog->set_non_modal();
 }
