@@ -25,7 +25,7 @@ using namespace std;
 
 Catalog catologe;
 Store store;
-store.add_catalog(catologe);
+
 
 void create_part();
 int int_validation(int input);
@@ -548,7 +548,7 @@ void robot_head_dialog_hideCB(Fl_Widget* w, void* p)
 void create_robot_headCB(Fl_Widget* w, void* p)
 {
 	Head head(robot_head_dlg->name(),robot_head_dlg->model_number(),robot_head_dlg->cost(),robot_head_dlg->description(),robot_head_dlg->file(),robot_head_dlg->power());
-	store.get_catalog().add_head(head);
+	catologe.add_head(head);
 	fl_message("Created part");
 	robot_head_dlg->hide();
 }
@@ -903,6 +903,7 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 
 int main()
 {
+    store.add_catalog(catologe);
 	robot_part_dlg = new robot_part_dialog{};
 	robot_head_dlg = new robot_head_dialog{};
 	robot_torso_dlg = new robot_torso_dialog{};
