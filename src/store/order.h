@@ -22,10 +22,8 @@ class Order
 	  Customer get_customer();
 	  int get_status();
 	  SalesAssociate get_sales_associate();
-	  //File insertion
-	  //friend ostream& operator<<(ostream& os, const Order x);
-	  //File extraction
-	  //friend istream& operator>>(istream& is, Order x);
+	  void save_order(ostream& ofs);
+
 	private:
 	  int order_number;
 	  string date;

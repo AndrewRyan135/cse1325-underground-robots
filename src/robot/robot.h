@@ -100,6 +100,7 @@ public:
     double max_speed();
     double max_battery_life();
     void save_robot_model(ostream& ofs);
+    int get_model_number();
 
 };
 #endif
