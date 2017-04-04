@@ -15,6 +15,7 @@
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Button.H>
 #include <FL/fl_ask.H>
+#include <FL/Fl_Text_Display.H>
 #include "catalog.h"
 #include "customer.h"
 #include "robot.h"
@@ -718,10 +719,10 @@ Fl_Menu_Item menuitems[] = {
 		//{"&Save", FL_ALT + 's', (Fl_Callback *)/*save*/},
 		{"&Quit", FL_ALT + 'q', (Fl_Callback *) Quit},
 		{0},
-	{"&Customer", 0,0,0,FL_SUBMENU},
-		{"&Show Robot Parts", FL_ALT + 's', (Fl_Callback *)show_robot_partsCB},
+	{"&Report", 0,0,0,FL_SUBMENU},
+		{"&Show Robot Parts", FL_ALT + 'v', (Fl_Callback *)show_robot_partsCB},
 		{0},
-	{"&Boss", 0,0,0,FL_SUBMENU},
+	{"&Create", 0,0,0,FL_SUBMENU},
 		{"Add &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},
 		{0},
 	{0}
@@ -729,39 +730,47 @@ Fl_Menu_Item menuitems[] = {
 
 void show_robot_partsCB()
 {
+	Fl_Window *win = new Fl_Window(640,480);
 	stringstream os;
 	int i = 0;
 	os << "Heads: \n";
 	for (i=0;i<catologe.head_vector_size();i++)
 	{
 		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
-		   << "=====================================================================\n";
+		   << "=================================================\n";
 	}
 	os << "Torsos: \n";
 	for (i=0;i<catologe.torso_vector_size();i++)
 	{
 		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
-		   << "=====================================================================\n";
+		   << "=================================================\n";
 	}
 	os << "Arms: \n";
 	for (i=0;i<catologe.arm_vector_size();i++)
 	{
 		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
-		   << "=====================================================================\n";
+		   << "=================================================\n";
 	}
 	os << "Locomotors: \n";
 	for (i=0;i<catologe.locomotor_vector_size();i++)
 	{
 		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
-		   << "=====================================================================\n";
+		   << "=================================================\n";
 	}
 	os << "Batteries: \n";
 	for (i=0;i<catologe.battery_vector_size();i++)
 	{
 		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
-		   << "=====================================================================\n";
+		   << "=================================================\n";
 	}
-	fl_message((os.str()).c_str());
+
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot Parts");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+	//fl_message((os.str()).c_str());
 }
 
 int main()
