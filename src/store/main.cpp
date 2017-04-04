@@ -45,6 +45,7 @@ void create_robot_locomotorCB(Fl_Widget* w, void* p);
 void robot_battery_dialog_showCB(Fl_Widget* w, void* p);
 void robot_battery_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_batteryCB(Fl_Widget* w, void* p);
+void show_robot_partsCB();
 //void part_picker(int index);
 //void save_data();
 
@@ -323,114 +324,7 @@ double calculate_total_price(int model_index, int quantity)
 }
 */
 
-/*void create_partCB(Fl_Widget* w, void* p)
-{
-	int cmd, _model_number, _battery_compartments, _max_arms;
-	int flag = 1;
-	string _name, _description, _image_file;
-	double _cost, _power, _max_power, _power_available, _max_energy;
-	bool valid = false;
-	stringstream os;
-	os << "1. Head" << "\n"
-	   << "2. Torso" << "\n"
-	   << "3. Arm" << "\n"
-	   << "4. Locomotor" << "\n"
-	   << "5. Battery";
-	cout << os.str() << endl;
-	cin >> cmd;
-	switch(cmd) {
-		case 1 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
-				 cout << "Enter the part power: " << endl;
-				 _power = double_validation(_power);
-				 Head head(_name,_model_number,_cost,_description,_image_file,_power);
-				 catologe.add_head(head);
-				 break;}
-		case 2 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file; 
-				 cout << "Enter the number of battery compartments: " << endl;
-				 _battery_compartments = int_validation(_battery_compartments);
-				 cout << "Enter the number of arms: " << endl;
-				 _max_arms = int_validation(_max_arms);
-				 Torso torso(_name,_model_number,_cost,_description,_image_file,_battery_compartments,_max_arms);
-				 catologe.add_torso(torso);
-				 break;}
-		case 3 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
-				 cout << "Enter the max power of the arm: " << endl;
-				 _max_power = double_validation(_max_power);
-				 Arm arm(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 catologe.add_arm(arm);
-				 break;}
-		case 4 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
-				 cout << "Enter the max power of the locomotor: " << endl;
-				 _max_power = double_validation(_max_power);
-				 Locomotor locomotor(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 catologe.add_locomotor(locomotor);
-				 break;}
-		case 5 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
-				 cout << "Enter the power available" << endl;
-				  _power_available = double_validation(_power_available);
-				 cout << "Enter the max energy: " << endl;
-				 _max_energy = double_validation(_max_energy);
-				 Battery battery(_name,_model_number,_cost,_description,_image_file,_power_available,_max_energy);
-				 catologe.add_battery(battery);
-				 break;}
-		default : {}
-	}
-}*/
+
 
 class robot_part_dialog
 {
@@ -451,6 +345,9 @@ class robot_part_dialog
 
 		rp_battery = new Fl_Return_Button(100, 170, 120, 25, "Battery");
 		rp_battery->callback((Fl_Callback *)robot_battery_dialog_showCB, 0);
+
+		rp_return = new Fl_Return_Button(230, 240, 100, 25, "Return:");
+		rp_return->callback((Fl_Callback *)robot_part_dialog_hideCB, 0);
 		dialog->end();
 		dialog->set_non_modal();
 		}
@@ -458,12 +355,11 @@ class robot_part_dialog
 		void hide() {dialog->hide();}
 	private :
 		Fl_Window *dialog;
-		Fl_Return_Button *rp_head, *rp_torso, *rp_arm, *rp_locomotor, *rp_battery;
+		Fl_Return_Button *rp_head, *rp_torso, *rp_arm, *rp_locomotor, *rp_battery, *rp_return;
 };
 robot_part_dialog *robot_part_dlg;
 void robot_part_dialog_showCB(Fl_Widget* w, void* p)
 {
-	//robot_part_dialog *robot_part_dlg;
 	robot_part_dlg->show();
 }
 void robot_part_dialog_hideCB(Fl_Widget* w, void* p)
@@ -534,6 +430,7 @@ void create_robot_headCB(Fl_Widget* w, void* p)
 {
 	Head head(robot_head_dlg->name(),robot_head_dlg->model_number(),robot_head_dlg->cost(),robot_head_dlg->description(),robot_head_dlg->file(),robot_head_dlg->power());
 	catologe.add_head(head);
+	fl_message("Created part");
 	robot_head_dlg->hide();
 }
 //=======================================
@@ -604,6 +501,7 @@ void create_robot_torsoCB(Fl_Widget* w, void* p)
 	Torso torso(robot_head_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
 				robot_torso_dlg->battery(),robot_torso_dlg->max_arms());
 	catologe.add_torso(torso);
+	fl_message("Created part");
 	robot_torso_dlg->hide();
 }
 //=======================================
@@ -670,6 +568,7 @@ void create_robot_armCB(Fl_Widget* w, void* p)
 {
 	Arm arm(robot_arm_dlg->name(),robot_arm_dlg->model_number(),robot_arm_dlg->cost(),robot_arm_dlg->description(),robot_arm_dlg->file(),robot_arm_dlg->power());
 	catologe.add_arm(arm);
+	fl_message("Created part");
 	robot_arm_dlg->hide();
 }
 //=======================================
@@ -736,6 +635,7 @@ void create_robot_locomotorCB(Fl_Widget* w, void* p)
 {
 	Locomotor loco(robot_locomotor_dlg->name(),robot_locomotor_dlg->model_number(),robot_locomotor_dlg->cost(),robot_locomotor_dlg->description(),robot_locomotor_dlg->file(),robot_locomotor_dlg->power());
 	catologe.add_locomotor(loco);
+	fl_message("Created part");
 	robot_locomotor_dlg->hide();
 }
 //=======================================
@@ -807,6 +707,7 @@ void create_robot_batteryCB(Fl_Widget* w, void* p)
 	Battery battery(robot_battery_dlg->name(),robot_battery_dlg->model_number(),robot_battery_dlg->cost(),robot_battery_dlg->description(),
 					robot_battery_dlg->file(),robot_battery_dlg->power(), robot_battery_dlg->energy());
 	catologe.add_battery(battery);
+	fl_message("Created part");
 	robot_battery_dlg->hide();
 }
 
@@ -817,11 +718,51 @@ Fl_Menu_Item menuitems[] = {
 		//{"&Save", FL_ALT + 's', (Fl_Callback *)/*save*/},
 		{"&Quit", FL_ALT + 'q', (Fl_Callback *) Quit},
 		{0},
+	{"&Customer", 0,0,0,FL_SUBMENU},
+		{"&Show Robot Parts", FL_ALT + 's', (Fl_Callback *)show_robot_partsCB},
+		{0},
 	{"&Boss", 0,0,0,FL_SUBMENU},
 		{"Add &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},
 		{0},
 	{0}
 };
+
+void show_robot_partsCB()
+{
+	stringstream os;
+	int i = 0;
+	os << "Heads: \n";
+	for (i=0;i<catologe.head_vector_size();i++)
+	{
+		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+		   << "=====================================================================\n";
+	}
+	os << "Torsos: \n";
+	for (i=0;i<catologe.torso_vector_size();i++)
+	{
+		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+		   << "=====================================================================\n";
+	}
+	os << "Arms: \n";
+	for (i=0;i<catologe.arm_vector_size();i++)
+	{
+		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+		   << "=====================================================================\n";
+	}
+	os << "Locomotors: \n";
+	for (i=0;i<catologe.locomotor_vector_size();i++)
+	{
+		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+		   << "=====================================================================\n";
+	}
+	os << "Batteries: \n";
+	for (i=0;i<catologe.battery_vector_size();i++)
+	{
+		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+		   << "=====================================================================\n";
+	}
+	fl_message((os.str()).c_str());
+}
 
 int main()
 {
