@@ -47,7 +47,7 @@ void create_robot_locomotorCB(Fl_Widget* w, void* p);
 void robot_battery_dialog_showCB(Fl_Widget* w, void* p);
 void robot_battery_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_batteryCB(Fl_Widget* w, void* p);
-void show_robot_partsCB();
+void show_robot_partsCB(Fl_Widget* w, void* p);
 //void part_picker(int index);
 //void save_data();
 
@@ -844,7 +844,7 @@ Fl_Menu_Item menuitems[] = {
 	{0}
 };
 
-void show_robot_partsCB()
+void show_robot_partsCB(Fl_Widget* w, void* p)
 {
 	Fl_Window *win = new Fl_Window(640,480);
 	stringstream os;
@@ -897,7 +897,6 @@ int main()
 	robot_arm_dlg = new robot_arm_dialog{};
 	robot_locomotor_dlg = new robot_locomotor_dialog{};
 	robot_battery_dlg = new robot_battery_dialog{};
-	while (true){
 		Fl_Window *win;
 		Fl_Menu_Bar *menubar;
 		fl_register_images();
@@ -910,8 +909,7 @@ int main()
 		Controller controller;
 		cout << view.get_menu() << endl;
 		controller.menu_choice(cmd);
-	}
-		//return Fl::run();
+		return Fl::run();
 		//int cmd = 0;
 		//Controller controller;
 		//cout << view.get_menu() << endl;
