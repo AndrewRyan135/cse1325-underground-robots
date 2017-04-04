@@ -32,6 +32,7 @@ class Catalog
 	int arm_vector_size();
 	int locomotor_vector_size();
 	int battery_vector_size();
+	int robot_model_vector_size();
 
 	Robot_model get_model(int model_index);
 	Head get_head(int head_index);
@@ -39,6 +40,9 @@ class Catalog
 	Arm get_arm(int arm_index);
 	Locomotor get_locomotor(int locomotor_index);
 	Battery get_battery(int battery_index);
+
+	string catalog_to_string();
+	void save_catalog(ostream& ofs);
 
 	private:
 	vector<Robot_model> robot_model_vector;

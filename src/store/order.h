@@ -1,8 +1,10 @@
 #ifndef ORDER_H
-#define ORDER_H 
+#define ORDER_H
 #include "robot.h"
 #include "customer.h"
 #include "sales_associate.h"
+#include <fstream>
+#include <iostream>
 using namespace std;
 
 class Order
@@ -12,6 +14,16 @@ class Order
 		Customer _customer, int _status, SalesAssociate _sales_associate);
 	  double robot_cost();
 	  double extended_price();
+	  //getters
+	  int get_order_number();
+	  string get_date();
+	  Robot_model get_robot_model();
+	  int get_quantity();
+	  Customer get_customer();
+	  int get_status();
+	  SalesAssociate get_sales_associate();
+	  void save_order(ostream& ofs);
+
 	private:
 	  int order_number;
 	  string date;

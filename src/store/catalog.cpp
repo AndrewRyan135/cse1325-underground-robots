@@ -1,5 +1,7 @@
 #include "catalog.h"
-
+#include <string>
+#include <iostream>
+#include <sstream>
 void Catalog::add_model(Robot_model model)
 {
 	robot_model_vector.push_back(model);
@@ -105,6 +107,11 @@ int Catalog::battery_vector_size()
 	return battery_part_vector.size();
 }
 
+int Catalog::robot_model_vector_size()
+{
+    return robot_model_vector.size();
+}
+
 Robot_model Catalog::get_model(int model_index)
 {
 	return robot_model_vector[model_index];
@@ -135,6 +142,54 @@ Battery Catalog::get_battery(int battery_index)
 	return battery_part_vector[battery_index];
 }
 
+string Catalog::catalog_to_string()
+{
+	stringstream os;
+	for (int i = 0; i < head_vector_size(); i++) {
+		os << (head_part_vector.at(i)).to_string();
+	}
+	for (int i = 0; i < torso_vector_size(); i++) {
+		os << torso_to_string(i);
+	}
+	for (int i = 0; i < arm_vector_size(); i++) {
+		os << arm_to_string(i);
+	}
+	for (int i = 0; i < locomotor_vector_size(); i++) {
+		os << locomotor_to_string(i);
+	}
+	for (int i = 0; i < battery_vector_size(); i++) {
+		os << battery_to_string(i);
+	}
+	return os.str();
+}
+
+void Catalog :: save_catalog(ostream& ofs)
+{
+	for (int i = 0; i < head_vector_size(); i++) {
+		(get_head(i)).save_head(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < torso_vector_size(); i++) {
+		(get_torso(i)).save_torso(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < arm_vector_size(); i++) {
+		(get_arm(i)).save_arm(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < locomotor_vector_size(); i++) {
+		(get_locomotor(i)).save_locomotor(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < battery_vector_size(); i++) {
+		(get_battery(i)).save_battery(ofs);
+		ofs << "-1" << endl;
+	}
+	for (int i = 0; i < model_vector_size(); i++) {
+		(get_model(i)).save_robot_model(ofs);
+		ofs << "-1" << endl;
+	}
+}
 
 
 
