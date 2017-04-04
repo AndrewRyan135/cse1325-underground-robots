@@ -22,10 +22,9 @@
 #include "sales_associate.h"
 #include "store.h"
 using namespace std;
-	
+
 Catalog catologe;
 Store store;
-store.add_catalog(catologe);
 
 void create_part();
 int int_validation(int input);
@@ -134,11 +133,11 @@ class Controller
 	{
 	 cmd = int_validation(cmd);
 	switch(cmd) {
-	case 1 :  cout << "\t\tBrowse robot cataloge\n" << endl; 
+	case 1 :  cout << "\t\tBrowse robot cataloge\n" << endl;
 			  view.show_catalog();
-				  	  
+
 			  break;
-	case 2 :  cout << "To be finished in later sprint\n" << endl; 
+	case 2 :  cout << "To be finished in later sprint\n" << endl;
 			  break;
 	case 3 : cout << "1. Create robot part" << endl
 			      << "2. Create new robot model" << endl
@@ -184,7 +183,7 @@ class Controller
 			     getline(cin,phone_number);
 			     cout << "Enter the customer's email: " << endl;
 			     cin >> email;
-			     
+
 			     Customer customer(name, number, phone_number, email);
 			     catologe.add_customer(customer);
 		     }
@@ -216,7 +215,7 @@ class Controller
 	}
 	}
 	private :
-	int cmd;	
+	int cmd;
 };
 void Quit(Fl_Widget* w, void* p)
 {
@@ -332,7 +331,7 @@ double calculate_total_price(int model_index, int quantity)
 	double total;
 	Robot_model model = catologe.get_model(model_index);
 
-	total = quantity * model.cost();	
+	total = quantity * model.cost();
 }
 */
 
@@ -380,7 +379,7 @@ void create_part()
 				 cin.ignore();
 				 getline(cin,_description);
 				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file; 
+				 cin >> _image_file;
 				 cout << "Enter the number of battery compartments: " << endl;
 				 _battery_compartments = int_validation(_battery_compartments);
 				 cout << "Enter the number of arms: " << endl;
@@ -903,6 +902,7 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 
 int main()
 {
+    store.add_catalog(catologe);
 	robot_part_dlg = new robot_part_dialog{};
 	robot_head_dlg = new robot_head_dialog{};
 	robot_torso_dlg = new robot_torso_dialog{};
