@@ -547,7 +547,11 @@ void robot_head_dialog_hideCB(Fl_Widget* w, void* p)
 void create_robot_headCB(Fl_Widget* w, void* p)
 {
 	Head head(robot_head_dlg->name(),robot_head_dlg->model_number(),robot_head_dlg->cost(),robot_head_dlg->description(),robot_head_dlg->file(),robot_head_dlg->power());
+<<<<<<< HEAD
 	store.get_catalog().add_head(head);
+=======
+	catologe.add_head(head);
+>>>>>>> refs/remotes/origin/Staging
 	fl_message("Created part");
 	robot_head_dlg->hide();
 }
@@ -869,25 +873,41 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	os << "Torsos: \n";
 	for (i=0;i<catologe.torso_vector_size();i++)
 	{
+<<<<<<< HEAD
 		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+=======
+		os << "Part index: " << i+1 << '\n' << catologe.torso_to_string(i) << '\n'
+>>>>>>> refs/remotes/origin/Staging
 		   << "=================================================\n";
 	}
 	os << "Arms: \n";
 	for (i=0;i<catologe.arm_vector_size();i++)
 	{
+<<<<<<< HEAD
 		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+=======
+		os << "Part index: " << i+1 << '\n' << catologe.arm_to_string(i) << '\n'
+>>>>>>> refs/remotes/origin/Staging
 		   << "=================================================\n";
 	}
 	os << "Locomotors: \n";
 	for (i=0;i<catologe.locomotor_vector_size();i++)
 	{
+<<<<<<< HEAD
 		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+=======
+		os << "Part index: " << i+1 << '\n' << catologe.locomotor_to_string(i) << '\n'
+>>>>>>> refs/remotes/origin/Staging
 		   << "=================================================\n";
 	}
 	os << "Batteries: \n";
 	for (i=0;i<catologe.battery_vector_size();i++)
 	{
+<<<<<<< HEAD
 		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+=======
+		os << "Part index: " << i+1 << '\n' << catologe.battery_to_string(i) << '\n'
+>>>>>>> refs/remotes/origin/Staging
 		   << "=================================================\n";
 	}
 
@@ -902,7 +922,10 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 
 int main()
 {
+<<<<<<< HEAD
     store.add_catalog(catologe);
+=======
+>>>>>>> refs/remotes/origin/Staging
 	robot_part_dlg = new robot_part_dialog{};
 	robot_head_dlg = new robot_head_dialog{};
 	robot_torso_dlg = new robot_torso_dialog{};

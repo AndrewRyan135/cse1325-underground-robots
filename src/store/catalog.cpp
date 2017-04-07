@@ -107,6 +107,11 @@ int Catalog::battery_vector_size()
 	return battery_part_vector.size();
 }
 
+int Catalog::robot_model_vector_size()
+{
+    return robot_model_vector.size();
+}
+
 Robot_model Catalog::get_model(int model_index)
 {
 	return robot_model_vector[model_index];
@@ -141,7 +146,7 @@ string Catalog::catalog_to_string()
 {
 	stringstream os;
 	for (int i = 0; i < head_vector_size(); i++) {
-		os << head_to_string(i);
+		os << (head_part_vector.at(i)).to_string();
 	}
 	for (int i = 0; i < torso_vector_size(); i++) {
 		os << torso_to_string(i);
@@ -155,6 +160,7 @@ string Catalog::catalog_to_string()
 	for (int i = 0; i < battery_vector_size(); i++) {
 		os << battery_to_string(i);
 	}
+	return os.str();
 }
 
 void Catalog :: save_catalog(ostream& ofs)

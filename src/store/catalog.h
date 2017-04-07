@@ -32,6 +32,7 @@ class Catalog
 	int arm_vector_size();
 	int locomotor_vector_size();
 	int battery_vector_size();
+	int robot_model_vector_size();
 
 	Robot_model get_model(int model_index);
 	Head get_head(int head_index);

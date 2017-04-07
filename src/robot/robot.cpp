@@ -213,3 +213,7 @@ void Robot_model :: save_robot_model(ostream& ofs)
 
 double Robot_model :: max_speed(){}
 double Robot_model :: max_battery_life(){}
+int Robot_model :: get_model_number()
+{
+    return model_number;
+}
