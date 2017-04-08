@@ -510,6 +510,23 @@ void create_robot_modelCB(Fl_Widget* w, void* p)
 	robot_battery_dlg->hide();
 }
 
+void show_robot_modelsCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i = 0;
+	for (i=0; i<catologe.robot_model_vector_size(); i++)
+	{
+		os << catologe.robot_model_to_string(i) << "\n";
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot models");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
+
 void show_robot_partsCB(Fl_Widget* w, void* p)
 {
 	Fl_Window *win = new Fl_Window(640,480);
