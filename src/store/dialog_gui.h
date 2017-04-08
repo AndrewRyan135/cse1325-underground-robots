@@ -36,6 +36,9 @@ void robot_battery_dialog_showCB(Fl_Widget* w, void* p);
 void robot_battery_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_batteryCB(Fl_Widget* w, void* p);
 void show_robot_partsCB(Fl_Widget* w, void* p);
+void robot_model_dialog_showCB(Fl_Widget* w, void* p);
+void robot_model_dialog_hideCB(Fl_Widget* w, void* p);
+void create_robot_modelCB(Fl_Widget* w, void* p);
 
 
 
@@ -439,6 +442,74 @@ void openCB(Fl_Widget* w, void* p)
 	store.open("save_file.txt");
 }
 
+class robot_model_dialog
+{
+	public :
+		robot_model_dialog() {
+		dialog = new Fl_Window(480, 360, "Robot Model");
+		rp_head_index = new Fl_Input(270, 10, 210, 25, "Head index:");
+		rp_head_index->align(FL_ALIGN_LEFT);
+
+		rp_torso_index = new Fl_Input(270, 40, 210, 25, "Torso index:");
+		rp_torso_index->align(FL_ALIGN_LEFT);
+
+		rp_arm_index = new Fl_Input(270, 70, 210, 25, "Arm index:");
+		rp_arm_index->align(FL_ALIGN_LEFT);
+
+		rp_locomotor_index = new Fl_Multiline_Input(270, 100, 210, 75, "Locomotor index:");
+		rp_locomotor_index->align(FL_ALIGN_LEFT);
+
+		rp_battery_index = new Fl_Input(270, 180, 210, 25, "Battery index:");
+		rp_battery_index->align(FL_ALIGN_LEFT);
+
+		rp_name = new Fl_Input(270, 180, 210, 25, "Model name:");
+		rp_name->align(FL_ALIGN_LEFT);
+
+		rp_model_number = new Fl_Input(270, 180, 210, 25, "Model number:");
+		rp_model_number->align(FL_ALIGN_LEFT);
+
+		rp_create = new Fl_Return_Button(270, 280, 100, 25, "Create:");
+		rp_create->callback((Fl_Callback *)create_robot_modelCB, 0);
+
+		rp_cancel = new Fl_Return_Button(380, 280, 95, 25, "Cancel:");
+		rp_cancel->callback((Fl_Callback *)robot_model_dialog_hideCB, 0);
+		dialog->end();
+		dialog->set_non_modal();
+		}
+
+		void show() {dialog->show();}
+		void hide() {dialog->hide();}
+		string name() {return rp_name->value();}
+		int model_number() {a = atoi(rp_model_number->value());return a;}
+		int head() {a = atoi(rp_head_index->value());return a;}
+		int torso() {a = atoi(rp_torso_index->value());return a;}
+		int arm() {a = atoi(rp_torso_index->value());return a;}
+		int locomotor() {a = atoi(rp_torso_index->value());return a;}
+		int battery() {a = atoi(rp_torso_index->value());return a;}
+	private :
+		Fl_Window *dialog;
+		Fl_Return_Button *rp_create, *rp_cancel;
+		Fl_Input *rp_head_index, *rp_torso_index, *rp_arm_index, *rp_locomotor_index, *rp_battery_index, *rp_model_number, *rp_name;
+		int a;
+};
+robot_model_dialog *robot_model_dlg;
+void robot_model_dialog_showCB(Fl_Widget* w, void* p)
+{
+	robot_model_dlg->show();
+}
+void robot_model_dialog_hideCB(Fl_Widget* w, void* p)
+{
+	robot_model_dlg->hide();
+}
+void create_robot_modelCB(Fl_Widget* w, void* p)
+{
+	Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),catologe.get_torso(robot_model_dlg->torso()),catologe.get_head(robot_model_dlg->head()),
+					catologe.get_locomotor(robot_model_dlg->locomotor()),catologe.get_arm(robot_model_dlg->arm()),catologe.get_battery(robot_model_dlg->battery()));
+	catologe.add_model(model);
+	fl_message("Created model");
+	robot_battery_dlg->hide();
+}
+
 void show_robot_partsCB(Fl_Widget* w, void* p)
 {
 	Fl_Window *win = new Fl_Window(640,480);
@@ -447,7 +518,7 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	os << "Heads: \n";
 	for (i=0;i<catologe.head_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.head_to_string(i) << '\n'
+		os << "\tPart index: " << i+1 << "\n" << catologe.head_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Torsos: \n";
