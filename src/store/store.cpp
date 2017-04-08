@@ -6,12 +6,16 @@
 #include <fstream>
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Andrew-H
 Store :: Store(){}
 
 void Store :: save(string filename)
 {
     ofstream ofs(filename.c_str());
+<<<<<<< HEAD
 	catalog.save_catalog(ofs);
     //save_orders(ofs);
     for(int i = 0; i < customers.size(); i++){
@@ -377,5 +381,62 @@ Catalog Store :: get_catalog()
 {
     return catalog;
 }
+=======
+    //save_orders(ofs);
+    ofs.close();
+}
+
+//void Store :: save_orders(ostream& ofs)
+//{
+//    //if orders is empty, save -1
+//    //if(orders.size() == 0){
+//            ofs << -1;
+//            return;
+//    }
+//   else{ //if orders exist, insert line
+//        ofs << endl;
+//    }
+//    for(int i = 0; i < orders.size(); i++){
+//
+//        //save object
+//        ofs << orders.at(i);
+//        //if last object saved, insert -1
+//        if(i == orders.size()-1){
+//            ofs << "-1";
+//        }
+//        //otherwise skip a line
+//       else{
+//            ofs << endl;
+//        }
+//    }
+//    return;
+//}
+
+void Store :: open(string filename)
+{
+    ifstream ifs(filename.c_str());
+ //   open_orders(ifs);
+
+}
+
+//void Store :: open_orders(istream& ifs)
+//{
+//    string line;
+//   while(!ifs.eof()){
+//        getline(ifs, line);
+//        //check if line is -1
+//        if (line.length() > 0 && line[0] == -1){
+//            break;
+//        }
+//        //load data
+//        if(line.length() == 0)
+//        {
+//            //Order order;
+//            //ifs >> order;
+//            //orders.push_back(order);
+//        }
+//    }
+//}
+>>>>>>> Andrew-H
 
 

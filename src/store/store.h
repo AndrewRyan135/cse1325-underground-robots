@@ -13,10 +13,15 @@ private:
     vector<Order> orders;
     Catalog catalog;
     vector<Customer> customers;
+<<<<<<< HEAD
+=======
+    //This being camel case caused a headache
+>>>>>>> Andrew-H
     vector<SalesAssociate> sales_associates;
 public:
     Store();
     void save(string filename);
+<<<<<<< HEAD
     void open(string filename);
     void open_head(string s);
     void open_torso(string s);
@@ -32,5 +37,14 @@ public:
     void add_customer(Customer _customer);
     void add_sales_associate(SalesAssociate sales_associate);
     Catalog get_catalog();
+=======
+    void save_orders(ostream& ofs);
+    void open(string filename);
+    void open_orders(istream& ifs);
+    void add_order(Order _order);
+    void add_catalog(Catalog _catalog);
+    void add_customer(Customer _customer);
+    void add_sales_associate(SalesAssociate _sales_associate);
+>>>>>>> Andrew-H
 
 };
