@@ -14,6 +14,7 @@
 #include <FL/Fl_Text_Display.H>
 #include "catalog.h"
 #include "store.h"
+#include "sales_associate.h"
 
 Catalog catologe;
 Store store;
@@ -39,8 +40,8 @@ void show_robot_partsCB(Fl_Widget* w, void* p);
 void robot_model_dialog_showCB(Fl_Widget* w, void* p);
 void robot_model_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_modelCB(Fl_Widget* w, void* p);
-
-
+void create_sales_associateCB(Fl_Widget* w, void* p);
+void cancel_sales_associateCB(Fl_Widget* w, void* p);
 
 void Quit(Fl_Widget* w, void* p)
 {
@@ -449,7 +450,7 @@ class robot_model_dialog
 		dialog = new Fl_Window(480, 360, "Robot Model");
 		rp_head_index = new Fl_Input(270, 10, 210, 25, "Head index:");
 		rp_head_index->align(FL_ALIGN_LEFT);
-
+		
 		rp_torso_index = new Fl_Input(270, 40, 210, 25, "Torso index:");
 		rp_torso_index->align(FL_ALIGN_LEFT);
 
@@ -467,7 +468,7 @@ class robot_model_dialog
 
 		rp_model_number = new Fl_Input(270, 180, 210, 25, "Model number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
-
+		
 		rp_create = new Fl_Return_Button(270, 280, 100, 25, "Create:");
 		rp_create->callback((Fl_Callback *)create_robot_modelCB, 0);
 
@@ -570,3 +571,61 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	win->show();
 	buff->text((os.str()).c_str());
 }
+
+class sales_associate_dialog
+{
+	public:
+	  sales_associate_dialog()
+	  {
+		  dialog = new Fl_Window(340, 270, "Sales associate");
+		  rp_name = new Fl_Input(120,10,210,25, "Name:");
+		  rp_name->align(FL_ALIGN_LEFT);
+
+		  rp_number = new Fl_Input(120,40,210,25, "Employee number:");
+		  rp_number->align(FL_ALIGN_LEFT);
+
+		  rp_create = new Fl_Return_Button(145,240,120,25, "Create");
+		  rp_create->callback((Fl_Callback *)create_sales_associateCB, 0);
+
+		  rp_cancel = new Fl_Button(270,240,60,25, "Cancel");
+		  rp_cancel->callback((Fl_Callback *)cancel_sales_associateCB, 0);
+		  
+		  dialog->end();
+		  dialog->set_non_modal();
+	  }
+
+	  void show() {dialog->show();}
+	  void hide() {dialog->hide();}
+	  string name() {return rp_name->value();}
+	  int number()
+	  {
+		  int numb;
+		  istringstream(rp_number->value()) >> numb;
+		  return numb;
+	  }
+	private:
+	  Fl_Window *dialog;
+	  Fl_Input *rp_name;
+	  Fl_Input *rp_number;
+	  Fl_Return_Button *rp_create;
+	  Fl_Button *rp_cancel;
+
+};
+
+sales_associate_dialog *sales_associate_dlg;
+
+
+//NOTE: MAKE SURE TO PUSH ONTO VECTOR!!
+void create_sales_associateCB(Fl_Widget* w, void* p)
+{
+	SalesAssociate associate{sales_associate_dlg->name(),sales_associate_dlg->number()};
+	
+}
+
+void cancel_sales_associateCB(Fl_Widget* w, void* p)
+{
+	sales_associate_dlg->hide();
+}
+
+
+

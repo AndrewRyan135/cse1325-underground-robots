@@ -440,6 +440,7 @@ Fl_Menu_Item menuitems[] = {
 	{"&Create", 0,0,0,FL_SUBMENU},
 		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},
 		{"Robot &Model", FL_ALT + 'r' +'m', (Fl_Callback *)create_robot_modelCB},
+		{"Sales &Associate", FL_ALT + 'a', (Fl_Callback*)create_sales_associateCB},
 		{0},
 	{0}
 };
