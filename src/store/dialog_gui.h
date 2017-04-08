@@ -483,9 +483,9 @@ class robot_model_dialog
 		int model_number() {a = atoi(rp_model_number->value());return a;}
 		int head() {a = atoi(rp_head_index->value());return a;}
 		int torso() {a = atoi(rp_torso_index->value());return a;}
-		int arm() {a = atoi(rp_torso_index->value());return a;}
-		int locomotor() {a = atoi(rp_torso_index->value());return a;}
-		int battery() {a = atoi(rp_torso_index->value());return a;}
+		int arm() {a = atoi(rp_arm_index->value());return a;}
+		int locomotor() {a = atoi(rp_locomotor_index->value());return a;}
+		int battery() {a = atoi(rp_battery_index->value());return a;}
 	private :
 		Fl_Window *dialog;
 		Fl_Return_Button *rp_create, *rp_cancel;
