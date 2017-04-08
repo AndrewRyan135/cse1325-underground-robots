@@ -43,6 +43,7 @@ void create_robot_modelCB(Fl_Widget* w, void* p);
 void create_sales_associateCB(Fl_Widget* w, void* p);
 void cancel_sales_associateCB(Fl_Widget* w, void* p);
 
+
 void Quit(Fl_Widget* w, void* p)
 {
 	exit(0);
@@ -494,6 +495,7 @@ class robot_model_dialog
 		int a;
 };
 robot_model_dialog *robot_model_dlg;
+
 void robot_model_dialog_showCB(Fl_Widget* w, void* p)
 {
 	robot_model_dlg->show();
@@ -504,11 +506,13 @@ void robot_model_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_modelCB(Fl_Widget* w, void* p)
 {
-	Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),catologe.get_torso(robot_model_dlg->torso()),catologe.get_head(robot_model_dlg->head()),
-					catologe.get_locomotor(robot_model_dlg->locomotor()),catologe.get_arm(robot_model_dlg->arm()),catologe.get_battery(robot_model_dlg->battery()));
-	catologe.add_model(model);
-	fl_message("Created model");
-	robot_battery_dlg->hide();
+	robot_model_dlg = new robot_model_dialog{};
+	robot_model_dlg->show();
+	//Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),catologe.get_torso(robot_model_dlg->torso()),catologe.get_head(robot_model_dlg->head()),
+					//catologe.get_locomotor(robot_model_dlg->locomotor()),catologe.get_arm(robot_model_dlg->arm()),catologe.get_battery(robot_model_dlg->battery()));
+	//catologe.add_model(model);
+	//fl_message("Created model");
+	//robot_battery_dlg->hide();
 }
 
 void show_robot_modelsCB(Fl_Widget* w, void* p)
@@ -618,6 +622,8 @@ sales_associate_dialog *sales_associate_dlg;
 //NOTE: MAKE SURE TO PUSH ONTO VECTOR!!
 void create_sales_associateCB(Fl_Widget* w, void* p)
 {
+	sales_associate_dlg = new sales_associate_dialog{};
+	sales_associate_dlg->show();
 	SalesAssociate associate{sales_associate_dlg->name(),sales_associate_dlg->number()};
 	
 }

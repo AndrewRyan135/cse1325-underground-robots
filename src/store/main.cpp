@@ -51,6 +51,7 @@ void robot_battery_dialog_showCB(Fl_Widget* w, void* p);
 void robot_battery_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_batteryCB(Fl_Widget* w, void* p);
 void show_robot_partsCB(Fl_Widget* w, void* p);
+void create_sales_associateCB(Fl_Widget* w,void* p); 
 //void part_picker(int index);
 //void save_data();
 
