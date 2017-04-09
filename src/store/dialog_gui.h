@@ -16,7 +16,7 @@
 #include "store.h"
 #include "sales_associate.h"
 
-Catalog catologe;
+//Catalog catologe;
 Store store;
 
 void robot_part_dialog_showCB(Fl_Widget* w, void* p);
@@ -152,7 +152,7 @@ void robot_head_dialog_hideCB(Fl_Widget* w, void* p)
 void create_robot_headCB(Fl_Widget* w, void* p)
 {
 	Head head(robot_head_dlg->name(),robot_head_dlg->model_number(),robot_head_dlg->cost(),robot_head_dlg->description(),robot_head_dlg->file(),robot_head_dlg->power());
-	catologe.add_head(head);
+	store.get_catalog()->add_head(head);
 	fl_message("Created part");
 	robot_head_dlg->hide();
 }
@@ -223,7 +223,7 @@ void create_robot_torsoCB(Fl_Widget* w, void* p)
 {
 	Torso torso(robot_head_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
 				robot_torso_dlg->battery(),robot_torso_dlg->max_arms());
-	catologe.add_torso(torso);
+	store.get_catalog()->add_torso(torso);
 	fl_message("Created part");
 	robot_torso_dlg->hide();
 }
@@ -290,7 +290,7 @@ void robot_arm_dialog_hideCB(Fl_Widget* w, void* p)
 void create_robot_armCB(Fl_Widget* w, void* p)
 {
 	Arm arm(robot_arm_dlg->name(),robot_arm_dlg->model_number(),robot_arm_dlg->cost(),robot_arm_dlg->description(),robot_arm_dlg->file(),robot_arm_dlg->power());
-	catologe.add_arm(arm);
+	store.get_catalog()->add_arm(arm);
 	fl_message("Created part");
 	robot_arm_dlg->hide();
 }
@@ -357,7 +357,7 @@ void robot_locomotor_dialog_hideCB(Fl_Widget* w, void* p)
 void create_robot_locomotorCB(Fl_Widget* w, void* p)
 {
 	Locomotor loco(robot_locomotor_dlg->name(),robot_locomotor_dlg->model_number(),robot_locomotor_dlg->cost(),robot_locomotor_dlg->description(),robot_locomotor_dlg->file(),robot_locomotor_dlg->power());
-	catologe.add_locomotor(loco);
+	store.get_catalog()->add_locomotor(loco);
 	fl_message("Created part");
 	robot_locomotor_dlg->hide();
 }
@@ -429,7 +429,7 @@ void create_robot_batteryCB(Fl_Widget* w, void* p)
 {
 	Battery battery(robot_battery_dlg->name(),robot_battery_dlg->model_number(),robot_battery_dlg->cost(),robot_battery_dlg->description(),
 					robot_battery_dlg->file(),robot_battery_dlg->power(), robot_battery_dlg->energy());
-	catologe.add_battery(battery);
+	store.get_catalog()->add_battery(battery);
 	fl_message("Created part");
 	robot_battery_dlg->hide();
 }
@@ -520,9 +520,9 @@ void show_robot_modelsCB(Fl_Widget* w, void* p)
 	Fl_Window *win = new Fl_Window(640, 480);
 	stringstream os;
 	int i = 0;
-	for (i=0; i<catologe.robot_model_vector_size(); i++)
+	for (i=0; i<store.get_catalog()->robot_model_vector_size(); i++)
 	{
-		os << catologe.robot_model_to_string(i) << "\n";
+		os << store.get_catalog()->robot_model_to_string(i) << "\n";
 	}
 	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
 	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot models");
@@ -538,33 +538,33 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	stringstream os;
 	int i = 0;
 	os << "Heads: \n";
-	for (i=0;i<catologe.head_vector_size();i++)
+	for (i=0;i<store.get_catalog()->head_vector_size();i++)
 	{
-		os << "\tPart index: " << i+1 << "\n" << catologe.head_to_string(i) << '\n'
+		os << "\tPart index: " << i+1 << "\n" << store.get_catalog()->head_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Torsos: \n";
-	for (i=0;i<catologe.torso_vector_size();i++)
+	for (i=0;i<store.get_catalog()->torso_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.torso_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->torso_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Arms: \n";
-	for (i=0;i<catologe.arm_vector_size();i++)
+	for (i=0;i<store.get_catalog()->arm_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.arm_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->arm_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Locomotors: \n";
-	for (i=0;i<catologe.locomotor_vector_size();i++)
+	for (i=0;i<store.get_catalog()->locomotor_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.locomotor_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->locomotor_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Batteries: \n";
-	for (i=0;i<catologe.battery_vector_size();i++)
+	for (i=0;i<store.get_catalog()->battery_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.battery_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->battery_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 
@@ -624,7 +624,8 @@ void create_sales_associateCB(Fl_Widget* w, void* p)
 {
 	sales_associate_dlg = new sales_associate_dialog{};
 	sales_associate_dlg->show();
-	SalesAssociate associate{sales_associate_dlg->name(),sales_associate_dlg->number()};
+	Sales_associate associate{sales_associate_dlg->name(),sales_associate_dlg->number()};
+	store.add_sales_associate(associate);
 
 }
 

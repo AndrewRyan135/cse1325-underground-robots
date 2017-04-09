@@ -79,46 +79,46 @@ class View
 	{
 		int i = 0;
 		cout << "Head: \n" << endl;
-		for (i = 0; i < catologe.head_vector_size(); i++)
+		for (i = 0; i < store.get_catalog()->head_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << "\n" << catologe.head_to_string(i) << "\n" << endl;
+			cout << "Part Number: " << i << "\n" << store.get_catalog()->head_to_string(i) << "\n" << endl;
 			cout << "=====================================" << endl;
 		}
 		part_picker(1);
 		cout << "\nTorso: \n" << endl;
-		for (i = 0; i < catologe.torso_vector_size(); i++)
+		for (i = 0; i < store.get_catalog()->torso_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << "\n" << catologe.torso_to_string(i) << "\n" << endl;
+			cout << "Part Number: " << i << "\n" << store.get_catalog()->torso_to_string(i) << "\n" << endl;
 			cout << "=====================================" << endl;
 		}
 		part_picker(2);
 		cout << "\nArm: \n" << endl;
-		for (i = 0; i < catologe.arm_vector_size(); i++)
+		for (i = 0; i < store.get_catalog()->arm_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << "\n" << catologe.arm_to_string(i) << "\n" << endl;
+			cout << "Part Number: " << i << "\n" << store.get_catalog()->arm_to_string(i) << "\n" << endl;
 			cout << "=====================================" << endl;
 		}
 		part_picker(3);
 		cout << "\nLocomotor: \n" << endl;
-		for (i = 0; i < catologe.locomotor_vector_size(); i++)
+		for (i = 0; i < store.get_catalog()->locomotor_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << "\n" << catologe.locomotor_to_string(i) << "\n" << endl;
+			cout << "Part Number: " << i << "\n" << store.get_catalog()->locomotor_to_string(i) << "\n" << endl;
 			cout << "=====================================" << endl;
 		}
 		part_picker(4);
 		cout << "\nBattery: \n" << endl;
-		for (i = 0; i < catologe.battery_vector_size(); i++)
+		for (i = 0; i < store.get_catalog()->battery_vector_size(); i++)
 		{
-			cout << "Part Number: " << i << "\n" << catologe.battery_to_string(i) << "\n" << endl;
+			cout << "Part Number: " << i << "\n" << store.get_catalog()->battery_to_string(i) << "\n" << endl;
 			cout << "=====================================" << endl;
 		}
 		part_picker(5);
 	}
 	void show_catalog()
 	{
-		for (int i = 0; i < catologe.model_vector_size(); i++)
+		for (int i = 0; i < store.get_catalog()->model_vector_size(); i++)
 		{
-			cout << catologe.robot_model_to_string(i) << "\n" << endl;
+			cout << store.get_catalog()->robot_model_to_string(i) << "\n" << endl;
 			cout << "=========================================\n" << endl;
 		}
 	}
@@ -152,8 +152,8 @@ class Controller
 		     }
 		     else if (cmd == 2)
 		     {
-		     	if (catologe.head_vector_size() != 0 && catologe.torso_vector_size() != 0 && catologe.arm_vector_size() != 0 &&
-		     		catologe.locomotor_vector_size() != 0 && catologe.battery_vector_size() != 0)
+		     	if (store.get_catalog()->head_vector_size() != 0 && store.get_catalog()->torso_vector_size() != 0 && store.get_catalog()->arm_vector_size() != 0 &&
+		     		store.get_catalog()->locomotor_vector_size() != 0 && store.get_catalog()->battery_vector_size() != 0)
 		     	{
 		     		view.show_parts_list();
 		     	}
@@ -187,7 +187,7 @@ class Controller
 			     cin >> email;
 
 			     Customer customer(name, number, phone_number, email);
-			     catologe.add_customer(customer);
+			     store.add_customer(customer);
 		     }
 		     else if (cmd == 2)
 		     {
@@ -199,8 +199,8 @@ class Controller
 		 	     cout << "Enter the employee's employee number: " << endl;
 		 	     employee_number = int_validation(employee_number);
 
-		 	     SalesAssociate associate(name,employee_number);
-		 	     catologe.add_associate(associate);
+		 	     Sales_associate associate(name,employee_number);
+		 	     store.add_sales_associate(associate);
 		     }
 		     else if (cmd == 3)
 		     {
@@ -245,8 +245,9 @@ void part_picker(int index)
 				 cin >> name;
 				 cout << "Please enter the model number" << endl;
 				 cin >> model_number;
-				 Robot_model model(name, model_number, catologe.get_torso(torso), catologe.get_head(head), catologe.get_locomotor(locomotor), catologe.get_arm(arm), catologe.get_battery(battery));
-				 catologe.add_model(model);
+				 Robot_model model(name, model_number, *(store.get_catalog()->get_torso(torso)), *(store.get_catalog()->get_head(head)), *(store.get_catalog()->get_locomotor(locomotor)),
+                        *(store.get_catalog()->get_arm(arm)), *(store.get_catalog()->get_battery(battery)));
+				 store.get_catalog()->add_model(model);
 		         break;}
 		default : {}
 	}
@@ -349,7 +350,7 @@ void create_part()
 				 cout << "Enter the part power: " << endl;
 				 _power = double_validation(_power);
 				 Head head(_name,_model_number,_cost,_description,_image_file,_power);
-				 catologe.add_head(head);
+				 store.get_catalog()->add_head(head);
 				 break;}
 		case 2 : {cout << "Enter the part name: " << endl;
 				 cin.ignore();
@@ -368,7 +369,7 @@ void create_part()
 				 cout << "Enter the number of arms: " << endl;
 				 _max_arms = int_validation(_max_arms);
 				 Torso torso(_name,_model_number,_cost,_description,_image_file,_battery_compartments,_max_arms);
-				 catologe.add_torso(torso);
+				 store.get_catalog()->add_torso(torso);
 				 break;}
 		case 3 : {cout << "Enter the part name: " << endl;
 				 cin.ignore();
@@ -385,7 +386,7 @@ void create_part()
 				 cout << "Enter the max power of the arm: " << endl;
 				 _max_power = double_validation(_max_power);
 				 Arm arm(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 catologe.add_arm(arm);
+				 store.get_catalog()->add_arm(arm);
 				 break;}
 		case 4 : {cout << "Enter the part name: " << endl;
 				 cin.ignore();
@@ -402,7 +403,7 @@ void create_part()
 				 cout << "Enter the max power of the locomotor: " << endl;
 				 _max_power = double_validation(_max_power);
 				 Locomotor locomotor(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 catologe.add_locomotor(locomotor);
+				 store.get_catalog()->add_locomotor(locomotor);
 				 break;}
 		case 5 : {cout << "Enter the part name: " << endl;
 				 cin.ignore();
@@ -421,7 +422,7 @@ void create_part()
 				 cout << "Enter the max energy: " << endl;
 				 _max_energy = double_validation(_max_energy);
 				 Battery battery(_name,_model_number,_cost,_description,_image_file,_power_available,_max_energy);
-				 catologe.add_battery(battery);
+				 store.get_catalog()->add_battery(battery);
 				 break;}
 		default : {}
 	}
