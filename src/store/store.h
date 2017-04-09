@@ -13,7 +13,7 @@ private:
     vector<Order> orders;
     Catalog catalog;
     vector<Customer> customers;
-    vector<SalesAssociate> sales_associates;
+    vector<Sales_associate> sales_associates;
 public:
     Store();
     void save(string filename);
@@ -30,7 +30,7 @@ public:
     void add_order(Order _order);
     void add_catalog(Catalog _catalog);
     void add_customer(Customer _customer);
-    void add_sales_associate(SalesAssociate sales_associate);
-    Catalog get_catalog();
+    void add_sales_associate(Sales_associate sales_associate);
+    Catalog* get_catalog();
 
 };
