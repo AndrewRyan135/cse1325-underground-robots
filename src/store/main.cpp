@@ -31,26 +31,6 @@ void create_part();
 int int_validation(int input);
 double double_validation(double input);
 void part_picker(int index);
-//void robot_part_dialogCB(Fl_Widget* w, void* p);
-//void robot_head_dialogCB(Fl_Widget* w, void* p);
-/*void robot_part_dialog_showCB(Fl_Widget* w, void* p);
-void robot_part_dialog_hideCB(Fl_Widget* w, void* p);
-void robot_head_dialog_showCB(Fl_Widget* w, void* p);
-void robot_head_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_headCB(Fl_Widget* w, void* p);
-void robot_arm_dialog_showCB(Fl_Widget* w, void* p);
-void robot_arm_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_armCB(Fl_Widget* w, void* p);
-void robot_torso_dialog_showCB(Fl_Widget* w, void* p);
-void robot_torso_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_torsoCB(Fl_Widget* w, void* p);
-void robot_locomotor_dialog_showCB(Fl_Widget* w, void* p);
-void robot_locomotor_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_locomotorCB(Fl_Widget* w, void* p);
-void robot_battery_dialog_showCB(Fl_Widget* w, void* p);
-void robot_battery_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_batteryCB(Fl_Widget* w, void* p);
-void show_robot_partsCB(Fl_Widget* w, void* p);*/
 //void part_picker(int index);
 //void save_data();
 
