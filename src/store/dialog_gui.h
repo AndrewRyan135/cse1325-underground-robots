@@ -41,7 +41,6 @@ void robot_model_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_modelCB(Fl_Widget* w, void* p);
 
 
-
 void Quit(Fl_Widget* w, void* p)
 {
 	exit(0);
@@ -456,16 +455,16 @@ class robot_model_dialog
 		rp_arm_index = new Fl_Input(270, 70, 210, 25, "Arm index:");
 		rp_arm_index->align(FL_ALIGN_LEFT);
 
-		rp_locomotor_index = new Fl_Multiline_Input(270, 100, 210, 75, "Locomotor index:");
+		rp_locomotor_index = new Fl_Input(270, 100, 210, 25, "Locomotor index:");
 		rp_locomotor_index->align(FL_ALIGN_LEFT);
 
-		rp_battery_index = new Fl_Input(270, 180, 210, 25, "Battery index:");
+		rp_battery_index = new Fl_Input(270, 130, 210, 25, "Battery index:");
 		rp_battery_index->align(FL_ALIGN_LEFT);
 
-		rp_name = new Fl_Input(270, 180, 210, 25, "Model name:");
+		rp_name = new Fl_Input(270, 160, 210, 25, "Model name:");
 		rp_name->align(FL_ALIGN_LEFT);
 
-		rp_model_number = new Fl_Input(270, 180, 210, 25, "Model number:");
+		rp_model_number = new Fl_Input(270, 190, 210, 25, "Model number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
 		rp_create = new Fl_Return_Button(270, 280, 100, 25, "Create:");
@@ -483,9 +482,9 @@ class robot_model_dialog
 		int model_number() {a = atoi(rp_model_number->value());return a;}
 		int head() {a = atoi(rp_head_index->value());return a;}
 		int torso() {a = atoi(rp_torso_index->value());return a;}
-		int arm() {a = atoi(rp_torso_index->value());return a;}
-		int locomotor() {a = atoi(rp_torso_index->value());return a;}
-		int battery() {a = atoi(rp_torso_index->value());return a;}
+		int arm() {a = atoi(rp_arm_index->value());return a;}
+		int locomotor() {a = atoi(rp_locomotor_index->value());return a;}
+		int battery() {a = atoi(rp_battery_index->value());return a;}
 	private :
 		Fl_Window *dialog;
 		Fl_Return_Button *rp_create, *rp_cancel;
@@ -507,7 +506,7 @@ void create_robot_modelCB(Fl_Widget* w, void* p)
 					catologe.get_locomotor(robot_model_dlg->locomotor()),catologe.get_arm(robot_model_dlg->arm()),catologe.get_battery(robot_model_dlg->battery()));
 	catologe.add_model(model);
 	fl_message("Created model");
-	robot_battery_dlg->hide();
+	robot_model_dlg->hide();
 }
 
 void show_robot_partsCB(Fl_Widget* w, void* p)
