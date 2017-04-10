@@ -521,7 +521,7 @@ class robot_model_dialog
 {
 	public :
 		robot_model_dialog() {
-		dialog = new Fl_Window(480, 360, "Robot Model");
+		dialog = new Fl_Window(480, 260, "Robot Model");
 		rp_head_index = new Fl_Input(270, 10, 210, 25, "Head index:");
 		rp_head_index->align(FL_ALIGN_LEFT);
 
@@ -543,10 +543,10 @@ class robot_model_dialog
 		rp_model_number = new Fl_Input(270, 190, 210, 25, "Model number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
-		rp_create = new Fl_Return_Button(270, 280, 100, 25, "Create:");
+		rp_create = new Fl_Return_Button(270, 230, 100, 25, "Create:");
 		rp_create->callback((Fl_Callback *)create_robot_modelCB, 0);
 
-		rp_cancel = new Fl_Return_Button(380, 280, 95, 25, "Cancel:");
+		rp_cancel = new Fl_Return_Button(380, 230, 95, 25, "Cancel:");
 		rp_cancel->callback((Fl_Callback *)robot_model_dialog_hideCB, 0);
 		dialog->end();
 		dialog->set_non_modal();
@@ -586,9 +586,15 @@ void robot_model_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_modelCB(Fl_Widget* w, void* p)
 {
-	if(robot_model_dlg->model_number() == -999 || robot_model_dlg->head() == -999 || robot_model_dlg->torso() == -999 || robot_model_dlg->arm() == -999 || robot_model_dlg->locomotor() == -999 || robot_model_dlg->battery() == -999)
+	if((robot_model_dlg->model_number() == -999 || robot_model_dlg->head() == -999 || robot_model_dlg->torso() == -999 
+	   || robot_model_dlg->arm() == -999 || robot_model_dlg->locomotor() == -999 || robot_model_dlg->battery() == -999)
+	   || (catologe.head_vector_size() == 0 || catologe.torso_vector_size() == 0 || catologe.arm_vector_size() == 0 ||
+	   catologe.locomotor_vector_size() == 0 || catologe.battery_vector_size() == 0) || 
+	   (robot_model_dlg->head() > catologe.head_vector_size() || robot_model_dlg->torso() > catologe.torso_vector_size() 
+	   || robot_model_dlg->arm() > catologe.arm_vector_size() || robot_model_dlg->locomotor() > catologe.locomotor_vector_size() 
+	   || robot_model_dlg->battery() > catologe.battery_vector_size()))
 	{
-		fl_message("Invalid Input.");
+		fl_message("Invalid input, selected index that does not exist, or do not have a part of every type.");
 	}
 	else
 	{
@@ -655,17 +661,17 @@ class sales_associate_dialog
 	public:
 	  sales_associate_dialog()
 	  {
-		  dialog = new Fl_Window(480,360, "Sales associate");
-		  rp_name = new Fl_Input(270,10,210,25, "Name:");
+		  dialog = new Fl_Window(300,100, "Sales associate");
+		  rp_name = new Fl_Input(140,10,150,25, "Name:");
 		  rp_name->align(FL_ALIGN_LEFT);
 
-		  rp_number = new Fl_Input(270,30,210,25, "Employee number:");
+		  rp_number = new Fl_Input(140,40,150,25, "Employee number:");
 		  rp_number->align(FL_ALIGN_LEFT);
 
-		  rp_create = new Fl_Return_Button(270,280,100,25, "Create");
+		  rp_create = new Fl_Return_Button(95,70,100,25, "Create");
 		  rp_create->callback((Fl_Callback *)create_sales_associateCB, 0);
 
-		  rp_cancel = new Fl_Button(380,280,95,25, "Cancel");
+		  rp_cancel = new Fl_Button(200,70,95,25, "Cancel");
 		  rp_cancel->callback((Fl_Callback *)cancel_sales_associateCB, 0);
 
 		  dialog->end();
