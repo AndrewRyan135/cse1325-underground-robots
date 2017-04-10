@@ -132,8 +132,8 @@ class robot_head_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
-		void clear() {rp_name = NULL; rp_model_number = NULL; rp_cost = NULL;
-			rp_description = NULL; rp_file_name = NULL; rp_power = NULL;}
+		void clear() {rp_name->value(NULL);rp_moel_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_power->value(NULL);}
 		string name() {return rp_name->value();}
 		int model_number() {bool valid = int_validation(rp_model_number->value()); 
 			if (valid){return atoi(rp_model_number->value());} else{return -999;}}
