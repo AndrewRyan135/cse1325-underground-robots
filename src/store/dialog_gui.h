@@ -132,7 +132,7 @@ class robot_head_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
-		void clear() {rp_name->value(NULL);rp_moel_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
 			rp_file_name->value(NULL);rp_power->value(NULL);}
 		string name() {return rp_name->value();}
 		int model_number() {bool valid = int_validation(rp_model_number->value()); 
@@ -215,6 +215,8 @@ class robot_torso_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_battery->value(NULL);rp_max_arms->value(NULL);}
 		string name() {return rp_name->value();}
 		int model_number() {bool valid = int_validation(rp_model_number->value());
 		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
@@ -256,6 +258,7 @@ void create_robot_torsoCB(Fl_Widget* w, void* p)
 	fl_message("Created part");
 	}
 	robot_torso_dlg->hide();
+	robot_torso_dlg->clear();
 }
 //=======================================
 //             Arm Dialog
@@ -294,6 +297,8 @@ class robot_arm_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_power->value(NULL);}
 		string name() {return rp_name->value();}
 		int model_number() {bool valid = int_validation(rp_model_number->value());
 		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
@@ -333,6 +338,7 @@ void create_robot_armCB(Fl_Widget* w, void* p)
 	fl_message("Created part");
 	}
 	robot_arm_dlg->hide();
+	robot_arm_dlg->clear();
 }
 //=======================================
 //           Locomotor Dialog
@@ -371,6 +377,8 @@ class robot_locomotor_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_power->value(NULL);}
 		string name() {return rp_name->value();}
 		int model_number() {bool valid = int_validation(rp_model_number->value());
 		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
@@ -410,6 +418,7 @@ void create_robot_locomotorCB(Fl_Widget* w, void* p)
 	fl_message("Created part");
 	}
 	robot_locomotor_dlg->hide();
+	robot_locomotor_dlg->clear();
 }
 //=======================================
 //            Battery Dialog
@@ -451,6 +460,8 @@ class robot_battery_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_power->value(NULL);rp_energy->value(NULL);}
 		string name() {return rp_name->value();}
 		int model_number() {bool valid = int_validation(rp_model_number->value());
 		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
@@ -493,6 +504,7 @@ void create_robot_batteryCB(Fl_Widget* w, void* p)
 	fl_message("Created part");
 	}
 	robot_battery_dlg->hide();
+	robot_battery_dlg->clear();
 }
 
 void saveCB(Fl_Widget* w, void* p)
@@ -542,6 +554,8 @@ class robot_model_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_head_index->value(NULL);rp_torso_index->value(NULL);rp_arm_index->value(NULL);
+			rp_locomotor_index->value(NULL);rp_battery_index->value(NULL);}
 		string name() {return rp_name->value();}
 		int model_number() {bool valid = int_validation(rp_model_number->value());
 		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
@@ -584,6 +598,7 @@ void create_robot_modelCB(Fl_Widget* w, void* p)
 	fl_message("Created model");
 	}
 	robot_model_dlg->hide();
+	robot_model_dlg->clear();
 }
 
 void show_robot_partsCB(Fl_Widget* w, void* p)
@@ -659,6 +674,7 @@ class sales_associate_dialog
 
 	  void show() {dialog->show();}
 	  void hide() {dialog->hide();}
+	  void clear() {rp_name->value(NULL);rp_number->value(NULL);}
 	  string name() {return rp_name->value();}
 	  int number() {bool valid = int_validation(rp_number->value());
 		       if (valid){return atoi(rp_number->value());} else{return -999;}}
@@ -687,6 +703,7 @@ void create_sales_associateCB(Fl_Widget* w, void* p)
 	fl_message("Associate created.");
 	}
 	sales_associate_dlg->hide();
+	sales_associate_dlg->clear();
 }
 
 void sales_associate_dialog_showCB(Fl_Widget* w, void* p)
