@@ -32,20 +32,20 @@ void Catalog::add_battery(Battery battery)
 	battery_part_vector.push_back(battery);
 }
 
-void Catalog::add_customer(Customer cus)
-{
-	customer_vector.push_back(cus);
-}
+//void Catalog::add_customer(Customer cus)
+//{
+//	customer_vector.push_back(cus);
+//}
 
-void Catalog::add_associate(SalesAssociate ass)
-{
-	associate_vector.push_back(ass);
-}
+//void Catalog::add_associate(Sales_associate ass)
+//{
+//	associate_vector.push_back(ass);
+//}
 
-string Catalog::customer_to_string(int customer_number)
-{
-	return customer_vector[customer_number].to_string();
-}
+//string Catalog::customer_to_string(int customer_number)
+//{
+//	return customer_vector[customer_number].to_string();
+//}
 
 string Catalog::robot_model_to_string(int model_index)
 {
@@ -112,34 +112,34 @@ int Catalog::robot_model_vector_size()
     return robot_model_vector.size();
 }
 
-Robot_model Catalog::get_model(int model_index)
+Robot_model* Catalog::get_model(int model_index)
 {
-	return robot_model_vector[model_index];
+	return &robot_model_vector[model_index];
 }
 
-Head Catalog::get_head(int head_index)
+Head* Catalog::get_head(int head_index)
 {
-	return head_part_vector[head_index];
+	return &head_part_vector[head_index];
 }
 
-Torso Catalog::get_torso(int torso_index)
+Torso* Catalog::get_torso(int torso_index)
 {
-	return torso_part_vector[torso_index];
+	return &torso_part_vector[torso_index];
 }
 
-Arm Catalog::get_arm(int arm_index)
+Arm* Catalog::get_arm(int arm_index)
 {
-	return arm_part_vector[arm_index];
+	return &arm_part_vector[arm_index];
 }
 
-Locomotor Catalog::get_locomotor(int locomotor_index)
+Locomotor* Catalog::get_locomotor(int locomotor_index)
 {
-	return locomotor_part_vector[locomotor_index];
+	return &locomotor_part_vector[locomotor_index];
 }
 
-Battery Catalog::get_battery(int battery_index)
+Battery* Catalog::get_battery(int battery_index)
 {
-	return battery_part_vector[battery_index];
+	return &battery_part_vector[battery_index];
 }
 
 string Catalog::catalog_to_string()
@@ -166,28 +166,22 @@ string Catalog::catalog_to_string()
 void Catalog :: save_catalog(ostream& ofs)
 {
 	for (int i = 0; i < head_vector_size(); i++) {
-		(get_head(i)).save_head(ofs);
-		ofs << "-1" << endl;
+		(get_head(i))->save_head(ofs);
 	}
 	for (int i = 0; i < torso_vector_size(); i++) {
-		(get_torso(i)).save_torso(ofs);
-		ofs << "-1" << endl;
+		(get_torso(i))->save_torso(ofs);
 	}
 	for (int i = 0; i < arm_vector_size(); i++) {
-		(get_arm(i)).save_arm(ofs);
-		ofs << "-1" << endl;
+		(get_arm(i))->save_arm(ofs);
 	}
 	for (int i = 0; i < locomotor_vector_size(); i++) {
-		(get_locomotor(i)).save_locomotor(ofs);
-		ofs << "-1" << endl;
+		(get_locomotor(i))->save_locomotor(ofs);
 	}
 	for (int i = 0; i < battery_vector_size(); i++) {
-		(get_battery(i)).save_battery(ofs);
-		ofs << "-1" << endl;
+		(get_battery(i))->save_battery(ofs);
 	}
 	for (int i = 0; i < model_vector_size(); i++) {
-		(get_model(i)).save_robot_model(ofs);
-		ofs << "-1" << endl;
+		(get_model(i))->save_robot_model(ofs);
 	}
 }
 

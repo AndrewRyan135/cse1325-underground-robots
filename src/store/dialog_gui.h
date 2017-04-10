@@ -20,7 +20,6 @@
 #include "sales_associate.h"
 
 
-Catalog catologe;
 Store store;
 
 bool int_validation(string input);
@@ -135,13 +134,13 @@ class robot_head_dialog
 		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
 			rp_file_name->value(NULL);rp_power->value(NULL);}
 		string name() {return rp_name->value();}
-		int model_number() {bool valid = int_validation(rp_model_number->value()); 
+		int model_number() {bool valid = int_validation(rp_model_number->value());
 			if (valid){return atoi(rp_model_number->value());} else{return -999;}}
-		double cost() {bool valid = double_validation(rp_cost->value()); 
+		double cost() {bool valid = double_validation(rp_cost->value());
 			if (valid){return atof(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {bool valid = double_validation(rp_power->value()); 
+		double power() {bool valid = double_validation(rp_power->value());
 			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
@@ -169,7 +168,7 @@ void create_robot_headCB(Fl_Widget* w, void* p)
 	else
 	{
 		Head head(robot_head_dlg->name(),robot_head_dlg->model_number(),robot_head_dlg->cost(),robot_head_dlg->description(),robot_head_dlg->file(),robot_head_dlg->power());
-		catologe.add_head(head);
+		store.get_catalog()->add_head(head);
 		fl_message("Created part");
 	}
 	robot_head_dlg->clear();
@@ -254,7 +253,7 @@ void create_robot_torsoCB(Fl_Widget* w, void* p)
 	{
 	Torso torso(robot_head_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
 				robot_torso_dlg->battery(),robot_torso_dlg->max_arms());
-	catologe.add_torso(torso);
+	store.get_catalog()->add_torso(torso);
 	fl_message("Created part");
 	}
 	robot_torso_dlg->hide();
@@ -306,7 +305,7 @@ class robot_arm_dialog
 		       if (valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {bool valid = double_validation(rp_power->value()); 
+		double power() {bool valid = double_validation(rp_power->value());
 			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
@@ -334,7 +333,7 @@ void create_robot_armCB(Fl_Widget* w, void* p)
 	else
 	{
 	Arm arm(robot_arm_dlg->name(),robot_arm_dlg->model_number(),robot_arm_dlg->cost(),robot_arm_dlg->description(),robot_arm_dlg->file(),robot_arm_dlg->power());
-	catologe.add_arm(arm);
+	store.get_catalog()->add_arm(arm);
 	fl_message("Created part");
 	}
 	robot_arm_dlg->hide();
@@ -386,7 +385,7 @@ class robot_locomotor_dialog
 		       if (valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {bool valid = double_validation(rp_power->value()); 
+		double power() {bool valid = double_validation(rp_power->value());
 			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
@@ -414,7 +413,7 @@ void create_robot_locomotorCB(Fl_Widget* w, void* p)
 	else
 	{
 	Locomotor loco(robot_locomotor_dlg->name(),robot_locomotor_dlg->model_number(),robot_locomotor_dlg->cost(),robot_locomotor_dlg->description(),robot_locomotor_dlg->file(),robot_locomotor_dlg->power());
-	catologe.add_locomotor(loco);
+	store.get_catalog()->add_locomotor(loco);
 	fl_message("Created part");
 	}
 	robot_locomotor_dlg->hide();
@@ -469,9 +468,9 @@ class robot_battery_dialog
 		       if (valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {bool valid = double_validation(rp_power->value()); 
+		double power() {bool valid = double_validation(rp_power->value());
 			if (valid){return atof(rp_power->value());} else{return -999;}}
-		double energy() {bool valid = double_validation(rp_energy->value()); 
+		double energy() {bool valid = double_validation(rp_energy->value());
 			if (valid){return atof(rp_energy->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
@@ -500,7 +499,7 @@ void create_robot_batteryCB(Fl_Widget* w, void* p)
 	{
 	Battery battery(robot_battery_dlg->name(),robot_battery_dlg->model_number(),robot_battery_dlg->cost(),robot_battery_dlg->description(),
 					robot_battery_dlg->file(),robot_battery_dlg->power(), robot_battery_dlg->energy());
-	catologe.add_battery(battery);
+	store.get_catalog()->add_battery(battery);
 	fl_message("Created part");
 	}
 	robot_battery_dlg->hide();
@@ -586,21 +585,21 @@ void robot_model_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_modelCB(Fl_Widget* w, void* p)
 {
-	if((robot_model_dlg->model_number() == -999 || robot_model_dlg->head() == -999 || robot_model_dlg->torso() == -999 
+	if((robot_model_dlg->model_number() == -999 || robot_model_dlg->head() == -999 || robot_model_dlg->torso() == -999
 	   || robot_model_dlg->arm() == -999 || robot_model_dlg->locomotor() == -999 || robot_model_dlg->battery() == -999)
-	   || (catologe.head_vector_size() == 0 || catologe.torso_vector_size() == 0 || catologe.arm_vector_size() == 0 ||
-	   catologe.locomotor_vector_size() == 0 || catologe.battery_vector_size() == 0) || 
-	   (robot_model_dlg->head() > catologe.head_vector_size() || robot_model_dlg->torso() > catologe.torso_vector_size() 
-	   || robot_model_dlg->arm() > catologe.arm_vector_size() || robot_model_dlg->locomotor() > catologe.locomotor_vector_size() 
-	   || robot_model_dlg->battery() > catologe.battery_vector_size()))
+	   || (store.get_catalog()->head_vector_size() == 0 || store.get_catalog()->torso_vector_size() == 0 || store.get_catalog()->arm_vector_size() == 0 ||
+	   store.get_catalog()->locomotor_vector_size() == 0 || store.get_catalog()->battery_vector_size() == 0) ||
+	   (robot_model_dlg->head() > store.get_catalog()->head_vector_size() || robot_model_dlg->torso() > store.get_catalog()->torso_vector_size()
+	   || robot_model_dlg->arm() > store.get_catalog()->arm_vector_size() || robot_model_dlg->locomotor() > store.get_catalog()->locomotor_vector_size()
+	   || robot_model_dlg->battery() > store.get_catalog()->battery_vector_size()))
 	{
 		fl_message("Invalid input, selected index that does not exist, or do not have a part of every type.");
 	}
 	else
 	{
-	Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),catologe.get_torso(robot_model_dlg->torso()-1),catologe.get_head(robot_model_dlg->head()-1),
-					catologe.get_locomotor(robot_model_dlg->locomotor()-1),catologe.get_arm(robot_model_dlg->arm()-1),catologe.get_battery(robot_model_dlg->battery()-1));
-	catologe.add_model(model);
+	Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),*(store.get_catalog()->get_torso(robot_model_dlg->torso()-1)),*(store.get_catalog()->get_head(robot_model_dlg->head()-1)),
+					*(store.get_catalog()->get_locomotor(robot_model_dlg->locomotor()-1)),*(store.get_catalog()->get_arm(robot_model_dlg->arm()-1)),*(store.get_catalog()->get_battery(robot_model_dlg->battery()-1)));
+	store.get_catalog()->add_model(model);
 	fl_message("Created model");
 	}
 	robot_model_dlg->hide();
@@ -613,33 +612,33 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	stringstream os;
 	int i = 0;
 	os << "Heads: \n";
-	for (i=0;i<catologe.head_vector_size();i++)
+	for (i=0;i<store.get_catalog()->head_vector_size();i++)
 	{
-		os << "\tPart index: " << i+1 << "\n" << catologe.head_to_string(i) << '\n'
+		os << "\tPart index: " << i+1 << "\n" << store.get_catalog()->head_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Torsos: \n";
-	for (i=0;i<catologe.torso_vector_size();i++)
+	for (i=0;i<store.get_catalog()->torso_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.torso_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->torso_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Arms: \n";
-	for (i=0;i<catologe.arm_vector_size();i++)
+	for (i=0;i<store.get_catalog()->arm_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.arm_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->arm_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Locomotors: \n";
-	for (i=0;i<catologe.locomotor_vector_size();i++)
+	for (i=0;i<store.get_catalog()->locomotor_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.locomotor_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->locomotor_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Batteries: \n";
-	for (i=0;i<catologe.battery_vector_size();i++)
+	for (i=0;i<store.get_catalog()->battery_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.battery_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->battery_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 
@@ -704,8 +703,8 @@ void create_sales_associateCB(Fl_Widget* w, void* p)
 	}
 	else
 	{
-	SalesAssociate associate(sales_associate_dlg->name(), sales_associate_dlg->number());
-	catologe.add_associate(associate);
+	Sales_associate associate(sales_associate_dlg->name(), sales_associate_dlg->number());
+	store.add_sales_associate(associate);
 	fl_message("Associate created.");
 	}
 	sales_associate_dlg->hide();
@@ -732,9 +731,9 @@ void show_robot_modelsCB(Fl_Widget* w, void* p)
 	Fl_Window *win = new Fl_Window(640, 480);
 	stringstream os;
 	int i = 0;
-	for(i = 0; i< catologe.robot_model_vector_size(); i++)
+	for(i = 0; i< store.get_catalog()->robot_model_vector_size(); i++)
 	{
-		os << catologe.robot_model_to_string(i) << "\n"
+		os << store.get_catalog()->robot_model_to_string(i) << "\n"
 		<< "===========================" << '\n';
 	}
 	Fl_Text_Buffer *buff = new Fl_Text_Buffer();

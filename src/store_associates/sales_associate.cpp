@@ -1,6 +1,6 @@
 #include "sales_associate.h"
 
-string SalesAssociate::to_string()
+string Sales_associate::to_string()
 {
 	stringstream os;
 	os << "Sales Associate Info:" << "\n" << "Name: " << _name << "\n"
@@ -8,12 +8,14 @@ string SalesAssociate::to_string()
 	   return os.str();
 }
 
-void SalesAssociate :: save_sales_associate(ostream& ofs)
+void Sales_associate :: save_sales_associate(ostream& ofs)
 {
-    ofs << _name << "," << _employee_number << endl;
+    ofs << "8" << endl
+    << _name << endl
+    << _employee_number << endl;
 }
 
-int SalesAssociate :: get_employee_number()
+int Sales_associate :: get_employee_number()
 {
     return _employee_number;
 }

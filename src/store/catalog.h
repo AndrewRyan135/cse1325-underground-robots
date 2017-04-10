@@ -15,8 +15,8 @@ class Catalog
 	void add_arm(Arm arm);
 	void add_locomotor(Locomotor locomotor);
 	void add_battery(Battery battery);
-	void add_customer(Customer cus);
-	void add_associate(SalesAssociate ass);
+	//void add_customer(Customer cus);
+	//void add_associate(Sales_associate ass);
 
 	string customer_to_string(int customer_number);
 	string robot_model_to_string(int model_index);
@@ -34,12 +34,12 @@ class Catalog
 	int battery_vector_size();
 	int robot_model_vector_size();
 
-	Robot_model get_model(int model_index);
-	Head get_head(int head_index);
-	Torso get_torso(int torso_index);
-	Arm get_arm(int arm_index);
-	Locomotor get_locomotor(int locomotor_index);
-	Battery get_battery(int battery_index);
+	Robot_model* get_model(int model_index);
+	Head* get_head(int head_index);
+	Torso* get_torso(int torso_index);
+	Arm* get_arm(int arm_index);
+	Locomotor* get_locomotor(int locomotor_index);
+	Battery* get_battery(int battery_index);
 
 	string catalog_to_string();
 	void save_catalog(ostream& ofs);
@@ -51,8 +51,8 @@ class Catalog
 	vector<Arm> arm_part_vector;
 	vector<Locomotor> locomotor_part_vector;
 	vector<Battery> battery_part_vector;
-	vector<Customer> customer_vector;
-	vector<SalesAssociate> associate_vector;
+	//vector<Customer> customer_vector;
+	//vector<SalesAssociate> associate_vector;
 };
 
 #endif
