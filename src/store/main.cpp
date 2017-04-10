@@ -28,233 +28,19 @@ using namespace std;
 //Store store;
 
 void create_part();
-int int_validation(int input);
-double double_validation(double input);
+int int_validation();
+double double_validation();
 void part_picker(int index);
-//void robot_part_dialogCB(Fl_Widget* w, void* p);
-//void robot_head_dialogCB(Fl_Widget* w, void* p);
-void robot_part_dialog_showCB(Fl_Widget* w, void* p);
-void robot_part_dialog_hideCB(Fl_Widget* w, void* p);
-void robot_head_dialog_showCB(Fl_Widget* w, void* p);
-void robot_head_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_headCB(Fl_Widget* w, void* p);
-void robot_arm_dialog_showCB(Fl_Widget* w, void* p);
-void robot_arm_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_armCB(Fl_Widget* w, void* p);
-void robot_torso_dialog_showCB(Fl_Widget* w, void* p);
-void robot_torso_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_torsoCB(Fl_Widget* w, void* p);
-void robot_locomotor_dialog_showCB(Fl_Widget* w, void* p);
-void robot_locomotor_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_locomotorCB(Fl_Widget* w, void* p);
-void robot_battery_dialog_showCB(Fl_Widget* w, void* p);
-void robot_battery_dialog_hideCB(Fl_Widget* w, void* p);
-void create_robot_batteryCB(Fl_Widget* w, void* p);
-void show_robot_partsCB(Fl_Widget* w, void* p);
-void create_sales_associateCB(Fl_Widget* w,void* p);
+bool int_validation(string input);
+bool double_validation(string input);
 //void part_picker(int index);
 //void save_data();
 
-//===============================
-//            VIEW
-//===============================
-class View
+
+
+/*int int_validation()
 {
-	public :
-	string get_menu()
-	{
-		stringstream os;
-		os << "========================\n"
-		   << "Robbie Robot Shop System\n"
-		   << "========================"
-		   << "\n"
-		   << "\n1. Report"
-		   << "\n2. Sales Data"
-		   << "\n3. Create"
-		   << "\n4. Add store associates"
-		   << "\n5. Exit\n";
-		return os.str();
-	}
-	void show_parts_list()
-	{
-		int i = 0;
-		cout << "Head: \n" << endl;
-		for (i = 0; i < store.get_catalog()->head_vector_size(); i++)
-		{
-			cout << "Part Number: " << i << "\n" << store.get_catalog()->head_to_string(i) << "\n" << endl;
-			cout << "=====================================" << endl;
-		}
-		part_picker(1);
-		cout << "\nTorso: \n" << endl;
-		for (i = 0; i < store.get_catalog()->torso_vector_size(); i++)
-		{
-			cout << "Part Number: " << i << "\n" << store.get_catalog()->torso_to_string(i) << "\n" << endl;
-			cout << "=====================================" << endl;
-		}
-		part_picker(2);
-		cout << "\nArm: \n" << endl;
-		for (i = 0; i < store.get_catalog()->arm_vector_size(); i++)
-		{
-			cout << "Part Number: " << i << "\n" << store.get_catalog()->arm_to_string(i) << "\n" << endl;
-			cout << "=====================================" << endl;
-		}
-		part_picker(3);
-		cout << "\nLocomotor: \n" << endl;
-		for (i = 0; i < store.get_catalog()->locomotor_vector_size(); i++)
-		{
-			cout << "Part Number: " << i << "\n" << store.get_catalog()->locomotor_to_string(i) << "\n" << endl;
-			cout << "=====================================" << endl;
-		}
-		part_picker(4);
-		cout << "\nBattery: \n" << endl;
-		for (i = 0; i < store.get_catalog()->battery_vector_size(); i++)
-		{
-			cout << "Part Number: " << i << "\n" << store.get_catalog()->battery_to_string(i) << "\n" << endl;
-			cout << "=====================================" << endl;
-		}
-		part_picker(5);
-	}
-	void show_catalog()
-	{
-		for (int i = 0; i < store.get_catalog()->model_vector_size(); i++)
-		{
-			cout << store.get_catalog()->robot_model_to_string(i) << "\n" << endl;
-			cout << "=========================================\n" << endl;
-		}
-	}
-};
-
-View view;
-//==================================
-//           CONTROLLER
-//==================================
-class Controller
-{
-	public :
-	void menu_choice(int cmd)
-	{
-	 cmd = int_validation(cmd);
-	switch(cmd) {
-	case 1 :  cout << "\t\tBrowse robot cataloge\n" << endl;
-			  view.show_catalog();
-
-			  break;
-	case 2 :  cout << "To be finished in later sprint\n" << endl;
-			  break;
-	case 3 : cout << "1. Create robot part" << endl
-			      << "2. Create new robot model" << endl
-			      << "3. Exit\n" << endl;
-			 cin >> cmd;
-		     if (cmd == 1)
-		     {
-		     	//create_part();
-		     	robot_part_dialog_showCB;
-		     }
-		     else if (cmd == 2)
-		     {
-		     	if (store.get_catalog()->head_vector_size() != 0 && store.get_catalog()->torso_vector_size() != 0 && store.get_catalog()->arm_vector_size() != 0 &&
-		     		store.get_catalog()->locomotor_vector_size() != 0 && store.get_catalog()->battery_vector_size() != 0)
-		     	{
-		     		view.show_parts_list();
-		     	}
-		     	else
-		     	{
-		     		cout << "Cannot create a new model with out parts to complete it(No created parts of a certain type)\n" << endl;
-		     	}
-		     }
-		     else if (cmd == 3)
-		     {
-		     	break;
-		     }
-		     break;
-	case 4 : cout << "1. Create new customer" << endl
-		          << "2. Create new sales associate" << endl
-		          << "3. Exit" << endl;
-			 cin >> cmd;
-		     if (cmd == 1)
-		     {
-			     string name, phone_number, email;
-			     int number;
-			     cout << "Enter the customer's name: " << endl;
-			     cin.ignore();
-			     getline(cin,name);
-			     cout << "Enter the customer's number: " << endl;
-			     number = int_validation(number);
-			     cout << "Enter the customer's phone number: " << endl;
-			     cin.ignore();
-			     getline(cin,phone_number);
-			     cout << "Enter the customer's email: " << endl;
-			     cin >> email;
-
-			     Customer customer(name, number, phone_number, email);
-			     store.add_customer(customer);
-		     }
-		     else if (cmd == 2)
-		     {
-		 	     string name;
-		 	     int employee_number;
-		 	     cout << "Enter the employee's name: " << endl;
-		 	     cin.ignore();
-		 	     getline(cin, name);
-		 	     cout << "Enter the employee's employee number: " << endl;
-		 	     employee_number = int_validation(employee_number);
-
-		 	     Sales_associate associate(name,employee_number);
-		 	     store.add_sales_associate(associate);
-		     }
-		     else if (cmd == 3)
-		     {
-		     	break;
-		     }
-		     else
-		     {
-		     	cout << "Invalid input\n" << endl;
-		     	break;
-		     }
-		     break;
-	case 5 : exit(0);
-	default : {}
-	}
-	}
-	private :
-	int cmd;
-};
-
-void part_picker(int index)
-{
-	string name;
-	static int model_number;
-	static int head, torso, arm, locomotor, battery;
-	switch(index) {
-
-	    case 1 : cout << "Enter the head part number: " << endl;
-		          cin >> head;
-		          break;
-		case 2 : cout << "Enter the torso part number: " << endl;
-		         cin >> torso;
-		         break;
-		case 3 : cout << "Enter the arm part number: " << endl;
-		         cin >> arm;
-		         break;
-		case 4 : cout << "Enter the locomotor part number: " << endl;
-		         cin >> locomotor;
-		         break;
-		case 5 : {cout << "Enter the battery part number: " << endl;
-		         cin >> battery;
-		         cout << "Please enter the robots name" << endl;
-				 cin >> name;
-				 cout << "Please enter the model number" << endl;
-				 cin >> model_number;
-				 Robot_model model(name, model_number, *(store.get_catalog()->get_torso(torso)), *(store.get_catalog()->get_head(head)), *(store.get_catalog()->get_locomotor(locomotor)),
-                        *(store.get_catalog()->get_arm(arm)), *(store.get_catalog()->get_battery(battery)));
-				 store.get_catalog()->add_model(model);
-		         break;}
-		default : {}
-	}
-}
-
-int int_validation(int input)
-{
+	int input;
 	int flag = 1;
 	while (flag == 1)
 	{
@@ -269,7 +55,7 @@ int int_validation(int input)
 	    flag = 0;
 	}
 	return input;
-}
+}*/
 
 //saves store orders that have been places
 /*
@@ -291,8 +77,9 @@ void save_data()
 */
 
 
-double double_validation(double input)
+/*double double_validation()
 {
+	double input;
 	int flag = 1;
 	while (flag == 1)
 	{
@@ -307,7 +94,7 @@ double double_validation(double input)
 	    flag = 0;
 	}
 	return input;
-}
+}*/
 
 /*
 double calculate_total_price(int model_index, int quantity)
@@ -318,115 +105,6 @@ double calculate_total_price(int model_index, int quantity)
 	total = quantity * model.cost();
 }
 */
-
-void create_part()
-{
-	int cmd, _model_number, _battery_compartments, _max_arms;
-	int flag = 1;
-	string _name, _description, _image_file;
-	double _cost, _power, _max_power, _power_available, _max_energy;
-	bool valid = false;
-	stringstream os;
-	os << "1. Head" << "\n"
-	   << "2. Torso" << "\n"
-	   << "3. Arm" << "\n"
-	   << "4. Locomotor" << "\n"
-	   << "5. Battery";
-	cout << os.str() << endl;
-	cin >> cmd;
-	switch(cmd) {
-		case 1 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
-				 cout << "Enter the part power: " << endl;
-				 _power = double_validation(_power);
-				 Head head(_name,_model_number,_cost,_description,_image_file,_power);
-				 store.get_catalog()->add_head(head);
-				 break;}
-		case 2 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
-				 cout << "Enter the number of battery compartments: " << endl;
-				 _battery_compartments = int_validation(_battery_compartments);
-				 cout << "Enter the number of arms: " << endl;
-				 _max_arms = int_validation(_max_arms);
-				 Torso torso(_name,_model_number,_cost,_description,_image_file,_battery_compartments,_max_arms);
-				 store.get_catalog()->add_torso(torso);
-				 break;}
-		case 3 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
-				 cout << "Enter the max power of the arm: " << endl;
-				 _max_power = double_validation(_max_power);
-				 Arm arm(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 store.get_catalog()->add_arm(arm);
-				 break;}
-		case 4 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
-				 cout << "Enter the max power of the locomotor: " << endl;
-				 _max_power = double_validation(_max_power);
-				 Locomotor locomotor(_name,_model_number,_cost,_description,_image_file,_max_power);
-				 store.get_catalog()->add_locomotor(locomotor);
-				 break;}
-		case 5 : {cout << "Enter the part name: " << endl;
-				 cin.ignore();
-				 getline(cin,_name);
-				 cout << "Enter the model number: " << endl;
-				 _model_number = int_validation(_model_number);
-				 cout << "Enter the cost of the part: " << endl;
-				 _cost = int_validation(_cost);
-				 cout << "Enter the part description: " << endl;
-				 cin.ignore();
-				 getline(cin,_description);
-				 cout << "Enter the image file name: " << endl;
-				 cin >> _image_file;
-				 cout << "Enter the power available" << endl;
-				  _power_available = double_validation(_power_available);
-				 cout << "Enter the max energy: " << endl;
-				 _max_energy = double_validation(_max_energy);
-				 Battery battery(_name,_model_number,_cost,_description,_image_file,_power_available,_max_energy);
-				 store.get_catalog()->add_battery(battery);
-				 break;}
-		default : {}
-	}
-}
 
 //robot_part_dialog *robot_part_dlg;
 Fl_Menu_Item menuitems[] = {
@@ -441,8 +119,8 @@ Fl_Menu_Item menuitems[] = {
 		{0},
 	{"&Create", 0,0,0,FL_SUBMENU},
 		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},
-		{"Robot &Model", FL_ALT + 'r' +'m', (Fl_Callback *)create_robot_modelCB},
-		{"Sales &Associate", FL_ALT + 'a', (Fl_Callback*)create_sales_associateCB},
+		{"Robot &Model", FL_ALT + 'r', (Fl_Callback *)robot_model_dialog_showCB},
+		{"Sales &Associate", FL_ALT + 'a', (Fl_Callback *)sales_associate_dialog_showCB},
 		{0},
 	{0}
 };
@@ -455,6 +133,8 @@ int main()
 	robot_arm_dlg = new robot_arm_dialog{};
 	robot_locomotor_dlg = new robot_locomotor_dialog{};
 	robot_battery_dlg = new robot_battery_dialog{};
+	robot_model_dlg = new robot_model_dialog{};
+	sales_associate_dlg = new sales_associate_dialog{};
 		Fl_Window *win;
 		Fl_Menu_Bar *menubar;
 		fl_register_images();
@@ -463,13 +143,5 @@ int main()
 		menubar->menu(menuitems);
 		win->end();
 		win->show();
-		//int cmd = 0;
-		//Controller controller;
-		//cout << view.get_menu() << endl;
-		//controller.menu_choice(cmd);
 		return Fl::run();
-		//int cmd = 0;
-		//Controller controller;
-		//cout << view.get_menu() << endl;
-		//controller.menu_choice(cmd);
 }
