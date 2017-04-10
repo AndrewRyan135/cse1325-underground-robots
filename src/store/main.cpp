@@ -28,16 +28,19 @@ using namespace std;
 //Store store;
 
 void create_part();
-int int_validation(int input);
-double double_validation(double input);
+int int_validation();
+double double_validation();
 void part_picker(int index);
+bool int_validation(string input);
+bool double_validation(string input);
 //void part_picker(int index);
 //void save_data();
 
 
 
-int int_validation(int input)
+/*int int_validation()
 {
+	int input;
 	int flag = 1;
 	while (flag == 1)
 	{
@@ -52,7 +55,7 @@ int int_validation(int input)
 	    flag = 0;
 	}
 	return input;
-}
+}*/
 
 //saves store orders that have been places
 /*
@@ -74,8 +77,9 @@ void save_data()
 */
 
 
-double double_validation(double input)
+/*double double_validation()
 {
+	double input;
 	int flag = 1;
 	while (flag == 1)
 	{
@@ -90,7 +94,7 @@ double double_validation(double input)
 	    flag = 0;
 	}
 	return input;
-}
+}*/
 
 /*
 double calculate_total_price(int model_index, int quantity)
