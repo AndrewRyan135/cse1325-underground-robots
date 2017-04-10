@@ -16,6 +16,7 @@
 #include "store.h"
 #include "sales_associate.h"
 
+
 Catalog catologe;
 Store store;
 
@@ -40,9 +41,10 @@ void show_robot_partsCB(Fl_Widget* w, void* p);
 void robot_model_dialog_showCB(Fl_Widget* w, void* p);
 void robot_model_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_modelCB(Fl_Widget* w, void* p);
-void create_sales_associateCB(Fl_Widget* w, void* p);
-void cancel_sales_associateCB(Fl_Widget* w, void* p);
 
+void create_sales_associateCB(Fl_Widget* w, void* p);
+void sales_associate_dialog_showCB(Fl_Widget* w, void* p);
+void cancel_sales_associateCB(Fl_Widget* w, void* p);
 
 void Quit(Fl_Widget* w, void* p)
 {
@@ -451,25 +453,25 @@ class robot_model_dialog
 		dialog = new Fl_Window(480, 360, "Robot Model");
 		rp_head_index = new Fl_Input(270, 10, 210, 25, "Head index:");
 		rp_head_index->align(FL_ALIGN_LEFT);
-		
+
 		rp_torso_index = new Fl_Input(270, 40, 210, 25, "Torso index:");
 		rp_torso_index->align(FL_ALIGN_LEFT);
 
 		rp_arm_index = new Fl_Input(270, 70, 210, 25, "Arm index:");
 		rp_arm_index->align(FL_ALIGN_LEFT);
 
-		rp_locomotor_index = new Fl_Multiline_Input(270, 100, 210, 75, "Locomotor index:");
+		rp_locomotor_index = new Fl_Input(270, 100, 210, 25, "Locomotor index:");
 		rp_locomotor_index->align(FL_ALIGN_LEFT);
 
-		rp_battery_index = new Fl_Input(270, 180, 210, 25, "Battery index:");
+		rp_battery_index = new Fl_Input(270, 130, 210, 25, "Battery index:");
 		rp_battery_index->align(FL_ALIGN_LEFT);
 
-		rp_name = new Fl_Input(270, 180, 210, 25, "Model name:");
+		rp_name = new Fl_Input(270, 160, 210, 25, "Model name:");
 		rp_name->align(FL_ALIGN_LEFT);
 
-		rp_model_number = new Fl_Input(270, 180, 210, 25, "Model number:");
+		rp_model_number = new Fl_Input(270, 190, 210, 25, "Model number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
-		
+
 		rp_create = new Fl_Return_Button(270, 280, 100, 25, "Create:");
 		rp_create->callback((Fl_Callback *)create_robot_modelCB, 0);
 
@@ -495,7 +497,6 @@ class robot_model_dialog
 		int a;
 };
 robot_model_dialog *robot_model_dlg;
-
 void robot_model_dialog_showCB(Fl_Widget* w, void* p)
 {
 	robot_model_dlg->show();
@@ -506,30 +507,11 @@ void robot_model_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_modelCB(Fl_Widget* w, void* p)
 {
-	robot_model_dlg = new robot_model_dialog{};
-	robot_model_dlg->show();
-	//Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),catologe.get_torso(robot_model_dlg->torso()),catologe.get_head(robot_model_dlg->head()),
-					//catologe.get_locomotor(robot_model_dlg->locomotor()),catologe.get_arm(robot_model_dlg->arm()),catologe.get_battery(robot_model_dlg->battery()));
-	//catologe.add_model(model);
-	//fl_message("Created model");
-	//robot_battery_dlg->hide();
-}
-
-void show_robot_modelsCB(Fl_Widget* w, void* p)
-{
-	Fl_Window *win = new Fl_Window(640, 480);
-	stringstream os;
-	int i = 0;
-	for (i=0; i<catologe.robot_model_vector_size(); i++)
-	{
-		os << catologe.robot_model_to_string(i) << "\n";
-	}
-	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
-	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot models");
-	disp->buffer(buff);
-	win->resizable(*disp);
-	win->show();
-	buff->text((os.str()).c_str());
+	Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),catologe.get_torso(robot_model_dlg->torso()),catologe.get_head(robot_model_dlg->head()),
+					catologe.get_locomotor(robot_model_dlg->locomotor()),catologe.get_arm(robot_model_dlg->arm()),catologe.get_battery(robot_model_dlg->battery()));
+	catologe.add_model(model);
+	fl_message("Created model");
+	robot_model_dlg->hide();
 }
 
 void show_robot_partsCB(Fl_Widget* w, void* p)
@@ -576,24 +558,29 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	buff->text((os.str()).c_str());
 }
 
+////////////////////////////////////////////////
+//	Creating sales associate dialog
+////////////////////////////////////////////////
+
+
 class sales_associate_dialog
 {
 	public:
 	  sales_associate_dialog()
 	  {
-		  dialog = new Fl_Window(340, 270, "Sales associate");
-		  rp_name = new Fl_Input(120,10,210,25, "Name:");
+		  dialog = new Fl_Window(480,360, "Sales associate");
+		  rp_name = new Fl_Input(270,10,210,25, "Name:");
 		  rp_name->align(FL_ALIGN_LEFT);
 
-		  rp_number = new Fl_Input(120,40,210,25, "Employee number:");
+		  rp_number = new Fl_Input(270,30,210,25, "Employee number:");
 		  rp_number->align(FL_ALIGN_LEFT);
 
-		  rp_create = new Fl_Return_Button(145,240,120,25, "Create");
+		  rp_create = new Fl_Return_Button(270,280,100,25, "Create");
 		  rp_create->callback((Fl_Callback *)create_sales_associateCB, 0);
 
-		  rp_cancel = new Fl_Button(270,240,60,25, "Cancel");
+		  rp_cancel = new Fl_Button(380,280,95,25, "Cancel");
 		  rp_cancel->callback((Fl_Callback *)cancel_sales_associateCB, 0);
-		  
+
 		  dialog->end();
 		  dialog->set_non_modal();
 	  }
@@ -607,6 +594,7 @@ class sales_associate_dialog
 		  istringstream(rp_number->value()) >> numb;
 		  return numb;
 	  }
+
 	private:
 	  Fl_Window *dialog;
 	  Fl_Input *rp_name;
@@ -618,14 +606,17 @@ class sales_associate_dialog
 
 sales_associate_dialog *sales_associate_dlg;
 
-
-//NOTE: MAKE SURE TO PUSH ONTO VECTOR!!
 void create_sales_associateCB(Fl_Widget* w, void* p)
 {
-	sales_associate_dlg = new sales_associate_dialog{};
+	SalesAssociate associate(sales_associate_dlg->name(), sales_associate_dlg->number());
+	catologe.add_associate(associate);
+	fl_message("Associate created.");
+	sales_associate_dlg->hide();
+}
+
+void sales_associate_dialog_showCB(Fl_Widget* w, void* p)
+{
 	sales_associate_dlg->show();
-	SalesAssociate associate{sales_associate_dlg->name(),sales_associate_dlg->number()};
-	
 }
 
 void cancel_sales_associateCB(Fl_Widget* w, void* p)
@@ -634,4 +625,24 @@ void cancel_sales_associateCB(Fl_Widget* w, void* p)
 }
 
 
+///////////////////////////////////////////////////
+//	show robot models callback
+//////////////////////////////////////////////////
+
+void show_robot_modelsCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i< catologe.robot_model_vector_size(); i++)
+	{
+		os << catologe.robot_model_to_string(i) << "\n";
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot Models");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
 
