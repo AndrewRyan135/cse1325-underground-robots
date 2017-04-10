@@ -216,12 +216,16 @@ class robot_torso_dialog
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_cost->value());return a;}
-		int cost() {b = atoi(rp_cost->value());return b;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int cost() {bool valid = int_validation(rp_cost->value());
+		       if(valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		int battery() {c = atoi(rp_battery->value());return c;}
-		int max_arms() {d = atoi(rp_max_arms->value());return d;}
+		int battery() {bool valid = int_validation(rp_battery->value());
+		        if(valid){return atoi(rp_battery->value());} else{return -999;}}
+		int max_arms() {bool valid = int_validation(rp_max_arms->value());
+	  	        if(valid) {return atoi(rp_max_arms->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_battery, *rp_max_arms;
@@ -240,10 +244,17 @@ void robot_torso_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_torsoCB(Fl_Widget* w, void* p)
 {
+	if(robot_torso_dlg->model_number() == -999 || robot_torso_dlg->cost() == -999 || robot_torso_dlg->battery() == -999 || robot_torso_dlg->max_arms() == -999)
+	{
+		fl_message("Invalid Input");
+	}
+	else
+	{
 	Torso torso(robot_head_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
 				robot_torso_dlg->battery(),robot_torso_dlg->max_arms());
 	catologe.add_torso(torso);
 	fl_message("Created part");
+	}
 	robot_torso_dlg->hide();
 }
 //=======================================
@@ -284,11 +295,14 @@ class robot_arm_dialog
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_cost->value());return a;}
-		int cost() {b = atoi(rp_cost->value());return b;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int cost() {bool valid = int_validation(rp_cost->value());
+		       if (valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {c = atof(rp_power->value());return c;}
+		double power() {bool valid = double_validation(rp_power->value()); 
+			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
@@ -308,9 +322,16 @@ void robot_arm_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_armCB(Fl_Widget* w, void* p)
 {
+	if(robot_arm_dlg->model_number() == -999 || robot_arm_dlg->cost() == -999 || robot_arm_dlg->power() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
 	Arm arm(robot_arm_dlg->name(),robot_arm_dlg->model_number(),robot_arm_dlg->cost(),robot_arm_dlg->description(),robot_arm_dlg->file(),robot_arm_dlg->power());
 	catologe.add_arm(arm);
 	fl_message("Created part");
+	}
 	robot_arm_dlg->hide();
 }
 //=======================================
@@ -351,11 +372,14 @@ class robot_locomotor_dialog
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_cost->value());return a;}
-		int cost() {b = atoi(rp_cost->value());return b;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int cost() {bool valid = int_validation(rp_cost->value());
+		       if (valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {c = atof(rp_power->value());return c;}
+		double power() {bool valid = double_validation(rp_power->value()); 
+			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
@@ -375,9 +399,16 @@ void robot_locomotor_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_locomotorCB(Fl_Widget* w, void* p)
 {
+	if(robot_locomotor_dlg->model_number() == -999 || robot_locomotor_dlg->cost() == -999 || robot_locomotor_dlg->power() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
 	Locomotor loco(robot_locomotor_dlg->name(),robot_locomotor_dlg->model_number(),robot_locomotor_dlg->cost(),robot_locomotor_dlg->description(),robot_locomotor_dlg->file(),robot_locomotor_dlg->power());
 	catologe.add_locomotor(loco);
 	fl_message("Created part");
+	}
 	robot_locomotor_dlg->hide();
 }
 //=======================================
@@ -421,12 +452,16 @@ class robot_battery_dialog
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_cost->value());return a;}
-		int cost() {b = atoi(rp_cost->value());return b;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int cost() {bool valid = int_validation(rp_cost->value());
+		       if (valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {c = atof(rp_power->value());return c;}
-		double energy() {d = atof(rp_energy->value());return d;}
+		double power() {bool valid = double_validation(rp_power->value()); 
+			if (valid){return atof(rp_power->value());} else{return -999;}}
+		double energy() {bool valid = double_validation(rp_energy->value()); 
+			if (valid){return atof(rp_energy->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power, *rp_energy;
@@ -446,10 +481,17 @@ void robot_battery_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_batteryCB(Fl_Widget* w, void* p)
 {
+	if(robot_battery_dlg->model_number() == -999 || robot_battery_dlg->cost() == -999 || robot_battery_dlg->power() == -999 || robot_battery_dlg->energy() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
 	Battery battery(robot_battery_dlg->name(),robot_battery_dlg->model_number(),robot_battery_dlg->cost(),robot_battery_dlg->description(),
 					robot_battery_dlg->file(),robot_battery_dlg->power(), robot_battery_dlg->energy());
 	catologe.add_battery(battery);
 	fl_message("Created part");
+	}
 	robot_battery_dlg->hide();
 }
 
@@ -501,12 +543,18 @@ class robot_model_dialog
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
 		string name() {return rp_name->value();}
-		int model_number() {int_validation(rp_model_number->value());}
-		int head() {a = atoi(rp_head_index->value());return a;}
-		int torso() {a = atoi(rp_torso_index->value());return a;}
-		int arm() {a = atoi(rp_arm_index->value());return a;}
-		int locomotor() {a = atoi(rp_locomotor_index->value());return a;}
-		int battery() {a = atoi(rp_battery_index->value());return a;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int head() {bool valid = int_validation(rp_head_index->value());
+		       if (valid){return atoi(rp_head_index->value());} else{return -999;}}
+		int torso() {bool valid = int_validation(rp_torso_index->value());
+		       if (valid){return atoi(rp_torso_index->value());} else{return -999;}}
+		int arm() {bool valid = int_validation(rp_arm_index->value());
+		       if (valid){return atoi(rp_arm_index->value());} else{return -999;}}
+		int locomotor() {bool valid = int_validation(rp_locomotor_index->value());
+		       if (valid){return atoi(rp_locomotor_index->value());} else{return -999;}}
+		int battery() {bool valid = int_validation(rp_battery_index->value());
+		       if (valid){return atoi(rp_battery_index->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Return_Button *rp_create, *rp_cancel;
@@ -524,10 +572,17 @@ void robot_model_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_modelCB(Fl_Widget* w, void* p)
 {
+	if(robot_model_dlg->model_number() == -999 || robot_model_dlg->head() == -999 || robot_model_dlg->torso() == -999 || robot_model_dlg->arm() == -999 || robot_model_dlg->locomotor() == -999 || robot_model_dlg->battery() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
 	Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),catologe.get_torso(robot_model_dlg->torso()-1),catologe.get_head(robot_model_dlg->head()-1),
 					catologe.get_locomotor(robot_model_dlg->locomotor()-1),catologe.get_arm(robot_model_dlg->arm()-1),catologe.get_battery(robot_model_dlg->battery()-1));
 	catologe.add_model(model);
 	fl_message("Created model");
+	}
 	robot_model_dlg->hide();
 }
 
@@ -605,12 +660,8 @@ class sales_associate_dialog
 	  void show() {dialog->show();}
 	  void hide() {dialog->hide();}
 	  string name() {return rp_name->value();}
-	  int number()
-	  {
-		  int numb;
-		  istringstream(rp_number->value()) >> numb;
-		  return numb;
-	  }
+	  int number() {bool valid = int_validation(rp_number->value());
+		       if (valid){return atoi(rp_number->value());} else{return -999;}}
 
 	private:
 	  Fl_Window *dialog;
@@ -625,9 +676,16 @@ sales_associate_dialog *sales_associate_dlg;
 
 void create_sales_associateCB(Fl_Widget* w, void* p)
 {
+	if(sales_associate_dlg->number() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
 	SalesAssociate associate(sales_associate_dlg->name(), sales_associate_dlg->number());
 	catologe.add_associate(associate);
 	fl_message("Associate created.");
+	}
 	sales_associate_dlg->hide();
 }
 
