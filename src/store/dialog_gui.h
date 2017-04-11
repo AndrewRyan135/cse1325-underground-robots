@@ -585,13 +585,15 @@ void robot_model_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_modelCB(Fl_Widget* w, void* p)
 {
-	if((robot_model_dlg->model_number() == -999 || robot_model_dlg->head() == -999 || robot_model_dlg->torso() == -999
-	   || robot_model_dlg->arm() == -999 || robot_model_dlg->locomotor() == -999 || robot_model_dlg->battery() == -999)
+	if((robot_model_dlg->model_number() == (-999) || robot_model_dlg->head() == (-999) || robot_model_dlg->torso() == (-999)
+	   || robot_model_dlg->arm() == (-999) || robot_model_dlg->locomotor() == (-999) || robot_model_dlg->battery() == (-999))
 	   || (store.get_catalog()->head_vector_size() == 0 || store.get_catalog()->torso_vector_size() == 0 || store.get_catalog()->arm_vector_size() == 0 ||
 	   store.get_catalog()->locomotor_vector_size() == 0 || store.get_catalog()->battery_vector_size() == 0) ||
 	   (robot_model_dlg->head() > store.get_catalog()->head_vector_size() || robot_model_dlg->torso() > store.get_catalog()->torso_vector_size()
 	   || robot_model_dlg->arm() > store.get_catalog()->arm_vector_size() || robot_model_dlg->locomotor() > store.get_catalog()->locomotor_vector_size()
-	   || robot_model_dlg->battery() > store.get_catalog()->battery_vector_size()))
+	   || robot_model_dlg->battery() > store.get_catalog()->battery_vector_size()) || (robot_model_dlg->head() <= 0 || robot_model_dlg->torso() <= 0
+	   || robot_model_dlg->arm() <= 0 || robot_model_dlg->locomotor() <= 0
+	   || robot_model_dlg->battery() <= 0))
 	{
 		fl_message("Invalid input, selected index that does not exist, or do not have a part of every type.");
 	}
