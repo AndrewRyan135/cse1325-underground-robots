@@ -21,7 +21,11 @@ string Customer::to_string()
 }
 void Customer :: save_customer(ostream& ofs)
 {
-    ofs << name << "," << number << "," << phonenumber << "," << email << endl;
+    ofs << "7"
+    << name << endl
+    << number << endl
+    << phonenumber << endl
+    << email << endl;
 }
 
 int Customer :: get_customer_number()

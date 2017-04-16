@@ -28,16 +28,19 @@ using namespace std;
 //Store store;
 
 void create_part();
-int int_validation(int input);
-double double_validation(double input);
+int int_validation();
+double double_validation();
 void part_picker(int index);
+bool int_validation(string input);
+bool double_validation(string input);
 //void part_picker(int index);
 //void save_data();
 
 
 
-int int_validation(int input)
+/*int int_validation()
 {
+	int input;
 	int flag = 1;
 	while (flag == 1)
 	{
@@ -52,7 +55,7 @@ int int_validation(int input)
 	    flag = 0;
 	}
 	return input;
-}
+}*/
 
 //saves store orders that have been places
 /*
@@ -74,8 +77,9 @@ void save_data()
 */
 
 
-double double_validation(double input)
+/*double double_validation()
 {
+	double input;
 	int flag = 1;
 	while (flag == 1)
 	{
@@ -90,7 +94,7 @@ double double_validation(double input)
 	    flag = 0;
 	}
 	return input;
-}
+}*/
 
 /*
 double calculate_total_price(int model_index, int quantity)
@@ -111,11 +115,13 @@ Fl_Menu_Item menuitems[] = {
 		{0},
 	{"&Report", 0,0,0,FL_SUBMENU},
 		{"&Show Robot Parts", FL_ALT + 'v', (Fl_Callback *)show_robot_partsCB},
-		//{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_modelsCB},
+		{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_modelsCB},
 		{0},
 	{"&Create", 0,0,0,FL_SUBMENU},
 		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},
 		{"Robot &Model", FL_ALT + 'r', (Fl_Callback *)robot_model_dialog_showCB},
+		{"Sales &Associate", FL_ALT + 'a', (Fl_Callback *)sales_associate_dialog_showCB},
+		{"Customer", FL_ALT + 'c', (Fl_Callback *)customer_dialog_showCB},
 		{0},
 	{0}
 };
@@ -129,6 +135,8 @@ int main()
 	robot_locomotor_dlg = new robot_locomotor_dialog{};
 	robot_battery_dlg = new robot_battery_dialog{};
 	robot_model_dlg = new robot_model_dialog{};
+	sales_associate_dlg = new sales_associate_dialog{};
+	customer_dlg = new customer_dialog{};
 		Fl_Window *win;
 		Fl_Menu_Bar *menubar;
 		fl_register_images();

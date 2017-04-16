@@ -8,35 +8,15 @@ Robot_part :: Robot_part(string _name, int _model_number, double _cost, string _
             string _image_filename) : name(_name), model_number(_model_number),
                     cost(_cost), description(_description), image_filename(_image_filename){}
 
-//double Robot_part::get_cost()
-//{
-//	return cost;
-//}
-//getters
-string Robot_part :: get_name()
-{
-    return name;
-}
-int Robot_part :: get_model_number()
-{
-    return model_number;
-}
-double Robot_part :: get_cost()
-{
-    return cost;
-}
-string Robot_part :: get_description()
-{
-    return description;
-}
-string Robot_part :: get_image_filename()
-{
-    return image_filename;
-}
+
 //file insertion
 void Robot_part :: save_part(ostream& ofs)
 {
-    ofs << name << "," << model_number << "," << cost << "," << description << "," << image_filename << ",";
+    ofs << name << endl
+    << model_number << endl
+    << cost << endl
+    << description << endl
+    << image_filename << endl;
 }
 
 Head :: Head(string _name, int _model_number, double _cost, string _description,
@@ -54,13 +34,13 @@ string Head::to_string()
     return os.str();
 }
 
-double Head::get_power()
-{
-    return power;
-}
+
+
+
 
 void Head :: save_head(ostream& ofs)
 {
+    ofs << "1" << endl;
     save_part(ofs);
     ofs << power << endl;
 }
@@ -80,19 +60,14 @@ string Torso::to_string()
     return os.str();
 }
 
-int Torso :: get_battery_compartments()
-{
-    return battery_compartments;
-}
-int Torso :: get_max_arms()
-{
-    return max_arms;
-}
+
 
 void Torso :: save_torso(ostream& ofs)
 {
+    ofs << "2" << endl;
     save_part(ofs);
-    ofs << battery_compartments << "," << max_arms << endl;
+    ofs << battery_compartments << endl
+    << max_arms << endl;
 }
 
 Arm :: Arm(string _name, int _model_number, double _cost, string _description,
@@ -110,13 +85,11 @@ string Arm::to_string()
     return os.str();
 }
 
-double Arm :: get_max_power()
-{
-    return max_power;
-}
+
 
 void Arm :: save_arm(ostream& ofs)
 {
+    ofs << "3" << endl;
     save_part(ofs);
     ofs << max_power << endl;
 }
@@ -136,13 +109,10 @@ string Locomotor::to_string()
     return os.str();
 }
 
-double Locomotor :: get_max_power()
-{
-    return max_power;
-}
 
 void Locomotor :: save_locomotor(ostream& ofs)
 {
+    ofs << "4" << endl;
     save_part(ofs);
     ofs << max_power << endl;
 }
@@ -163,19 +133,14 @@ string Battery::to_string()
     return os.str();
 }
 
-double Battery :: get_power_availible()
-{
-    return power_availible;
-}
-double Battery :: get_max_energy()
-{
-    return max_energy;
-}
+
 
 void Battery :: save_battery(ostream& ofs)
 {
+    ofs << "5" << endl;
     save_part(ofs);
-    ofs << power_availible << "," << max_energy << endl;
+    ofs << power_availible << endl
+    << max_energy << endl;
 }
 
 Robot_model :: Robot_model(string _name, int _model_number, Torso _torso,
@@ -206,14 +171,16 @@ double Robot_model :: cost()
 
 void Robot_model :: save_robot_model(ostream& ofs)
 {
-    ofs << name << "," << model_number << "," << torso.get_model_number() << "," <<
-        head.get_model_number() << "," << locomotor.get_model_number() << "," << arm.get_model_number() <<
-        "," << battery.get_model_number() << endl;
+    ofs << "6" << endl
+    << name << endl
+    << model_number << endl
+    << torso.get_model_number() << endl
+    << head.get_model_number() << endl
+    << locomotor.get_model_number() << endl
+    << arm.get_model_number() << endl
+    << battery.get_model_number() << endl;
 }
 
 double Robot_model :: max_speed(){}
 double Robot_model :: max_battery_life(){}
-int Robot_model :: get_model_number()
-{
-    return model_number;
-}
+

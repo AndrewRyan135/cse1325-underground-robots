@@ -11,7 +11,7 @@ class Order
 {
 	public:
 	  Order(int _order_number, string _date, Robot_model _robot_model, int _quantity,
-		Customer _customer, int _status, SalesAssociate _sales_associate);
+		Customer _customer, int _status, Sales_associate _sales_associate);
 	  double robot_cost();
 	  double extended_price();
 	  //getters
@@ -21,7 +21,7 @@ class Order
 	  int get_quantity();
 	  Customer get_customer();
 	  int get_status();
-	  SalesAssociate get_sales_associate();
+	  Sales_associate get_sales_associate();
 	  void save_order(ostream& ofs);
 
 	private:
@@ -31,7 +31,7 @@ class Order
 	  int quantity;
 	  Customer customer;
 	  int status;
-	  SalesAssociate sales_associate;
+	  Sales_associate sales_associate;
 };
 
 #endif

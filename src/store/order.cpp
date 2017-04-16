@@ -3,7 +3,7 @@
 #include <iostream>
 
 Order :: Order(int _order_number, string _date, Robot_model _robot_model, int _quantity,
-	       Customer _customer, int _status, SalesAssociate _sales_associate) :
+	       Customer _customer, int _status, Sales_associate _sales_associate) :
 	       order_number(_order_number), date(_date), robot_model(_robot_model),
 	       quantity(_quantity), customer(_customer), status (_status),
 	       sales_associate(_sales_associate){}
@@ -37,14 +37,19 @@ int Order :: get_status()
 {
     return status;
 }
-SalesAssociate Order :: get_sales_associate()
+Sales_associate Order :: get_sales_associate()
 {
     return sales_associate;
 }
 
 void Order :: save_order(ostream& ofs)
 {
-    ofs << order_number << "," << date << "," << robot_model.get_model_number() << ","
-    << quantity << "," << customer.get_customer_number() << "," << status << ","
+    ofs << "9" << endl
+    << order_number << endl
+    << date << endl
+    << robot_model.get_model_number() << endl
+    << quantity << endl
+    << customer.get_customer_number() << endl
+    << status << endl
     << sales_associate.get_employee_number() << endl;
 }

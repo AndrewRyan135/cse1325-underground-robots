@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -14,10 +17,13 @@
 #include <FL/Fl_Text_Display.H>
 #include "catalog.h"
 #include "store.h"
+#include "sales_associate.h"
 
-Catalog catologe;
+
 Store store;
 
+bool int_validation(string input);
+bool double_validation(string input);
 void robot_part_dialog_showCB(Fl_Widget* w, void* p);
 void robot_part_dialog_hideCB(Fl_Widget* w, void* p);
 void robot_head_dialog_showCB(Fl_Widget* w, void* p);
@@ -39,6 +45,12 @@ void show_robot_partsCB(Fl_Widget* w, void* p);
 void robot_model_dialog_showCB(Fl_Widget* w, void* p);
 void robot_model_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_modelCB(Fl_Widget* w, void* p);
+void create_sales_associateCB(Fl_Widget* w, void* p);
+void sales_associate_dialog_showCB(Fl_Widget* w, void* p);
+void cancel_sales_associateCB(Fl_Widget* w, void* p);
+void create_customerCB(Fl_Widget* w, void *p);
+void cancel_customerCB(Fl_Widget* w,void *p);
+void customer_dialog_showCB(Fl_Widget* w, void* p);
 
 
 void Quit(Fl_Widget* w, void* p)
@@ -123,12 +135,17 @@ class robot_head_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_power->value(NULL);}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_cost->value());return a;}
-		int cost() {b = atoi(rp_cost->value());return b;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+			if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		double cost() {bool valid = double_validation(rp_cost->value());
+			if (valid){return atof(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {c = atof(rp_power->value());return c;}
+		double power() {bool valid = double_validation(rp_power->value());
+			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
@@ -148,9 +165,17 @@ void robot_head_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_headCB(Fl_Widget* w, void* p)
 {
-	Head head(robot_head_dlg->name(),robot_head_dlg->model_number(),robot_head_dlg->cost(),robot_head_dlg->description(),robot_head_dlg->file(),robot_head_dlg->power());
-	catologe.add_head(head);
-	fl_message("Created part");
+	if (robot_head_dlg->model_number() == -999 || robot_head_dlg->cost() == -999 || robot_head_dlg->power() == -999)
+	{
+		fl_message("Invalid Input");
+	}
+	else
+	{
+		Head head(robot_head_dlg->name(),robot_head_dlg->model_number(),robot_head_dlg->cost(),robot_head_dlg->description(),robot_head_dlg->file(),robot_head_dlg->power());
+		store.get_catalog()->add_head(head);
+		fl_message("Created part");
+	}
+	robot_head_dlg->clear();
 	robot_head_dlg->hide();
 }
 //=======================================
@@ -193,13 +218,19 @@ class robot_torso_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_battery->value(NULL);rp_max_arms->value(NULL);}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_cost->value());return a;}
-		int cost() {b = atoi(rp_cost->value());return b;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int cost() {bool valid = int_validation(rp_cost->value());
+		       if(valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		int battery() {c = atoi(rp_battery->value());return c;}
-		int max_arms() {d = atoi(rp_max_arms->value());return d;}
+		int battery() {bool valid = int_validation(rp_battery->value());
+		        if(valid){return atoi(rp_battery->value());} else{return -999;}}
+		int max_arms() {bool valid = int_validation(rp_max_arms->value());
+	  	        if(valid) {return atoi(rp_max_arms->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_battery, *rp_max_arms;
@@ -218,11 +249,19 @@ void robot_torso_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_torsoCB(Fl_Widget* w, void* p)
 {
+	if(robot_torso_dlg->model_number() == -999 || robot_torso_dlg->cost() == -999 || robot_torso_dlg->battery() == -999 || robot_torso_dlg->max_arms() == -999)
+	{
+		fl_message("Invalid Input");
+	}
+	else
+	{
 	Torso torso(robot_head_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
 				robot_torso_dlg->battery(),robot_torso_dlg->max_arms());
-	catologe.add_torso(torso);
+	store.get_catalog()->add_torso(torso);
 	fl_message("Created part");
+	}
 	robot_torso_dlg->hide();
+	robot_torso_dlg->clear();
 }
 //=======================================
 //             Arm Dialog
@@ -261,12 +300,17 @@ class robot_arm_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_power->value(NULL);}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_cost->value());return a;}
-		int cost() {b = atoi(rp_cost->value());return b;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int cost() {bool valid = int_validation(rp_cost->value());
+		       if (valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {c = atof(rp_power->value());return c;}
+		double power() {bool valid = double_validation(rp_power->value());
+			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
@@ -286,10 +330,18 @@ void robot_arm_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_armCB(Fl_Widget* w, void* p)
 {
+	if(robot_arm_dlg->model_number() == -999 || robot_arm_dlg->cost() == -999 || robot_arm_dlg->power() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
 	Arm arm(robot_arm_dlg->name(),robot_arm_dlg->model_number(),robot_arm_dlg->cost(),robot_arm_dlg->description(),robot_arm_dlg->file(),robot_arm_dlg->power());
-	catologe.add_arm(arm);
+	store.get_catalog()->add_arm(arm);
 	fl_message("Created part");
+	}
 	robot_arm_dlg->hide();
+	robot_arm_dlg->clear();
 }
 //=======================================
 //           Locomotor Dialog
@@ -328,12 +380,17 @@ class robot_locomotor_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_power->value(NULL);}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_cost->value());return a;}
-		int cost() {b = atoi(rp_cost->value());return b;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int cost() {bool valid = int_validation(rp_cost->value());
+		       if (valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {c = atof(rp_power->value());return c;}
+		double power() {bool valid = double_validation(rp_power->value());
+			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
@@ -353,10 +410,18 @@ void robot_locomotor_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_locomotorCB(Fl_Widget* w, void* p)
 {
+	if(robot_locomotor_dlg->model_number() == -999 || robot_locomotor_dlg->cost() == -999 || robot_locomotor_dlg->power() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
 	Locomotor loco(robot_locomotor_dlg->name(),robot_locomotor_dlg->model_number(),robot_locomotor_dlg->cost(),robot_locomotor_dlg->description(),robot_locomotor_dlg->file(),robot_locomotor_dlg->power());
-	catologe.add_locomotor(loco);
+	store.get_catalog()->add_locomotor(loco);
 	fl_message("Created part");
+	}
 	robot_locomotor_dlg->hide();
+	robot_locomotor_dlg->clear();
 }
 //=======================================
 //            Battery Dialog
@@ -398,13 +463,19 @@ class robot_battery_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_model_number->value(NULL);rp_cost->value(NULL);rp_description->value(NULL);
+			rp_file_name->value(NULL);rp_power->value(NULL);rp_energy->value(NULL);}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_cost->value());return a;}
-		int cost() {b = atoi(rp_cost->value());return b;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int cost() {bool valid = int_validation(rp_cost->value());
+		       if (valid){return atoi(rp_cost->value());} else{return -999;}}
 		string description() {return rp_description->value();}
 		string file() {return rp_file_name->value();}
-		double power() {c = atof(rp_power->value());return c;}
-		double energy() {d = atof(rp_energy->value());return d;}
+		double power() {bool valid = double_validation(rp_power->value());
+			if (valid){return atof(rp_power->value());} else{return -999;}}
+		double energy() {bool valid = double_validation(rp_energy->value());
+			if (valid){return atof(rp_energy->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power, *rp_energy;
@@ -424,11 +495,19 @@ void robot_battery_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_batteryCB(Fl_Widget* w, void* p)
 {
+	if(robot_battery_dlg->model_number() == -999 || robot_battery_dlg->cost() == -999 || robot_battery_dlg->power() == -999 || robot_battery_dlg->energy() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
 	Battery battery(robot_battery_dlg->name(),robot_battery_dlg->model_number(),robot_battery_dlg->cost(),robot_battery_dlg->description(),
 					robot_battery_dlg->file(),robot_battery_dlg->power(), robot_battery_dlg->energy());
-	catologe.add_battery(battery);
+	store.get_catalog()->add_battery(battery);
 	fl_message("Created part");
+	}
 	robot_battery_dlg->hide();
+	robot_battery_dlg->clear();
 }
 
 void saveCB(Fl_Widget* w, void* p)
@@ -445,7 +524,7 @@ class robot_model_dialog
 {
 	public :
 		robot_model_dialog() {
-		dialog = new Fl_Window(480, 360, "Robot Model");
+		dialog = new Fl_Window(480, 260, "Robot Model");
 		rp_head_index = new Fl_Input(270, 10, 210, 25, "Head index:");
 		rp_head_index->align(FL_ALIGN_LEFT);
 
@@ -467,10 +546,10 @@ class robot_model_dialog
 		rp_model_number = new Fl_Input(270, 190, 210, 25, "Model number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
-		rp_create = new Fl_Return_Button(270, 280, 100, 25, "Create:");
+		rp_create = new Fl_Return_Button(270, 230, 100, 25, "Create:");
 		rp_create->callback((Fl_Callback *)create_robot_modelCB, 0);
 
-		rp_cancel = new Fl_Return_Button(380, 280, 95, 25, "Cancel:");
+		rp_cancel = new Fl_Return_Button(380, 230, 95, 25, "Cancel:");
 		rp_cancel->callback((Fl_Callback *)robot_model_dialog_hideCB, 0);
 		dialog->end();
 		dialog->set_non_modal();
@@ -478,13 +557,21 @@ class robot_model_dialog
 
 		void show() {dialog->show();}
 		void hide() {dialog->hide();}
+		void clear() {rp_name->value(NULL);rp_head_index->value(NULL);rp_torso_index->value(NULL);rp_arm_index->value(NULL);
+			rp_locomotor_index->value(NULL);rp_battery_index->value(NULL);}
 		string name() {return rp_name->value();}
-		int model_number() {a = atoi(rp_model_number->value());return a;}
-		int head() {a = atoi(rp_head_index->value());return a;}
-		int torso() {a = atoi(rp_torso_index->value());return a;}
-		int arm() {a = atoi(rp_arm_index->value());return a;}
-		int locomotor() {a = atoi(rp_locomotor_index->value());return a;}
-		int battery() {a = atoi(rp_battery_index->value());return a;}
+		int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int head() {bool valid = int_validation(rp_head_index->value());
+		       if (valid){return atoi(rp_head_index->value());} else{return -999;}}
+		int torso() {bool valid = int_validation(rp_torso_index->value());
+		       if (valid){return atoi(rp_torso_index->value());} else{return -999;}}
+		int arm() {bool valid = int_validation(rp_arm_index->value());
+		       if (valid){return atoi(rp_arm_index->value());} else{return -999;}}
+		int locomotor() {bool valid = int_validation(rp_locomotor_index->value());
+		       if (valid){return atoi(rp_locomotor_index->value());} else{return -999;}}
+		int battery() {bool valid = int_validation(rp_battery_index->value());
+		       if (valid){return atoi(rp_battery_index->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Fl_Return_Button *rp_create, *rp_cancel;
@@ -502,11 +589,27 @@ void robot_model_dialog_hideCB(Fl_Widget* w, void* p)
 }
 void create_robot_modelCB(Fl_Widget* w, void* p)
 {
-	Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),catologe.get_torso(robot_model_dlg->torso()),catologe.get_head(robot_model_dlg->head()),
-					catologe.get_locomotor(robot_model_dlg->locomotor()),catologe.get_arm(robot_model_dlg->arm()),catologe.get_battery(robot_model_dlg->battery()));
-	catologe.add_model(model);
+	if((robot_model_dlg->model_number() == (-999) || robot_model_dlg->head() == (-999) || robot_model_dlg->torso() == (-999)
+	   || robot_model_dlg->arm() == (-999) || robot_model_dlg->locomotor() == (-999) || robot_model_dlg->battery() == (-999))
+	   || (store.get_catalog()->head_vector_size() == 0 || store.get_catalog()->torso_vector_size() == 0 || store.get_catalog()->arm_vector_size() == 0 ||
+	   store.get_catalog()->locomotor_vector_size() == 0 || store.get_catalog()->battery_vector_size() == 0) ||
+	   (robot_model_dlg->head() > store.get_catalog()->head_vector_size() || robot_model_dlg->torso() > store.get_catalog()->torso_vector_size()
+	   || robot_model_dlg->arm() > store.get_catalog()->arm_vector_size() || robot_model_dlg->locomotor() > store.get_catalog()->locomotor_vector_size()
+	   || robot_model_dlg->battery() > store.get_catalog()->battery_vector_size()) || (robot_model_dlg->head() <= 0 || robot_model_dlg->torso() <= 0
+	   || robot_model_dlg->arm() <= 0 || robot_model_dlg->locomotor() <= 0
+	   || robot_model_dlg->battery() <= 0))
+	{
+		fl_message("Invalid input, selected index that does not exist, or do not have a part of every type.");
+	}
+	else
+	{
+	Robot_model model(robot_model_dlg->name(),robot_model_dlg->model_number(),*(store.get_catalog()->get_torso(robot_model_dlg->torso()-1)),*(store.get_catalog()->get_head(robot_model_dlg->head()-1)),
+					*(store.get_catalog()->get_locomotor(robot_model_dlg->locomotor()-1)),*(store.get_catalog()->get_arm(robot_model_dlg->arm()-1)),*(store.get_catalog()->get_battery(robot_model_dlg->battery()-1)));
+	store.get_catalog()->add_model(model);
 	fl_message("Created model");
+	}
 	robot_model_dlg->hide();
+	robot_model_dlg->clear();
 }
 
 void show_robot_partsCB(Fl_Widget* w, void* p)
@@ -515,33 +618,33 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	stringstream os;
 	int i = 0;
 	os << "Heads: \n";
-	for (i=0;i<catologe.head_vector_size();i++)
+	for (i=0;i<store.get_catalog()->head_vector_size();i++)
 	{
-		os << "\tPart index: " << i+1 << "\n" << catologe.head_to_string(i) << '\n'
+		os << "\tPart index: " << i+1 << "\n" << store.get_catalog()->head_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Torsos: \n";
-	for (i=0;i<catologe.torso_vector_size();i++)
+	for (i=0;i<store.get_catalog()->torso_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.torso_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->torso_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Arms: \n";
-	for (i=0;i<catologe.arm_vector_size();i++)
+	for (i=0;i<store.get_catalog()->arm_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.arm_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->arm_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Locomotors: \n";
-	for (i=0;i<catologe.locomotor_vector_size();i++)
+	for (i=0;i<store.get_catalog()->locomotor_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.locomotor_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->locomotor_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Batteries: \n";
-	for (i=0;i<catologe.battery_vector_size();i++)
+	for (i=0;i<store.get_catalog()->battery_vector_size();i++)
 	{
-		os << "Part index: " << i+1 << '\n' << catologe.battery_to_string(i) << '\n'
+		os << "Part index: " << i+1 << '\n' << store.get_catalog()->battery_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 
@@ -551,4 +654,215 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	win->resizable(*disp);
 	win->show();
 	buff->text((os.str()).c_str());
+}
+
+////////////////////////////////////////////////
+//	Creating sales associate dialog
+////////////////////////////////////////////////
+
+
+class sales_associate_dialog
+{
+	public:
+	  sales_associate_dialog()
+	  {
+		  dialog = new Fl_Window(300,100, "Sales associate");
+		  rp_name = new Fl_Input(140,10,150,25, "Name:");
+		  rp_name->align(FL_ALIGN_LEFT);
+
+		  rp_number = new Fl_Input(140,40,150,25, "Employee number:");
+		  rp_number->align(FL_ALIGN_LEFT);
+
+		  rp_create = new Fl_Return_Button(95,70,100,25, "Create");
+		  rp_create->callback((Fl_Callback *)create_sales_associateCB, 0);
+
+		  rp_cancel = new Fl_Button(200,70,95,25, "Cancel");
+		  rp_cancel->callback((Fl_Callback *)cancel_sales_associateCB, 0);
+
+		  dialog->end();
+		  dialog->set_non_modal();
+	  }
+
+	  void show() {dialog->show();}
+	  void hide() {dialog->hide();}
+	  void clear() {rp_name->value(NULL);rp_number->value(NULL);}
+	  string name() {return rp_name->value();}
+	  int number() {bool valid = int_validation(rp_number->value());
+		       if (valid){return atoi(rp_number->value());} else{return -999;}}
+
+	private:
+	  Fl_Window *dialog;
+	  Fl_Input *rp_name;
+	  Fl_Input *rp_number;
+	  Fl_Return_Button *rp_create;
+	  Fl_Button *rp_cancel;
+
+};
+
+sales_associate_dialog *sales_associate_dlg;
+
+void create_sales_associateCB(Fl_Widget* w, void* p)
+{
+	if(sales_associate_dlg->number() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
+	Sales_associate associate(sales_associate_dlg->name(), sales_associate_dlg->number());
+	store.add_sales_associate(associate);
+	fl_message("Associate created.");
+	}
+	sales_associate_dlg->hide();
+	sales_associate_dlg->clear();
+}
+
+void sales_associate_dialog_showCB(Fl_Widget* w, void* p)
+{
+	sales_associate_dlg->show();
+}
+
+void cancel_sales_associateCB(Fl_Widget* w, void* p)
+{
+	sales_associate_dlg->hide();
+}
+
+
+///////////////////////////////////////////////////
+//	show robot models callback
+//////////////////////////////////////////////////
+
+void show_robot_modelsCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i< store.get_catalog()->robot_model_vector_size(); i++)
+	{
+		os << store.get_catalog()->robot_model_to_string(i) << "\n"
+		<< "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot Models");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
+
+/////////////////////////////////////////////////////
+//	Creating customer
+/////////////////////////////////////////////////////
+
+class customer_dialog
+{
+		public:
+		  customer_dialog()
+		  {
+ 		  dialog = new Fl_Window(310,260, "Customer");
+		  rp_name = new Fl_Input(140,10,150,25, "Name:");
+		  rp_name->align(FL_ALIGN_LEFT);
+
+		  rp_number = new Fl_Input(140,40,150,25, "Number:");
+		  rp_number->align(FL_ALIGN_LEFT);
+
+		  rp_phonenumber = new Fl_Input(140,70,150,25, "Phone number:");
+		  rp_phonenumber->align(FL_ALIGN_LEFT);
+
+		  rp_email = new Fl_Input(140,100,150,25, "Email:");
+		  rp_email->align(FL_ALIGN_LEFT);
+
+		  rp_create = new Fl_Return_Button(100,230,100,25, "Create");
+		  rp_create->callback((Fl_Callback *)create_customerCB, 0);
+
+		  rp_cancel = new Fl_Button(210,230,95,25, "Cancel");
+		  rp_cancel->callback((Fl_Callback *)cancel_customerCB, 0);
+
+		  dialog->end();
+		  dialog->set_non_modal();
+		  }
+		void show() {dialog->show();}
+	  	void hide() {dialog->hide();}
+	        void clear() {rp_name->value(NULL);rp_number->value(NULL);}
+	        string name() {return rp_name->value();}
+	        int number() {bool valid = int_validation(rp_number->value());
+		       if (valid){return atoi(rp_number->value());} else{return -999;}}
+		string phonenumber() {return rp_phonenumber->value();}
+		string email() {return rp_email->value();}
+
+
+	private:
+	  Fl_Window *dialog;
+	  Fl_Input *rp_name;
+	  Fl_Input *rp_number;
+	  Fl_Input *rp_phonenumber;
+	  Fl_Input *rp_email;
+	  Fl_Return_Button *rp_create;
+	  Fl_Button *rp_cancel;
+};
+
+customer_dialog *customer_dlg;
+
+void create_customerCB(Fl_Widget* w, void* p)
+{
+	if(customer_dlg->number() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
+	Customer customer(customer_dlg->name(), customer_dlg->number(),customer_dlg->phonenumber(),customer_dlg->email());
+	store.add_customer(customer);
+	fl_message("Customer created.");
+	}
+	customer_dlg->hide();
+	customer_dlg->clear();
+}
+
+void customer_dialog_showCB(Fl_Widget* w, void* p)
+{
+	customer_dlg->show();
+}
+
+void cancel_customerCB(Fl_Widget* w, void* p)
+{
+	customer_dlg->hide();
+}
+
+
+
+
+bool int_validation(string input)
+{
+	int tmp;
+	stringstream ss;
+	ss << input;
+	ss >> tmp;
+
+	if (ss.fail())
+	{
+		return false;
+
+	}
+	else
+	{
+		return true;
+	}
+}
+
+bool double_validation(string input)
+{
+	double tmp;
+	stringstream ss;
+	ss << input;
+	ss >> tmp;
+
+	if(ss.fail())
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
