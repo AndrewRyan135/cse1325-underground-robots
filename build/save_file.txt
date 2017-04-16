@@ -6,7 +6,7 @@ head
 head.gif
 412
 2
-
+Torso
 2
 43
 torso

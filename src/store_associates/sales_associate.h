@@ -10,6 +10,7 @@ class Sales_associate
 	public :
 		Sales_associate(string name, int employee_number) : _name(name), _employee_number(employee_number) {}
 		string to_string();
+		string name();
 		void save_sales_associate(ostream& ofs);
 		int get_employee_number();
 	private :
