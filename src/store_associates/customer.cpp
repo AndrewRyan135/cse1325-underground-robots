@@ -20,7 +20,7 @@ string Customer::to_string()
 	return output;
 }
 
-string Customer::name() {return name;}
+//string Customer::name() {return name;}
 
 void Customer :: save_customer(ostream& ofs)
 {

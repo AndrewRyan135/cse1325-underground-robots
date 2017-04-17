@@ -31,6 +31,8 @@ public:
     void add_catalog(Catalog _catalog);
     void add_customer(Customer _customer);
     void add_sales_associate(Sales_associate sales_associate);
+    Customer* get_customer(int index);
+    Sales_associate* get_associate(int index);
     Catalog* get_catalog();
 
 };
