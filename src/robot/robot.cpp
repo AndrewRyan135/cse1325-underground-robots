@@ -25,7 +25,7 @@ Head :: Head(string _name, int _model_number, double _cost, string _description,
 string Head::to_string()
 {
     stringstream os;
-    os << "Name: " << name << "\n"
+    os << "Name: " << Robot_part::get_name() << "\n"
        << "Model Number: " << model_number << "\n"
        << "Cost: " << cost << "\n"
        << "Description: " << description << "\n"
@@ -34,6 +34,7 @@ string Head::to_string()
     return os.str();
 }
 
+string Head::name() {return Robot_part::get_name();}
 
 
 
@@ -51,7 +52,7 @@ Torso :: Torso(string _name, int _model_number, double _cost, string _descriptio
 string Torso::to_string()
 {
     stringstream os;
-    os << "Name: " << name << "\n"
+    os << "Name: " << Robot_part::get_name() << "\n"
        << "Model Number: " << model_number << "\n"
        << "Cost: " << cost << "\n"
        << "Description: " << description << "\n"
@@ -60,6 +61,7 @@ string Torso::to_string()
     return os.str();
 }
 
+string Torso::name() {return Robot_part::get_name();}
 
 
 void Torso :: save_torso(ostream& ofs)
@@ -76,7 +78,7 @@ Arm :: Arm(string _name, int _model_number, double _cost, string _description,
 string Arm::to_string()
 {
     stringstream os;
-    os << "Name: " << name << "\n"
+    os << "Name: " << Robot_part::get_name() << "\n"
        << "Model Number: " << model_number << "\n"
        << "Cost: " << cost << "\n"
        << "Description: " << description << "\n"
@@ -85,6 +87,7 @@ string Arm::to_string()
     return os.str();
 }
 
+string Arm::name() {return Robot_part::get_name();}
 
 
 void Arm :: save_arm(ostream& ofs)
@@ -100,7 +103,7 @@ Locomotor :: Locomotor(string _name, int _model_number, double _cost, string _de
 string Locomotor::to_string()
 {
     stringstream os;
-    os << "Name: " << name << "\n"
+    os << "Name: " << Robot_part::get_name() << "\n"
        << "Model Number: " << model_number << "\n"
        << "Cost: " << cost << "\n"
        << "Description: " << description << "\n"
@@ -109,6 +112,7 @@ string Locomotor::to_string()
     return os.str();
 }
 
+string Locomotor::name() {return Robot_part::get_name();}
 
 void Locomotor :: save_locomotor(ostream& ofs)
 {
@@ -123,7 +127,7 @@ Battery :: Battery(string _name, int _model_number, double _cost, string _descri
 string Battery::to_string()
 {
     stringstream os;
-    os << "Name: " << name << "\n"
+    os << "Name: " << Robot_part::get_name() << "\n"
        << "Model Number: " << model_number << "\n"
        << "Cost: " << cost << "\n"
        << "Description: " << description << "\n"
@@ -133,6 +137,7 @@ string Battery::to_string()
     return os.str();
 }
 
+string Battery::name() {return Robot_part::get_name();}
 
 
 void Battery :: save_battery(ostream& ofs)
@@ -150,11 +155,11 @@ name(_name), model_number(_model_number), torso(_torso), head(_head), locomotor(
 string Robot_model::to_string()
 {
     stringstream os;
-    os << "Name: " << name << "\n"
-       << "Model Number: " << model_number << "\n"
-       << torso.to_string() << "\n" << head.to_string() << "\n"
-       << locomotor.to_string() << "\n" << arm.to_string() << "\n"
-       << battery.to_string() << "\n";
+    os << "Name: \t\t\t" << name << "\n"
+       << "Model Number: \t\t" << model_number << "\nHead Part Name: \t"
+       << head.name() << "\nTorso Part Name: \t" << torso.name() << "\nArm Part Name: \t\t"
+       << arm.name() << "\nLocomotor Part Name: \t" << locomotor.name() << "\nBattery Part Name: \t"
+       << battery.name() << "\n";
        return os.str();
 }
 

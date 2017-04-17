@@ -121,6 +121,8 @@ Fl_Menu_Item menuitems[] = {
 		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},
 		{"Robot &Model", FL_ALT + 'r', (Fl_Callback *)robot_model_dialog_showCB},
 		{"Sales &Associate", FL_ALT + 'a', (Fl_Callback *)sales_associate_dialog_showCB},
+		{"Customer", FL_ALT + 'c', (Fl_Callback *)customer_dialog_showCB},
+		{"Order", FL_ALT + + 'o', (Fl_Callback *)show_order_dialogCB},
 		{0},
 	{0}
 };
@@ -135,6 +137,8 @@ int main()
 	robot_battery_dlg = new robot_battery_dialog{};
 	robot_model_dlg = new robot_model_dialog{};
 	sales_associate_dlg = new sales_associate_dialog{};
+	customer_dlg = new customer_dialog{};
+	order_dlg = new create_order{};
 		Fl_Window *win;
 		Fl_Menu_Bar *menubar;
 		fl_register_images();

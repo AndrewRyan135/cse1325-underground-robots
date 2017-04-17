@@ -230,6 +230,16 @@ void Store :: add_order(Order order)
     orders.push_back(order);
 }
 
+Customer* Store::get_customer(int index)
+{
+	return &customers[index];
+}
+
+Sales_associate* Store::get_associate(int index)
+{
+	return &sales_associates[index];
+}
+
 Catalog* Store :: get_catalog()
 {
     return &catalog;
