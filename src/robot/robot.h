@@ -100,6 +100,7 @@ public:
     Robot_model(string _name, int _model_number, Torso _torso,
         Head _head, Locomotor _locomotor, Arm _arm, Battery _battery);
     string to_string();
+    string get_name();
     double cost();
     double max_speed();
     double max_battery_life();

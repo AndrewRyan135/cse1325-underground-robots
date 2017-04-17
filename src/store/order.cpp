@@ -37,6 +37,16 @@ int Order :: get_status()
 {
     return status;
 }
+string Order::to_string()
+{
+	stringstream os;
+	os << "Order number:\t\t" << order_number <<'\n' << "Date:\t\t\t" << date
+	   << '\n' << "Robot Model:\t\t" << robot_model.get_name() << '\n'
+	   << "Quantity:\t\t" << quantity << '\n' << "Customer name:\t\t" << customer.get_name()
+	   << '\n' << "Status:\t\t\t" << status << '\n' << "Sales associate name:\t" << sales_associate.get_name()
+	   << '\n';
+	return os.str();
+}
 Sales_associate Order :: get_sales_associate()
 {
     return sales_associate;

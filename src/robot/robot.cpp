@@ -157,6 +157,8 @@ string Robot_model::to_string()
        return os.str();
 }
 
+string Robot_model::get_name() {return name;}
+
 double Robot_model :: cost()
 {
 	double total = 0;
