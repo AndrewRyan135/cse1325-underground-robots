@@ -845,7 +845,7 @@ class create_order
 		  rp_model_number = new Fl_Input(220,10,150,25, "Model Index:");
 		  rp_model_number->align(FL_ALIGN_LEFT);
 
-		  rp_amount = new Fl_Input(220,40,150,25, "Quantitiy:");
+		  rp_amount = new Fl_Input(220,40,150,25, "Quantity:");
 		  rp_amount->align(FL_ALIGN_LEFT);
 
 		  rp_customer_name = new Fl_Input(220,70,150,25, "Customer number:");
@@ -913,6 +913,57 @@ void cancel_order_dialogCB(Fl_Widget* w, void* p)
 	order_dlg->hide();
 }
 
+//===============================
+//         Manage order
+//===============================
+class manage_order_dialog
+{
+public:
+    manage_order_dialog() {
+		  dialog = new Fl_Window(380,260, "Manage Order");
+		  rp_order_number = new Fl_Input(220,10,150,25, "Order Index:");//type order#
+		  rp_order_number->align(FL_ALIGN_LEFT);
+
+
+		  rp_show = new Fl_Return_Button(75, 230, 100, 25, "Show Orders");//open order list
+		  rp_show->callback((Fl_Callback *)show_ordersCB, 0);
+		  //checkbox for all states
+
+
+		  rp_save = new Fl_Return_Button(180,230,100,25, "Create");//save changes
+		  rp_save->callback((Fl_Callback *)save_orderCB, 0);
+
+		  rp_cancel = new Fl_Return_Button(285,230,95,25, "Cancel");
+		  rp_cancel->callback((Fl_Callback *)cancel_customerCB, 0);
+
+		  dialog->end();
+		  dialog->set_non_modal();
+		}
+
+		void show() {dialog->show();}
+		void hide() {dialog->hide();}
+		void clear() {rp_order_number->value(NULL);}
+		int order_number() {bool valid = int_validation(rp_order_number->value());
+                            if (valid){return atoi(rp_order_number->value());}else{return -999;}}
+private:
+    Fl_Window *dialog;
+    Fl_Input *rp_order_number;
+    Fl_Return_Button *rp_show, *rp_save, *rp_cancel;
+};
+manage_order_dialog *manage_order_dlg;
+void save_orderCB(Fl_Widget* w, void* p)
+{
+
+}
+void manage_order_dialogCB(Fl_Widget* w, void* p)
+{
+    manage_order_dlg->show();
+}
+
+void cancel_order_management_dialogCB(Fl_Widget* w, void* p)
+{
+    manage_order_dlg->hide();
+}
 //===============================
 //     Validation functions
 //===============================
