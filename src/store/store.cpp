@@ -262,6 +262,11 @@ Sales_associate* Store::get_associate(int index)
 	return &sales_associates[index];
 }
 
+Order* Store::get_order(int index)
+{
+    return &orders[index];
+}
+
 Catalog* Store :: get_catalog()
 {
     return &catalog;
