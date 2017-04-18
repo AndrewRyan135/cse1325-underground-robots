@@ -154,6 +154,7 @@ void Store :: open(string filename)
                     }
                     robot_model = new Robot_model(name, model_number, *torso, *head, *locomotor, *arm, *battery);
                     catalog.add_model(*robot_model);
+                    break;
                 }
             case 7:
                 {
@@ -201,6 +202,7 @@ void Store :: open(string filename)
                     }
                     order = new Order(order_number, date, *robot_model, quantity, *customer, status, *sales_associate);
                     add_order(*order);
+                    break;
                 }
             //default:
                // {
@@ -228,6 +230,41 @@ void Store :: add_sales_associate(Sales_associate sales_associate)
 void Store :: add_order(Order order)
 {
     orders.push_back(order);
+}
+
+int Store::order_vector_size()
+{
+	return orders.size();
+}
+
+int Store::customers_size()
+{
+	return customers.size();
+}
+
+int Store::sales_associates_size()
+{
+	return sales_associates.size();
+}
+
+string Store::order_to_string(int index)
+{
+	return orders[index].to_string();
+}
+
+Customer* Store::get_customer(int index)
+{
+	return &customers[index];
+}
+
+Sales_associate* Store::get_associate(int index)
+{
+	return &sales_associates[index];
+}
+
+Order* Store::get_order(int index)
+{
+    return &orders[index];
 }
 
 Catalog* Store :: get_catalog()

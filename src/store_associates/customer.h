@@ -11,6 +11,7 @@ class Customer
 	  Customer(string c_name, int c_number, string c_phonenumber, string c_email) :
 	  name(c_name), number(c_number), phonenumber(c_phonenumber), email(c_email) {}
 	  string to_string();
+	  string get_name();
 	  void save_customer(ostream& ofs);
 	  int get_customer_number();
 

@@ -8,6 +8,8 @@ string Sales_associate::to_string()
 	   return os.str();
 }
 
+string Sales_associate::get_name() {return _name;}
+
 void Sales_associate :: save_sales_associate(ostream& ofs)
 {
     ofs << "8" << endl

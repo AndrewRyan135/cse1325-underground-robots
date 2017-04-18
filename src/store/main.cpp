@@ -116,12 +116,18 @@ Fl_Menu_Item menuitems[] = {
 	{"&Report", 0,0,0,FL_SUBMENU},
 		{"&Show Robot Parts", FL_ALT + 'v', (Fl_Callback *)show_robot_partsCB},
 		{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_modelsCB},
+		{"Show Orders", FL_ALT + FL_SHIFT + 'o', (Fl_Callback *)show_ordersCB},
 		{0},
 	{"&Create", 0,0,0,FL_SUBMENU},
 		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},
 		{"Robot &Model", FL_ALT + 'r', (Fl_Callback *)robot_model_dialog_showCB},
 		{"Sales &Associate", FL_ALT + 'a', (Fl_Callback *)sales_associate_dialog_showCB},
+		{"Customer", FL_ALT + 'c', (Fl_Callback *)customer_dialog_showCB},
+		{"Order", FL_ALT + + 'o', (Fl_Callback *)show_order_dialogCB},
 		{0},
+    {"&Manage", 0,0,0,FL_SUBMENU},
+        {"&Orders", FL_ALT + 'o', (Fl_Callback *)manage_order_dialogCB},
+        {0},
 	{0}
 };
 
@@ -135,6 +141,9 @@ int main()
 	robot_battery_dlg = new robot_battery_dialog{};
 	robot_model_dlg = new robot_model_dialog{};
 	sales_associate_dlg = new sales_associate_dialog{};
+	customer_dlg = new customer_dialog{};
+	order_dlg = new create_order{};
+	manage_order_dlg = new manage_order_dialog{};
 		Fl_Window *win;
 		Fl_Menu_Bar *menubar;
 		fl_register_images();

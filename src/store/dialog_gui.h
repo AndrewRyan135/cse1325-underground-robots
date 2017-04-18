@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctime>
 #include <ctype.h>
 #include <iostream>
 #include <string>
@@ -48,6 +49,22 @@ void create_robot_modelCB(Fl_Widget* w, void* p);
 void create_sales_associateCB(Fl_Widget* w, void* p);
 void sales_associate_dialog_showCB(Fl_Widget* w, void* p);
 void cancel_sales_associateCB(Fl_Widget* w, void* p);
+void create_customerCB(Fl_Widget* w, void *p);
+void cancel_customerCB(Fl_Widget* w,void *p);
+void customer_dialog_showCB(Fl_Widget* w, void* p);
+void show_order_dialogCB(Fl_Widget* w, void* p);
+void cancel_order_dialogCB(Fl_Widget* w, void* p);
+void show_ordersCB(Fl_Widget* w, void* p);
+void create_orderCB(Fl_Widget* w, void* p);
+void save_orderCB(Fl_Widget* w, void* p);
+void state1CB(Fl_Widget* w, void* p);
+void state2CB(Fl_Widget* w, void* p);
+void state3CB(Fl_Widget* w, void* p);
+void state4CB(Fl_Widget* w, void* p);
+void state5CB(Fl_Widget* w, void* p);
+void cancel_orderCB(Fl_Widget* w, void* p);
+void cancel_order_management_dialogCB(Fl_Widget* w, void* p);
+
 
 void Quit(Fl_Widget* w, void* p)
 {
@@ -542,6 +559,9 @@ class robot_model_dialog
 		rp_model_number = new Fl_Input(270, 190, 210, 25, "Model number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
+		rp_show = new Fl_Return_Button(160, 230, 100, 25, "Show Parts");
+		rp_show->callback((Fl_Callback *)show_robot_partsCB, 0);
+
 		rp_create = new Fl_Return_Button(270, 230, 100, 25, "Create:");
 		rp_create->callback((Fl_Callback *)create_robot_modelCB, 0);
 
@@ -570,7 +590,7 @@ class robot_model_dialog
 		       if (valid){return atoi(rp_battery_index->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
-		Fl_Return_Button *rp_create, *rp_cancel;
+		Fl_Return_Button *rp_create, *rp_cancel, *rp_show;
 		Fl_Input *rp_head_index, *rp_torso_index, *rp_arm_index, *rp_locomotor_index, *rp_battery_index, *rp_model_number, *rp_name;
 		int a;
 };
@@ -616,7 +636,7 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	os << "Heads: \n";
 	for (i=0;i<store.get_catalog()->head_vector_size();i++)
 	{
-		os << "\tPart index: " << i+1 << "\n" << store.get_catalog()->head_to_string(i) << '\n'
+		os << "Part index: " << i+1 << "\n" << store.get_catalog()->head_to_string(i) << '\n'
 		   << "=================================================\n";
 	}
 	os << "Torsos: \n";
@@ -746,6 +766,337 @@ void show_robot_modelsCB(Fl_Widget* w, void* p)
 	buff->text((os.str()).c_str());
 }
 
+/////////////////////////////////////////////////////
+//	Creating customer
+/////////////////////////////////////////////////////
+
+class customer_dialog
+{
+		public:
+		  customer_dialog()
+		  {
+ 		  dialog = new Fl_Window(310,260, "Customer");
+		  rp_name = new Fl_Input(140,10,150,25, "Name:");
+		  rp_name->align(FL_ALIGN_LEFT);
+
+		  rp_number = new Fl_Input(140,40,150,25, "Number:");
+		  rp_number->align(FL_ALIGN_LEFT);
+
+		  rp_phonenumber = new Fl_Input(140,70,150,25, "Phone number:");
+		  rp_phonenumber->align(FL_ALIGN_LEFT);
+
+		  rp_email = new Fl_Input(140,100,150,25, "Email:");
+		  rp_email->align(FL_ALIGN_LEFT);
+
+		  rp_create = new Fl_Return_Button(100,230,100,25, "Create");
+		  rp_create->callback((Fl_Callback *)create_customerCB, 0);
+
+		  rp_cancel = new Fl_Button(210,230,95,25, "Cancel");
+		  rp_cancel->callback((Fl_Callback *)cancel_customerCB, 0);
+
+		  dialog->end();
+		  dialog->set_non_modal();
+		  }
+		void show() {dialog->show();}
+	  	void hide() {dialog->hide();}
+	        void clear() {rp_name->value(NULL);rp_number->value(NULL);}
+	        string name() {return rp_name->value();}
+	        int number() {bool valid = int_validation(rp_number->value());
+		       if (valid){return atoi(rp_number->value());} else{return -999;}}
+		string phonenumber() {return rp_phonenumber->value();}
+		string email() {return rp_email->value();}
+
+
+	private:
+	  Fl_Window *dialog;
+	  Fl_Input *rp_name;
+	  Fl_Input *rp_number;
+	  Fl_Input *rp_phonenumber;
+	  Fl_Input *rp_email;
+	  Fl_Return_Button *rp_create;
+	  Fl_Button *rp_cancel;
+};
+
+customer_dialog *customer_dlg;
+
+void create_customerCB(Fl_Widget* w, void* p)
+{
+	if(customer_dlg->number() == -999)
+	{
+		fl_message("Invalid Input.");
+	}
+	else
+	{
+	Customer customer(customer_dlg->name(), customer_dlg->number(),customer_dlg->phonenumber(),customer_dlg->email());
+	store.add_customer(customer);
+	fl_message("Customer created.");
+	}
+	customer_dlg->hide();
+	customer_dlg->clear();
+}
+
+void customer_dialog_showCB(Fl_Widget* w, void* p)
+{
+	customer_dlg->show();
+}
+
+void cancel_customerCB(Fl_Widget* w, void* p)
+{
+	customer_dlg->hide();
+}
+
+//===============================
+//         Creating order
+//===============================
+
+class create_order
+{
+	public :
+		create_order() {
+		  dialog = new Fl_Window(380,260, "Create Order");
+		  rp_model_number = new Fl_Input(220,10,150,25, "Model Index:");
+		  rp_model_number->align(FL_ALIGN_LEFT);
+
+		  rp_amount = new Fl_Input(220,40,150,25, "Quantity:");
+		  rp_amount->align(FL_ALIGN_LEFT);
+
+		  rp_customer_name = new Fl_Input(220,70,150,25, "Customer number:");
+		  rp_customer_name->align(FL_ALIGN_LEFT);
+
+		  rp_sales_name = new Fl_Input(220,100,150,25, "Sales associate number:");
+		  rp_sales_name->align(FL_ALIGN_LEFT);
+
+		  rp_show = new Fl_Return_Button(75, 230, 100, 25, "Show Models");
+		  rp_show->callback((Fl_Callback *)show_robot_modelsCB, 0);
+
+		  rp_create = new Fl_Return_Button(180,230,100,25, "Create");
+		  rp_create->callback((Fl_Callback *)create_orderCB, 0);
+
+		  rp_cancel = new Fl_Return_Button(285,230,95,25, "Cancel");
+		  rp_cancel->callback((Fl_Callback *)cancel_order_dialogCB, 0);
+
+		  dialog->end();
+		  dialog->set_non_modal();
+		}
+
+		void show() {dialog->show();}
+	  	void hide() {dialog->hide();}
+	    void clear() {rp_model_number->value(NULL);rp_amount->value(NULL);rp_customer_name->value(NULL);
+	    			  rp_sales_name->value(NULL);}
+	    int model_number() {bool valid = int_validation(rp_model_number->value());
+		                    if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+		int amount() {bool valid = int_validation(rp_amount->value());
+					  if(valid){return atoi(rp_amount->value());} else{return -999;}}
+		int customer_number() {bool valid = int_validation(rp_customer_name->value());
+					  if(valid){return atoi(rp_customer_name->value());} else{return -999;}}
+		int sales_number() {bool valid = int_validation(rp_sales_name->value());
+					  if(valid){return atoi(rp_sales_name->value());} else{return -999;}}
+	private :
+		Fl_Window *dialog;
+		Fl_Input *rp_model_number, *rp_amount, *rp_customer_name, *rp_sales_name;
+		Fl_Return_Button *rp_create, *rp_cancel, *rp_show;
+};
+
+create_order *order_dlg;
+void create_orderCB(Fl_Widget* w, void* p)
+{
+	time_t t =time(0);
+	struct tm *now = localtime(&t);
+	stringstream os;
+	int num = rand() % 10000;
+	os <<(now->tm_year + 1900)<< '-'
+	<<(now->tm_mon + 1)<<'-'<<(now->tm_mday);
+	if ((order_dlg->model_number() != -999 || order_dlg->amount() != -999 || order_dlg->customer_number() != -999 ||
+		order_dlg->sales_number() != -999) || (order_dlg->model_number() > store.order_vector_size() ||
+		order_dlg->customer_number() > store.customers_size() || order_dlg->sales_number() > store.sales_associates_size())
+		|| (order_dlg->model_number() < 1 || order_dlg->customer_number() < 1 || order_dlg->sales_number() < 1))
+	{
+		Order make_order(num,(os.str()),*(store.get_catalog()->get_model(order_dlg->model_number()-1)),
+					 order_dlg->amount(),*(store.get_customer(order_dlg->customer_number() - 1)), 1,
+					 *(store.get_associate(order_dlg->sales_number() - 1)));
+		store.add_order(make_order);
+		fl_message("Order created");
+		order_dlg->hide();
+		order_dlg->clear();
+	}
+	order_dlg->hide();
+	order_dlg->clear();
+}
+
+void show_order_dialogCB(Fl_Widget* w, void* p)
+{
+	order_dlg->show();
+}
+
+void cancel_order_dialogCB(Fl_Widget* w, void* p)
+{
+	order_dlg->hide();
+}
+
+void show_ordersCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i< store.order_vector_size(); i++)
+	{
+		os << store.order_to_string(i) << "\n"
+		<< "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Orders");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
+
+//===============================
+//         Manage order
+//===============================
+class manage_order_dialog
+{
+public:
+    manage_order_dialog() {
+		  dialog = new Fl_Window(380,260, "Manage Order");
+		  rp_order_number = new Fl_Input(220,10,150,25, "Order Index:");//type order#
+		  rp_order_number->align(FL_ALIGN_LEFT);
+
+
+		  rp_show = new Fl_Return_Button(35, 230, 135, 25, "Show Orders");//open order list
+		  rp_show->callback((Fl_Callback *)show_ordersCB, 0);
+		  //checkbox for all states
+          rp_state1 = new Fl_Button(220,45,135,25, "Unfulfilled Order");
+		  rp_state1->callback((Fl_Callback *)state1CB, 0);
+
+          rp_state2 = new Fl_Button(220,75,135,25, "Robot Built");
+		  rp_state2->callback((Fl_Callback *)state2CB, 0);
+
+		  rp_state3 = new Fl_Button(220,105,135,25, "Invoice Sent");
+		  rp_state3->callback((Fl_Callback *)state3CB, 0);
+
+		  rp_state4 = new Fl_Button(220,135,135,25, "Payment Received");
+		  rp_state4->callback((Fl_Callback *)state4CB, 0);
+
+          rp_state5 = new Fl_Button(220,165,135,25, "Robot Shipped");
+		  rp_state5->callback((Fl_Callback *)state5CB, 0);
+
+		  rp_cancel_order = new Fl_Button(220,195,135,25, "Cancel Order");
+		  rp_cancel_order->callback((Fl_Callback *)cancel_orderCB, 0);
+
+
+		  rp_save = new Fl_Return_Button(180,230,100,25, "Create");//save changes
+		  rp_save->callback((Fl_Callback *)save_orderCB, 0);
+
+		  rp_cancel = new Fl_Return_Button(285,230,95,25, "Cancel");
+		  rp_cancel->callback((Fl_Callback *)cancel_order_management_dialogCB, 0);
+
+		  dialog->end();
+		  dialog->set_non_modal();
+		}
+
+		void show() {dialog->show();}
+		void hide() {dialog->hide();}
+		void clear() {rp_order_number->value(NULL);}
+		int order_number() {bool valid = int_validation(rp_order_number->value());
+                            if (valid){return atoi(rp_order_number->value());}else{return -999;}}
+private:
+    Fl_Window *dialog;
+    Fl_Input *rp_order_number;
+    Fl_Return_Button *rp_show, *rp_save, *rp_cancel;
+    Fl_Button *rp_state1, *rp_state2, *rp_state3, *rp_state4, *rp_state5, *rp_cancel_order;
+};
+manage_order_dialog *manage_order_dlg;
+void save_orderCB(Fl_Widget* w, void* p)
+{
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void manage_order_dialogCB(Fl_Widget* w, void* p)
+{
+    manage_order_dlg->show();
+}
+
+void cancel_order_management_dialogCB(Fl_Widget* w, void* p)
+{
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state1CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(1);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state2CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(2);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state3CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(3);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state4CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(4);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state5CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(5);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void cancel_orderCB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(0);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+//===============================
+//     Validation functions
+//===============================
 
 bool int_validation(string input)
 {

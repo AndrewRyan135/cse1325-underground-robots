@@ -37,6 +37,47 @@ int Order :: get_status()
 {
     return status;
 }
+string Order::to_string()
+{
+	stringstream os;
+	os << "Order number:\t\t" << order_number <<'\n' << "Date:\t\t\t" << date
+	   << '\n' << "Robot Model:\t\t" << robot_model.get_name() << '\n'
+	   << "Quantity:\t\t" << quantity << '\n' << "Customer name:\t\t" << customer.get_name()
+	   << '\n' << "Status:\t\t\t" << status << '\n' << "Sales associate name:\t" << sales_associate.get_name()
+	   << '\n';
+	return os.str();
+}
+void Order :: set_status(int new_status)
+{
+    status = new_status;
+}
+string Order :: status_to_string()
+{
+    switch(status)
+    {
+    case 1:
+        {
+            return "New Order";
+        }
+    case 2:
+        {
+            return "Robot Built";
+        }
+    case 3:
+        {
+            return "Invoice Sent";
+        }
+    case 4:
+        {
+            return "Payment Received";
+        }
+    case 5:
+        {
+            return "Robot Shipped";
+        }
+    }
+    return "Unknown Status";
+}
 Sales_associate Order :: get_sales_associate()
 {
     return sales_associate;

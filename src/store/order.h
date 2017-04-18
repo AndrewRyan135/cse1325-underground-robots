@@ -21,6 +21,9 @@ class Order
 	  int get_quantity();
 	  Customer get_customer();
 	  int get_status();
+	  string to_string();
+	  void set_status(int new_status);
+	  string status_to_string();
 	  Sales_associate get_sales_associate();
 	  void save_order(ostream& ofs);
 
