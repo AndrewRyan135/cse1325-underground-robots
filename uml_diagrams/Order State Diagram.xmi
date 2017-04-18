@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMI verified="false" xmi.version="1.2" timestamp="2017-04-17T15:58:41" xmlns:UML="http://schema.omg.org/spec/UML/1.3">
+<XMI verified="false" xmi.version="1.2" timestamp="2017-04-17T22:34:45" xmlns:UML="http://schema.omg.org/spec/UML/1.3">
  <XMI.header>
   <XMI.documentation>
    <XMI.exporter>umbrello uml modeller http://umbrello.kde.org</XMI.exporter>
@@ -44,34 +44,34 @@
         <messages/>
         <associations/>
        </diagram>
-       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="Order State Diagram" font="Sans Serif,9,-1,0,50,0,0,0,0,0" canvasheight="685.277" canvaswidth="1225.51" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#d3d3d3" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="123.5923530609329" xmi.id="Ru48Dc6yOD0Y" documentation="" showscope="1" snapgrid="0" showatts="1" type="5">
+       <diagram showopsig="1" linecolor="#ff0000" snapx="25" showattribassocs="1" snapy="25" linewidth="0" showattsig="1" textcolor="#000000" isopen="1" showpackage="1" showpubliconly="0" showstereotype="1" name="Order State Diagram" font="Sans Serif,9,-1,0,50,0,0,0,0,0" canvasheight="473.624" canvaswidth="576.597" localid="-1" snapcsgrid="0" showgrid="0" showops="1" griddotcolor="#d3d3d3" backgroundcolor="#ffffff" usefillcolor="1" fillcolor="#ffff00" zoom="163.665373929461" xmi.id="Ru48Dc6yOD0Y" documentation="" showscope="1" snapgrid="0" showatts="1" type="5">
         <widgets>
          <statewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" usesdiagramusefillcolor="0" x="91.3202" showstereotype="1" y="-592.445" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="SQCxyVTScHqy" statename="" statetype="0" width="10" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="YvGxceYjz598" documentation="" height="10">
           <Activities/>
          </statewidget>
          <statewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" usesdiagramusefillcolor="0" x="44.836" showstereotype="1" y="-500.395" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="7k6IJIphpS0N" statename="New Order" statetype="1" width="102" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="f4qBrkTNiTkP" documentation="" height="40">
           <Activities>
-           <Activity name="order.status = 0"/>
+           <Activity name="order.status = 1"/>
           </Activities>
          </statewidget>
          <statewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" usesdiagramusefillcolor="0" x="227.673" showstereotype="1" y="-364.454" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="to11Yba0FwSl" statename="Robot Built" statetype="1" width="102" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="R7A6s9UaE3iv" documentation="" height="40">
           <Activities>
-           <Activity name="order.status = 1"/>
+           <Activity name="order.status = 2"/>
           </Activities>
          </statewidget>
-         <statewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" usesdiagramusefillcolor="0" x="-141.799" showstereotype="1" y="-179.334" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="QwVVuTsbNKjy" statename="Payment Recieved" statetype="1" width="116" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="bt4DYJVYQybV" documentation="" height="40">
-          <Activities>
-           <Activity name="order.status = 3"/>
-          </Activities>
-         </statewidget>
-         <statewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" usesdiagramusefillcolor="0" x="-143.073" showstereotype="1" y="-405.769" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="nMge46MsETgX" statename="Robot Shipped" statetype="1" width="102" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="eAplAFxzInqJ" documentation="" height="40">
+         <statewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" usesdiagramusefillcolor="0" x="-141.799" showstereotype="1" y="-179.334" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="QwVVuTsbNKjy" statename="Payment Received" statetype="1" width="116" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="bt4DYJVYQybV" documentation="" height="40">
           <Activities>
            <Activity name="order.status = 4"/>
           </Activities>
          </statewidget>
+         <statewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" usesdiagramusefillcolor="0" x="-143.073" showstereotype="1" y="-405.769" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="nMge46MsETgX" statename="Robot Shipped" statetype="1" width="102" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="eAplAFxzInqJ" documentation="" height="40">
+          <Activities>
+           <Activity name="order.status = 5"/>
+          </Activities>
+         </statewidget>
          <statewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" usesdiagramusefillcolor="0" x="228.288" showstereotype="1" y="-181.715" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="3lxRFY3zbAcE" statename="Sent Invoice" statetype="1" width="102" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="99oXkf3re8J4" documentation="" height="40">
           <Activities>
-           <Activity name="order.status = 2"/>
+           <Activity name="order.status = 3"/>
           </Activities>
          </statewidget>
          <statewidget linecolor="#ff0000" usesdiagramfillcolor="0" linewidth="0" textcolor="#000000" usesdiagramusefillcolor="0" x="-91.6178" showstereotype="1" y="-531.668" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="sFr4lIGHRNfU" statename="State" statetype="2" width="10" isinstance="0" usefillcolor="1" fillcolor="#ffff00" xmi.id="3xUCz3QhjJcr" documentation="" height="10">
@@ -109,7 +109,7 @@
          <assocwidget roleBdoc="" linecolor="#ff0000" indexa="1" usesdiagramfillcolor="0" widgetbid="bt4DYJVYQybV" indexb="1" linewidth="0" seqnum="" textcolor="#000000" usesdiagramusefillcolor="0" totalcounta="2" totalcountb="2" roleAdoc="" widgetaid="99oXkf3re8J4" font="Sans Serif,9,-1,0,50,0,0,0,0,0" visibilityA="0" visibilityB="0" usefillcolor="1" fillcolor="#ffff00" changeabilityA="900" changeabilityB="900" documentation="" type="514">
           <linepath layout="Polyline">
            <startpoint startx="228.288" starty="-163.798"/>
-           <endpoint endx="-25.7994" endy="-163.798"/>
+           <endpoint endx="-25.799" endy="-163.798"/>
           </linepath>
           <floatingtext linecolor="#ff0000" usesdiagramfillcolor="1" linewidth="0" textcolor="none" usesdiagramusefillcolor="1" x="58.1449" showstereotype="1" y="-137.821" text="Recieve Payment" font="Sans Serif,9,-1,0,50,0,0,0,0,0" localid="zBu7eTBFASM5" pretext="" role="703" width="103" isinstance="0" posttext="" usefillcolor="1" fillcolor="none" xmi.id="FOGbkVQpVEGn" height="19"/>
          </assocwidget>
@@ -161,7 +161,7 @@
   </UML:Model>
  </XMI.content>
  <XMI.extensions xmi.extender="umbrello">
-  <docsettings viewid="Ru48Dc6yOD0Y" uniqueid="zIJeJSoxjGAK" documentation=""/>
+  <docsettings viewid="Ru48Dc6yOD0Y" uniqueid="ALtTVzcX6uLj" documentation=""/>
   <listview>
    <listitem open="1" type="800" id="Views">
     <listitem open="1" type="821" id="Component View"/>
