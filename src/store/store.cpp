@@ -230,6 +230,26 @@ void Store :: add_order(Order order)
     orders.push_back(order);
 }
 
+int Store::order_vector_size()
+{
+	return orders.size();
+}
+
+int Store::customers_size()
+{
+	return customers.size();
+}
+
+int Store::sales_associates_size()
+{
+	return sales_associates.size();
+}
+
+string Store::order_to_string(int index)
+{
+	return orders[index].to_string();
+}
+
 Customer* Store::get_customer(int index)
 {
 	return &customers[index];
