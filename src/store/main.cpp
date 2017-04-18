@@ -123,7 +123,7 @@ Fl_Menu_Item menuitems[] = {
 		{"Robot &Model", FL_ALT + 'r', (Fl_Callback *)robot_model_dialog_showCB},
 		{"Sales &Associate", FL_ALT + 'a', (Fl_Callback *)sales_associate_dialog_showCB},
 		{"Customer", FL_ALT + 'c', (Fl_Callback *)customer_dialog_showCB},
-		{"Order", FL_ALT + + 'o', (Fl_Callback *)manage_order_dialogCB},
+		{"Order", FL_ALT + + 'o', (Fl_Callback *)show_order_dialogCB},
 		{0},
     {"&Manage", 0,0,0,FL_SUBMENU},
         {"&Orders", FL_ALT + 'o', (Fl_Callback *)manage_order_dialogCB},

@@ -154,6 +154,7 @@ void Store :: open(string filename)
                     }
                     robot_model = new Robot_model(name, model_number, *torso, *head, *locomotor, *arm, *battery);
                     catalog.add_model(*robot_model);
+                    break;
                 }
             case 7:
                 {
@@ -201,6 +202,7 @@ void Store :: open(string filename)
                     }
                     order = new Order(order_number, date, *robot_model, quantity, *customer, status, *sales_associate);
                     add_order(*order);
+                    break;
                 }
             //default:
                // {

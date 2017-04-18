@@ -43,15 +43,20 @@ robot
 4
 3
 5
-70
-2
-43
-torso
-7Joe Jackson
+7
+Joe Jackson
 3
 5555555
 shoelessjoe@blacksoxbaseball.org
 8
 Kenesaw Mountain Landis
+2
+9
+2777
+2017-4-17
+1
+1
+2
+1
 2
 0

@@ -56,6 +56,7 @@ void show_order_dialogCB(Fl_Widget* w, void* p);
 void cancel_order_dialogCB(Fl_Widget* w, void* p);
 void show_ordersCB(Fl_Widget* w, void* p);
 void create_orderCB(Fl_Widget* w, void* p);
+void save_orderCB(Fl_Widget* w, void* p);
 
 
 void Quit(Fl_Widget* w, void* p)
@@ -936,7 +937,7 @@ void show_ordersCB(Fl_Widget* w, void* p)
 		<< "===========================" << '\n';
 	}
 	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
-	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot Models");
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Orders");
 	disp->buffer(buff);
 	win->resizable(*disp);
 	win->show();
@@ -983,7 +984,8 @@ private:
 manage_order_dialog *manage_order_dlg;
 void save_orderCB(Fl_Widget* w, void* p)
 {
-
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
 }
 void manage_order_dialogCB(Fl_Widget* w, void* p)
 {
