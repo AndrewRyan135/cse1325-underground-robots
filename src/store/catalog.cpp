@@ -52,6 +52,11 @@ string Catalog::robot_model_to_string(int model_index)
 	return robot_model_vector[model_index].to_string();
 }
 
+string Catalog::robot_model_name(int index)
+{
+	return robot_model_vector[index].get_name();
+}
+
 string Catalog::head_to_string(int head_index)
 {
 	return head_part_vector[head_index].to_string();

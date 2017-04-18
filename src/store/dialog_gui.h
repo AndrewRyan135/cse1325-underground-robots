@@ -52,6 +52,10 @@ void cancel_sales_associateCB(Fl_Widget* w, void* p);
 void create_customerCB(Fl_Widget* w, void *p);
 void cancel_customerCB(Fl_Widget* w,void *p);
 void customer_dialog_showCB(Fl_Widget* w, void* p);
+void show_order_dialogCB(Fl_Widget* w, void* p);
+void cancel_order_dialogCB(Fl_Widget* w, void* p);
+void show_ordersCB(Fl_Widget* w, void* p);
+void create_orderCB(Fl_Widget* w, void* p);
 
 
 void Quit(Fl_Widget* w, void* p)
@@ -858,10 +862,10 @@ class create_order
 		  rp_show->callback((Fl_Callback *)show_robot_modelsCB, 0);
 
 		  rp_create = new Fl_Return_Button(180,230,100,25, "Create");
-		  rp_create->callback((Fl_Callback *)create_customerCB, 0);
+		  rp_create->callback((Fl_Callback *)create_orderCB, 0);
 
 		  rp_cancel = new Fl_Return_Button(285,230,95,25, "Cancel");
-		  rp_cancel->callback((Fl_Callback *)cancel_customerCB, 0);
+		  rp_cancel->callback((Fl_Callback *)cancel_order_dialogCB, 0);
 
 		  dialog->end();
 		  dialog->set_non_modal();
@@ -894,11 +898,19 @@ void create_orderCB(Fl_Widget* w, void* p)
 	int num = rand() % 10000;
 	os <<(now->tm_year + 1900)<< '-'
 	<<(now->tm_mon + 1)<<'-'<<(now->tm_mday);
-	Order make_order(num,(os.str()),*(store.get_catalog()->get_model(order_dlg->model_number()-1)),
+	if ((order_dlg->model_number() != -999 || order_dlg->amount() != -999 || order_dlg->customer_number() != -999 ||
+		order_dlg->sales_number() != -999) || (order_dlg->model_number() > store.order_vector_size() ||
+		order_dlg->customer_number() > store.customers_size() || order_dlg->sales_number() > store.sales_associates_size())
+		|| (order_dlg->model_number() < 1 || order_dlg->customer_number() < 1 || order_dlg->sales_number() < 1))
+	{
+		Order make_order(num,(os.str()),*(store.get_catalog()->get_model(order_dlg->model_number()-1)),
 					 order_dlg->amount(),*(store.get_customer(order_dlg->customer_number() - 1)), 1,
 					 *(store.get_associate(order_dlg->sales_number() - 1)));
-	store.add_order(make_order);
-	fl_message("Order created");
+		store.add_order(make_order);
+		fl_message("Order created");
+		order_dlg->hide();
+		order_dlg->clear();
+	}
 	order_dlg->hide();
 	order_dlg->clear();
 }
@@ -911,6 +923,24 @@ void show_order_dialogCB(Fl_Widget* w, void* p)
 void cancel_order_dialogCB(Fl_Widget* w, void* p)
 {
 	order_dlg->hide();
+}
+
+void show_ordersCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i< store.order_vector_size(); i++)
+	{
+		os << store.order_to_string(i) << "\n"
+		<< "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot Models");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
 }
 
 //===============================
