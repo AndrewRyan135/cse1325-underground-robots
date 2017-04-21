@@ -64,7 +64,7 @@ void state4CB(Fl_Widget* w, void* p);
 void state5CB(Fl_Widget* w, void* p);
 void cancel_orderCB(Fl_Widget* w, void* p);
 void cancel_order_management_dialogCB(Fl_Widget* w, void* p);
-
+void show_sales_reportCB(Fl_Widget* w, void* p);
 
 void Quit(Fl_Widget* w, void* p)
 {
@@ -268,7 +268,7 @@ void create_robot_torsoCB(Fl_Widget* w, void* p)
 	}
 	else
 	{
-	Torso torso(robot_head_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
+	Torso torso(robot_torso_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
 				robot_torso_dlg->battery(),robot_torso_dlg->max_arms());
 	store.get_catalog()->add_torso(torso);
 	fl_message("Created part");
@@ -938,7 +938,7 @@ void show_ordersCB(Fl_Widget* w, void* p)
 	Fl_Window *win = new Fl_Window(640, 480);
 	stringstream os;
 	int i = 0;
-	for(i = 0; i< store.order_vector_size(); i++)
+	for(i = 0; i <store.order_vector_size(); i++)
 	{
 		os << store.order_to_string(i) << "\n"
 		<< "===========================" << '\n';
@@ -950,6 +950,46 @@ void show_ordersCB(Fl_Widget* w, void* p)
 	win->show();
 	buff->text((os.str()).c_str());
 }
+
+//==========================================
+//	  Display employee sales report
+//==========================================
+
+void show_sales_reportCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i,j = 0;
+	for(i = 0; i < store.sales_associates_size(); i++)
+	{
+		os << store.get_associate(i)->get_name() << "\n";
+		for(j = 0; i < store.order_vector_size(); i++)
+		{
+
+			os << store.get_order(j)->to_string() << "\n";
+			/*
+			if (store.get_associate(i)->get_employee_number() == 
+			    store.get_order(j)->get_sales_associate().get_employee_number())
+			{
+				os << store.get_order(j)->to_string() << "\n";
+			}
+			*/
+		}
+		os << "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Employee sales report");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+
+}
+
+
+
+
+
 
 //===============================
 //         Manage order

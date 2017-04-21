@@ -117,6 +117,7 @@ Fl_Menu_Item menuitems[] = {
 		{"&Show Robot Parts", FL_ALT + 'v', (Fl_Callback *)show_robot_partsCB},
 		{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_modelsCB},
 		{"Show Orders", FL_ALT + FL_SHIFT + 'o', (Fl_Callback *)show_ordersCB},
+		{"Orders by &employees",FL_ALT + 'e', (Fl_Callback *)show_sales_reportCB},
 		{0},
 	{"&Create", 0,0,0,FL_SUBMENU},
 		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},
@@ -144,6 +145,7 @@ int main()
 	customer_dlg = new customer_dialog{};
 	order_dlg = new create_order{};
 	manage_order_dlg = new manage_order_dialog{};
+
 		Fl_Window *win;
 		Fl_Menu_Bar *menubar;
 		fl_register_images();
