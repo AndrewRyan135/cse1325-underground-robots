@@ -118,6 +118,7 @@ Fl_Menu_Item menuitems[] = {
 		{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_modelsCB},
 		{"Show Orders", FL_ALT + FL_SHIFT + 'o', (Fl_Callback *)show_ordersCB},
 		{"Orders by &employees",FL_ALT + 'e', (Fl_Callback *)show_sales_reportCB},
+		{"&Test order output", FL_ALT + 't', (Fl_Callback *)test_windowCB},
 		{0},
 	{"&Create", 0,0,0,FL_SUBMENU},
 		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},

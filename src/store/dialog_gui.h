@@ -65,6 +65,8 @@ void state5CB(Fl_Widget* w, void* p);
 void cancel_orderCB(Fl_Widget* w, void* p);
 void cancel_order_management_dialogCB(Fl_Widget* w, void* p);
 void show_sales_reportCB(Fl_Widget* w, void* p);
+void test_windowCB(Fl_Widget* w, void* p);
+
 
 void Quit(Fl_Widget* w, void* p)
 {
@@ -951,6 +953,24 @@ void show_ordersCB(Fl_Widget* w, void* p)
 	buff->text((os.str()).c_str());
 }
 
+void test_windowCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640,480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i < store.order_vector_size(); i++)
+	{
+		os << store.get_order(i) << "\n";
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Test");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
+
+
 //==========================================
 //	  Display employee sales report
 //==========================================
@@ -963,17 +983,15 @@ void show_sales_reportCB(Fl_Widget* w, void* p)
 	for(i = 0; i < store.sales_associates_size(); i++)
 	{
 		os << store.get_associate(i)->get_name() << "\n";
-		for(j = 0; i < store.order_vector_size(); i++)
+		for(j = 0; j < store.order_vector_size(); j++)
 		{
-
-			os << store.get_order(j)->to_string() << "\n";
-			/*
+			
 			if (store.get_associate(i)->get_employee_number() == 
 			    store.get_order(j)->get_sales_associate().get_employee_number())
 			{
 				os << store.get_order(j)->to_string() << "\n";
 			}
-			*/
+			
 		}
 		os << "===========================" << '\n';
 	}
