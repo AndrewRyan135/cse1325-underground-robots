@@ -39,20 +39,20 @@ bool double_validation(string input);
 //robot_part_dialog *robot_part_dlg;
 Fl_Menu_Item menuitems[] = {
 	{"&File", 0,0,0,FL_SUBMENU},
-		{"&Open", FL_ALT + 'o', (Fl_Callback *) openCB},
-		{"&Save", FL_ALT + 's', (Fl_Callback *) saveCB},
+		{"&Open", FL_ALT + 'o', (Fl_Callback *) open_fileCB},
+		{"&Save", FL_ALT + 's', (Fl_Callback *) save_fileCB},
 		{"&Quit", FL_ALT + 'q', (Fl_Callback *) Quit},
 		{0},
 	{"&Report", 0,0,0,FL_SUBMENU},
 		{"&Show Robot Parts", FL_ALT + 'v', (Fl_Callback *)show_robot_partsCB},
 		{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_modelsCB},
 		{"Show Orders", FL_ALT + FL_SHIFT + 'o', (Fl_Callback *)show_ordersCB},
-<<<<<<< HEAD
+
 		{"Show &Customers", FL_ALT + 'c', (Fl_Callback *)show_customersCB},
-=======
+
 		{"Orders by &employees",FL_ALT + 'e', (Fl_Callback *)show_sales_reportCB},
 		{"&Test order output", FL_ALT + 't', (Fl_Callback *)test_windowCB},
->>>>>>> 6323f77d8568b107c1050aa03248178974d046ff
+
 		{0},
 	{"&Create", 0,0,0,FL_SUBMENU},
 		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},

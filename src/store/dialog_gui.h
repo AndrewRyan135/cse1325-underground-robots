@@ -16,6 +16,7 @@
 #include <FL/Fl_Button.H>
 #include <FL/fl_ask.H>
 #include <FL/Fl_Text_Display.H>
+#include <FL/Fl_File_Chooser.H>
 #include "catalog.h"
 #include "store.h"
 #include "sales_associate.h"
@@ -56,10 +57,12 @@ void show_order_dialogCB(Fl_Widget* w, void* p);
 void cancel_order_dialogCB(Fl_Widget* w, void* p);
 void show_ordersCB(Fl_Widget* w, void* p);
 void create_orderCB(Fl_Widget* w, void* p);
-<<<<<<< HEAD
+void open_fileCB(Fl_Widget* w, void* p);
+void save_fileCB(Fl_Widget* w, void* p);
+
 void show_sales_associatesCB(Fl_Widget* w, void* p);
 void show_customersCB(Fl_Widget* w, void* p);
-=======
+
 void save_orderCB(Fl_Widget* w, void* p);
 void state1CB(Fl_Widget* w, void* p);
 void state2CB(Fl_Widget* w, void* p);
@@ -70,7 +73,7 @@ void cancel_orderCB(Fl_Widget* w, void* p);
 void cancel_order_management_dialogCB(Fl_Widget* w, void* p);
 void show_sales_reportCB(Fl_Widget* w, void* p);
 void test_windowCB(Fl_Widget* w, void* p);
->>>>>>> 6323f77d8568b107c1050aa03248178974d046ff
+
 
 
 void Quit(Fl_Widget* w, void* p)
@@ -1190,6 +1193,43 @@ void cancel_orderCB(Fl_Widget* w, void* p)
     manage_order_dlg->hide();
     manage_order_dlg->clear();
 }
+
+void open_fileCB(Fl_Widget* w, void* p)
+{
+	Fl_File_Chooser chooser(".","*",Fl_File_Chooser::MULTI, "File Browser");
+	chooser.show();
+	while(chooser.shown())
+	{
+		Fl::wait();
+	}
+	if (chooser.count() > 1 || chooser.count() < 1)
+	{
+		fl_message("Please select 1 file");
+	}
+	else
+	{
+		store.open(chooser.value());
+	}
+}
+
+void save_fileCB(Fl_Widget* w, void* p)
+{
+	Fl_File_Chooser chooser(".","*",Fl_File_Chooser::MULTI, "File Browser");
+	chooser.show();
+	while(chooser.shown())
+	{
+		Fl::wait();
+	}
+	if (chooser.count() > 1 || chooser.count() < 1)
+	{
+		fl_message("Please select 1 file");
+	}
+	else
+	{
+		store.save(chooser.value());
+	}
+}
+
 //===============================
 //     Validation functions
 //===============================
