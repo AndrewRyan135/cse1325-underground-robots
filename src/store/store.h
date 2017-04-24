@@ -39,6 +39,7 @@ public:
     string sales_associates_to_string(int index);
     Customer* get_customer(int index);
     Sales_associate* get_associate(int index);
+    Order* get_order(int index);
     Catalog* get_catalog();
 
 };

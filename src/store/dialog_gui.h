@@ -56,8 +56,21 @@ void show_order_dialogCB(Fl_Widget* w, void* p);
 void cancel_order_dialogCB(Fl_Widget* w, void* p);
 void show_ordersCB(Fl_Widget* w, void* p);
 void create_orderCB(Fl_Widget* w, void* p);
+<<<<<<< HEAD
 void show_sales_associatesCB(Fl_Widget* w, void* p);
 void show_customersCB(Fl_Widget* w, void* p);
+=======
+void save_orderCB(Fl_Widget* w, void* p);
+void state1CB(Fl_Widget* w, void* p);
+void state2CB(Fl_Widget* w, void* p);
+void state3CB(Fl_Widget* w, void* p);
+void state4CB(Fl_Widget* w, void* p);
+void state5CB(Fl_Widget* w, void* p);
+void cancel_orderCB(Fl_Widget* w, void* p);
+void cancel_order_management_dialogCB(Fl_Widget* w, void* p);
+void show_sales_reportCB(Fl_Widget* w, void* p);
+void test_windowCB(Fl_Widget* w, void* p);
+>>>>>>> 6323f77d8568b107c1050aa03248178974d046ff
 
 
 void Quit(Fl_Widget* w, void* p)
@@ -262,7 +275,7 @@ void create_robot_torsoCB(Fl_Widget* w, void* p)
 	}
 	else
 	{
-	Torso torso(robot_head_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
+	Torso torso(robot_torso_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
 				robot_torso_dlg->battery(),robot_torso_dlg->max_arms());
 	store.get_catalog()->add_torso(torso);
 	fl_message("Created part");
@@ -874,7 +887,7 @@ class create_order
 		  rp_model_number = new Fl_Input(220,10,150,25, "Model Index:");
 		  rp_model_number->align(FL_ALIGN_LEFT);
 
-		  rp_amount = new Fl_Input(220,40,150,25, "Quantitiy:");
+		  rp_amount = new Fl_Input(220,40,150,25, "Quantity:");
 		  rp_amount->align(FL_ALIGN_LEFT);
 
 		  rp_customer_name = new Fl_Input(220,70,150,25, "Customer number:");
@@ -965,19 +978,218 @@ void show_ordersCB(Fl_Widget* w, void* p)
 	Fl_Window *win = new Fl_Window(640, 480);
 	stringstream os;
 	int i = 0;
-	for(i = 0; i< store.order_vector_size(); i++)
+	for(i = 0; i <store.order_vector_size(); i++)
 	{
 		os << store.order_to_string(i) << "\n"
 		<< "===========================" << '\n';
 	}
 	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
-	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot Models");
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Orders");
 	disp->buffer(buff);
 	win->resizable(*disp);
 	win->show();
 	buff->text((os.str()).c_str());
 }
 
+void test_windowCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640,480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i < store.order_vector_size(); i++)
+	{
+		os << store.get_order(i) << "\n";
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Test");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
+
+
+//==========================================
+//	  Display employee sales report
+//==========================================
+
+void show_sales_reportCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i,j = 0;
+	for(i = 0; i < store.sales_associates_size(); i++)
+	{
+		os << store.get_associate(i)->get_name() << "\n";
+		for(j = 0; j < store.order_vector_size(); j++)
+		{
+			
+			if (store.get_associate(i)->get_employee_number() == 
+			    store.get_order(j)->get_sales_associate().get_employee_number())
+			{
+				os << store.get_order(j)->to_string() << "\n";
+			}
+			
+		}
+		os << "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Employee sales report");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+
+}
+
+
+
+
+
+
+//===============================
+//         Manage order
+//===============================
+class manage_order_dialog
+{
+public:
+    manage_order_dialog() {
+		  dialog = new Fl_Window(380,260, "Manage Order");
+		  rp_order_number = new Fl_Input(220,10,150,25, "Order Index:");//type order#
+		  rp_order_number->align(FL_ALIGN_LEFT);
+
+
+		  rp_show = new Fl_Return_Button(35, 230, 135, 25, "Show Orders");//open order list
+		  rp_show->callback((Fl_Callback *)show_ordersCB, 0);
+		  //checkbox for all states
+          rp_state1 = new Fl_Button(220,45,135,25, "Unfulfilled Order");
+		  rp_state1->callback((Fl_Callback *)state1CB, 0);
+
+          rp_state2 = new Fl_Button(220,75,135,25, "Robot Built");
+		  rp_state2->callback((Fl_Callback *)state2CB, 0);
+
+		  rp_state3 = new Fl_Button(220,105,135,25, "Invoice Sent");
+		  rp_state3->callback((Fl_Callback *)state3CB, 0);
+
+		  rp_state4 = new Fl_Button(220,135,135,25, "Payment Received");
+		  rp_state4->callback((Fl_Callback *)state4CB, 0);
+
+          rp_state5 = new Fl_Button(220,165,135,25, "Robot Shipped");
+		  rp_state5->callback((Fl_Callback *)state5CB, 0);
+
+		  rp_cancel_order = new Fl_Button(220,195,135,25, "Cancel Order");
+		  rp_cancel_order->callback((Fl_Callback *)cancel_orderCB, 0);
+
+
+		  rp_save = new Fl_Return_Button(180,230,100,25, "Create");//save changes
+		  rp_save->callback((Fl_Callback *)save_orderCB, 0);
+
+		  rp_cancel = new Fl_Return_Button(285,230,95,25, "Cancel");
+		  rp_cancel->callback((Fl_Callback *)cancel_order_management_dialogCB, 0);
+
+		  dialog->end();
+		  dialog->set_non_modal();
+		}
+
+		void show() {dialog->show();}
+		void hide() {dialog->hide();}
+		void clear() {rp_order_number->value(NULL);}
+		int order_number() {bool valid = int_validation(rp_order_number->value());
+                            if (valid){return atoi(rp_order_number->value());}else{return -999;}}
+private:
+    Fl_Window *dialog;
+    Fl_Input *rp_order_number;
+    Fl_Return_Button *rp_show, *rp_save, *rp_cancel;
+    Fl_Button *rp_state1, *rp_state2, *rp_state3, *rp_state4, *rp_state5, *rp_cancel_order;
+};
+manage_order_dialog *manage_order_dlg;
+void save_orderCB(Fl_Widget* w, void* p)
+{
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void manage_order_dialogCB(Fl_Widget* w, void* p)
+{
+    manage_order_dlg->show();
+}
+
+void cancel_order_management_dialogCB(Fl_Widget* w, void* p)
+{
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state1CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(1);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state2CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(2);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state3CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(3);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state4CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(4);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void state5CB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(5);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
+void cancel_orderCB(Fl_Widget* w, void* p)
+{
+    for(int i = 0; i < store.order_vector_size(); i++){
+        if(manage_order_dlg->order_number() == store.get_order(i)->get_order_number())
+        {
+            store.get_order(i)->set_status(0);
+            break;
+        }
+    }
+    manage_order_dlg->hide();
+    manage_order_dlg->clear();
+}
 //===============================
 //     Validation functions
 //===============================

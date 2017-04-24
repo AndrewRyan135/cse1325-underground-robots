@@ -24,7 +24,7 @@ string Customer::get_name() {return name;}
 
 void Customer :: save_customer(ostream& ofs)
 {
-    ofs << "7"
+    ofs << "7" << endl
     << name << endl
     << number << endl
     << phonenumber << endl

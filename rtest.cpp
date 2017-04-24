@@ -65,6 +65,7 @@ int main(void)
         case 3:
             {
                 cout << store.get_catalog()->catalog_to_string() << endl;
+                cout << store.order_to_string(0) << endl;
                 break;
             }
 
