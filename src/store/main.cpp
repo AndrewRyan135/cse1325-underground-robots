@@ -36,76 +36,6 @@ bool double_validation(string input);
 //void part_picker(int index);
 //void save_data();
 
-
-
-/*int int_validation()
-{
-	int input;
-	int flag = 1;
-	while (flag == 1)
-	{
-		cin >> input;
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(),'\n');
-			cout << "Invalid input: Please re enter: " << endl;
-			continue;
-		}
-	    flag = 0;
-	}
-	return input;
-}*/
-
-//saves store orders that have been places
-/*
-void save_data()
-{
-	cout << "Enter the file name to save in: " << endl;
-	string output_filename;
-	cin >> output_filename;
-	ofstream ofs {output_filename};
-	if(!ofs)
-	{
-		throw runtime_error("Can't open file...");
-		return;
-	}
-
-	ofs << "Works";
-	return;
-}
-*/
-
-
-/*double double_validation()
-{
-	double input;
-	int flag = 1;
-	while (flag == 1)
-	{
-		cin >> input;
-		if (cin.fail())
-		{
-			cin.clear();
-			cin.ignore(numeric_limits<streamsize>::max(),'\n');
-			cout << "Invalid input: Please re enter: " << endl;
-			continue;
-		}
-	    flag = 0;
-	}
-	return input;
-}*/
-
-/*
-double calculate_total_price(int model_index, int quantity)
-{
-	double total;
-	Robot_model model = catologe.get_model(model_index);
-
-	total = quantity * model.cost();
-}
-*/
-
 //robot_part_dialog *robot_part_dlg;
 Fl_Menu_Item menuitems[] = {
 	{"&File", 0,0,0,FL_SUBMENU},
@@ -117,6 +47,7 @@ Fl_Menu_Item menuitems[] = {
 		{"&Show Robot Parts", FL_ALT + 'v', (Fl_Callback *)show_robot_partsCB},
 		{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_modelsCB},
 		{"Show Orders", FL_ALT + FL_SHIFT + 'o', (Fl_Callback *)show_ordersCB},
+		{"Show &Customers", FL_ALT + 'c', (Fl_Callback *)show_customersCB},
 		{0},
 	{"&Create", 0,0,0,FL_SUBMENU},
 		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},

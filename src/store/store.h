@@ -35,6 +35,8 @@ public:
     int customers_size();
     int sales_associates_size();
     string order_to_string(int index);
+    string customer_to_string(int index);
+    string sales_associates_to_string(int index);
     Customer* get_customer(int index);
     Sales_associate* get_associate(int index);
     Catalog* get_catalog();

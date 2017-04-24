@@ -56,6 +56,8 @@ void show_order_dialogCB(Fl_Widget* w, void* p);
 void cancel_order_dialogCB(Fl_Widget* w, void* p);
 void show_ordersCB(Fl_Widget* w, void* p);
 void create_orderCB(Fl_Widget* w, void* p);
+void show_sales_associatesCB(Fl_Widget* w, void* p);
+void show_customersCB(Fl_Widget* w, void* p);
 
 
 void Quit(Fl_Widget* w, void* p)
@@ -735,6 +737,23 @@ void cancel_sales_associateCB(Fl_Widget* w, void* p)
 	sales_associate_dlg->hide();
 }
 
+void show_sales_associatesCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i< store.sales_associates_size(); i++)
+	{
+		os << store.sales_associates_to_string(i) << "\n"
+		<< "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Sales Associates");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
 
 ///////////////////////////////////////////////////
 //	show robot models callback
@@ -767,23 +786,20 @@ class customer_dialog
 		public:
 		  customer_dialog()
 		  {
- 		  dialog = new Fl_Window(310,260, "Customer");
+ 		  dialog = new Fl_Window(310,140, "Customer");
 		  rp_name = new Fl_Input(140,10,150,25, "Name:");
 		  rp_name->align(FL_ALIGN_LEFT);
 
-		  rp_number = new Fl_Input(140,40,150,25, "Number:");
-		  rp_number->align(FL_ALIGN_LEFT);
-
-		  rp_phonenumber = new Fl_Input(140,70,150,25, "Phone number:");
+		  rp_phonenumber = new Fl_Input(140,40,150,25, "Phone number:");
 		  rp_phonenumber->align(FL_ALIGN_LEFT);
 
-		  rp_email = new Fl_Input(140,100,150,25, "Email:");
+		  rp_email = new Fl_Input(140,70,150,25, "Email:");
 		  rp_email->align(FL_ALIGN_LEFT);
 
-		  rp_create = new Fl_Return_Button(100,230,100,25, "Create");
+		  rp_create = new Fl_Return_Button(100,100,100,25, "Create");
 		  rp_create->callback((Fl_Callback *)create_customerCB, 0);
 
-		  rp_cancel = new Fl_Button(210,230,95,25, "Cancel");
+		  rp_cancel = new Fl_Button(210,100,95,25, "Cancel");
 		  rp_cancel->callback((Fl_Callback *)cancel_customerCB, 0);
 
 		  dialog->end();
@@ -791,10 +807,8 @@ class customer_dialog
 		  }
 		void show() {dialog->show();}
 	  	void hide() {dialog->hide();}
-	        void clear() {rp_name->value(NULL);rp_number->value(NULL);}
-	        string name() {return rp_name->value();}
-	        int number() {bool valid = int_validation(rp_number->value());
-		       if (valid){return atoi(rp_number->value());} else{return -999;}}
+	    void clear() {rp_name->value(NULL);rp_phonenumber->value(NULL);rp_email->value(NULL);}
+	    string name() {return rp_name->value();}
 		string phonenumber() {return rp_phonenumber->value();}
 		string email() {return rp_email->value();}
 
@@ -802,7 +816,6 @@ class customer_dialog
 	private:
 	  Fl_Window *dialog;
 	  Fl_Input *rp_name;
-	  Fl_Input *rp_number;
 	  Fl_Input *rp_phonenumber;
 	  Fl_Input *rp_email;
 	  Fl_Return_Button *rp_create;
@@ -813,16 +826,11 @@ customer_dialog *customer_dlg;
 
 void create_customerCB(Fl_Widget* w, void* p)
 {
-	if(customer_dlg->number() == -999)
-	{
-		fl_message("Invalid Input.");
-	}
-	else
-	{
-	Customer customer(customer_dlg->name(), customer_dlg->number(),customer_dlg->phonenumber(),customer_dlg->email());
-	store.add_customer(customer);
-	fl_message("Customer created.");
-	}
+		srand(time(NULL));
+		int num = rand() % 10000;
+		Customer customer(customer_dlg->name(),num,customer_dlg->phonenumber(),customer_dlg->email());
+		store.add_customer(customer);
+		fl_message("Customer created.");
 	customer_dlg->hide();
 	customer_dlg->clear();
 }
@@ -837,6 +845,23 @@ void cancel_customerCB(Fl_Widget* w, void* p)
 	customer_dlg->hide();
 }
 
+void show_customersCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i< store.customers_size(); i++)
+	{
+		os << store.customer_to_string(i) << "\n"
+		<< "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot Customers");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
 //===============================
 //         Creating order
 //===============================
@@ -858,13 +883,19 @@ class create_order
 		  rp_sales_name = new Fl_Input(220,100,150,25, "Sales associate number:");
 		  rp_sales_name->align(FL_ALIGN_LEFT);
 
-		  rp_show = new Fl_Return_Button(75, 230, 100, 25, "Show Models");
+		  rp_show = new Fl_Return_Button(55, 200, 120, 25, "Show Models");
 		  rp_show->callback((Fl_Callback *)show_robot_modelsCB, 0);
 
-		  rp_create = new Fl_Return_Button(180,230,100,25, "Create");
+		  rp_show_customers = new Fl_Return_Button(10, 230, 160, 25, "Show Customers");
+		  rp_show_customers->callback((Fl_Callback *)show_customersCB, 0);
+
+		  rp_show_associates = new Fl_Return_Button(175, 230, 200, 25, "Show Sales Associates");
+		  rp_show_associates->callback((Fl_Callback *)show_sales_associatesCB, 0);
+
+		  rp_create = new Fl_Return_Button(185,200,100,25, "Create");
 		  rp_create->callback((Fl_Callback *)create_orderCB, 0);
 
-		  rp_cancel = new Fl_Return_Button(285,230,95,25, "Cancel");
+		  rp_cancel = new Fl_Return_Button(285,200,90,25, "Cancel");
 		  rp_cancel->callback((Fl_Callback *)cancel_order_dialogCB, 0);
 
 		  dialog->end();
@@ -886,7 +917,7 @@ class create_order
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_model_number, *rp_amount, *rp_customer_name, *rp_sales_name;
-		Fl_Return_Button *rp_create, *rp_cancel, *rp_show;
+		Fl_Return_Button *rp_create, *rp_cancel, *rp_show, *rp_show_customers, *rp_show_associates;
 };
 
 create_order *order_dlg;
@@ -895,13 +926,19 @@ void create_orderCB(Fl_Widget* w, void* p)
 	time_t t =time(0);
 	struct tm *now = localtime(&t);
 	stringstream os;
+	srand(time(NULL));
 	int num = rand() % 10000;
 	os <<(now->tm_year + 1900)<< '-'
 	<<(now->tm_mon + 1)<<'-'<<(now->tm_mday);
-	if ((order_dlg->model_number() != -999 || order_dlg->amount() != -999 || order_dlg->customer_number() != -999 ||
-		order_dlg->sales_number() != -999) || (order_dlg->model_number() > store.order_vector_size() ||
+	if ((order_dlg->model_number() == -999 || order_dlg->amount() == -999 || order_dlg->customer_number() == -999 ||
+		order_dlg->sales_number() == -999) || (order_dlg->model_number() > store.order_vector_size() ||
 		order_dlg->customer_number() > store.customers_size() || order_dlg->sales_number() > store.sales_associates_size())
 		|| (order_dlg->model_number() < 1 || order_dlg->customer_number() < 1 || order_dlg->sales_number() < 1))
+	{
+		fl_message("Invalid Input");
+		order_dlg->hide();
+	}
+	else
 	{
 		Order make_order(num,(os.str()),*(store.get_catalog()->get_model(order_dlg->model_number()-1)),
 					 order_dlg->amount(),*(store.get_customer(order_dlg->customer_number() - 1)), 1,
@@ -909,9 +946,7 @@ void create_orderCB(Fl_Widget* w, void* p)
 		store.add_order(make_order);
 		fl_message("Order created");
 		order_dlg->hide();
-		order_dlg->clear();
 	}
-	order_dlg->hide();
 	order_dlg->clear();
 }
 
