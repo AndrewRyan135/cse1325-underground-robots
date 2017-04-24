@@ -36,6 +36,9 @@ string Head::to_string()
 
 string Head::name() {return Robot_part::get_name();}
 
+
+
+
 void Head :: save_head(ostream& ofs)
 {
     ofs << "1" << endl;
@@ -59,6 +62,7 @@ string Torso::to_string()
 }
 
 string Torso::name() {return Robot_part::get_name();}
+
 
 void Torso :: save_torso(ostream& ofs)
 {
@@ -84,6 +88,7 @@ string Arm::to_string()
 }
 
 string Arm::name() {return Robot_part::get_name();}
+
 
 void Arm :: save_arm(ostream& ofs)
 {
@@ -133,6 +138,7 @@ string Battery::to_string()
 }
 
 string Battery::name() {return Robot_part::get_name();}
+
 
 void Battery :: save_battery(ostream& ofs)
 {

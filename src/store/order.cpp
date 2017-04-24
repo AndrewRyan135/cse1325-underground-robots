@@ -47,6 +47,37 @@ string Order::to_string()
 	   << '\n';
 	return os.str();
 }
+void Order :: set_status(int new_status)
+{
+    status = new_status;
+}
+string Order :: status_to_string()
+{
+    switch(status)
+    {
+    case 1:
+        {
+            return "New Order";
+        }
+    case 2:
+        {
+            return "Robot Built";
+        }
+    case 3:
+        {
+            return "Invoice Sent";
+        }
+    case 4:
+        {
+            return "Payment Received";
+        }
+    case 5:
+        {
+            return "Robot Shipped";
+        }
+    }
+    return "Unknown Status";
+}
 Sales_associate Order :: get_sales_associate()
 {
     return sales_associate;
