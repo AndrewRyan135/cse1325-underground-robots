@@ -51,7 +51,7 @@ Fl_Menu_Item menuitems[] = {
 		{"Show &Customers", FL_ALT + 'c', (Fl_Callback *)show_customersCB},
 
 		{"Orders by &employees",FL_ALT + 'e', (Fl_Callback *)show_sales_reportCB},
-		{"&Test order output", FL_ALT + 't', (Fl_Callback *)test_windowCB},
+		//{"&Test order output", FL_ALT + 't', (Fl_Callback *)test_windowCB},
 
 		{0},
 	{"&Create", 0,0,0,FL_SUBMENU},
