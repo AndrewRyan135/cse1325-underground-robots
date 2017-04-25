@@ -10,12 +10,14 @@
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Shared_Image.H>
 #include <FL/Fl_JPEG_Image.H>
+#include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Multiline_Input.H>
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Button.H>
 #include <FL/fl_ask.H>
 #include <FL/Fl_Text_Display.H>
+#include <FL/Fl_File_Chooser.H>
 #include "catalog.h"
 #include "store.h"
 #include "sales_associate.h"
@@ -43,9 +45,17 @@ void robot_battery_dialog_showCB(Fl_Widget* w, void* p);
 void robot_battery_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_batteryCB(Fl_Widget* w, void* p);
 void show_robot_partsCB(Fl_Widget* w, void* p);
+void show_head_imgCB(Fl_Widget* w, void* p);
 void robot_model_dialog_showCB(Fl_Widget* w, void* p);
 void robot_model_dialog_hideCB(Fl_Widget* w, void* p);
 void create_robot_modelCB(Fl_Widget* w, void* p);
+void show_robot_models_dialogCB(Fl_Widget* w, void* p);
+void hide_robot_models_dialogCB(Fl_Widget* w, void* p);
+void show_model_imgCB(Fl_Widget* w, void* p);
+void show_torso_imgCB(Fl_Widget* w, void* p);
+void show_locomotor_imgCB(Fl_Widget* w, void* p);
+void show_battery_imgCB(Fl_Widget* w, void* p);
+void show_arm_imgCB(Fl_Widget* w, void* p);
 void create_sales_associateCB(Fl_Widget* w, void* p);
 void sales_associate_dialog_showCB(Fl_Widget* w, void* p);
 void cancel_sales_associateCB(Fl_Widget* w, void* p);
@@ -56,6 +66,12 @@ void show_order_dialogCB(Fl_Widget* w, void* p);
 void cancel_order_dialogCB(Fl_Widget* w, void* p);
 void show_ordersCB(Fl_Widget* w, void* p);
 void create_orderCB(Fl_Widget* w, void* p);
+void open_fileCB(Fl_Widget* w, void* p);
+void save_fileCB(Fl_Widget* w, void* p);
+
+void show_sales_associatesCB(Fl_Widget* w, void* p);
+void show_customersCB(Fl_Widget* w, void* p);
+
 void save_orderCB(Fl_Widget* w, void* p);
 void state1CB(Fl_Widget* w, void* p);
 void state2CB(Fl_Widget* w, void* p);
@@ -64,6 +80,9 @@ void state4CB(Fl_Widget* w, void* p);
 void state5CB(Fl_Widget* w, void* p);
 void cancel_orderCB(Fl_Widget* w, void* p);
 void cancel_order_management_dialogCB(Fl_Widget* w, void* p);
+void show_sales_reportCB(Fl_Widget* w, void* p);
+void test_windowCB(Fl_Widget* w, void* p);
+
 
 
 void Quit(Fl_Widget* w, void* p)
@@ -268,7 +287,7 @@ void create_robot_torsoCB(Fl_Widget* w, void* p)
 	}
 	else
 	{
-	Torso torso(robot_head_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
+	Torso torso(robot_torso_dlg->name(),robot_torso_dlg->model_number(),robot_torso_dlg->cost(),robot_torso_dlg->description(),robot_torso_dlg->file(),
 				robot_torso_dlg->battery(),robot_torso_dlg->max_arms());
 	store.get_catalog()->add_torso(torso);
 	fl_message("Created part");
@@ -540,18 +559,28 @@ class robot_model_dialog
 		dialog = new Fl_Window(480, 260, "Robot Model");
 		rp_head_index = new Fl_Input(270, 10, 210, 25, "Head index:");
 		rp_head_index->align(FL_ALIGN_LEFT);
+		rp_head_show = new Fl_Button(10, 10, 100, 25, "Show Image");
+		rp_head_show->callback((Fl_Callback *)show_head_imgCB, 0);
 
 		rp_torso_index = new Fl_Input(270, 40, 210, 25, "Torso index:");
 		rp_torso_index->align(FL_ALIGN_LEFT);
+		rp_torso_show = new Fl_Button(10, 40, 100, 25, "Show Image");
+		rp_torso_show->callback((Fl_Callback *)show_torso_imgCB, 0);
 
 		rp_arm_index = new Fl_Input(270, 70, 210, 25, "Arm index:");
 		rp_arm_index->align(FL_ALIGN_LEFT);
+		rp_arm_show = new Fl_Button(10, 70, 100, 25, "Show Image");
+		rp_arm_show->callback((Fl_Callback *)show_arm_imgCB, 0);
 
 		rp_locomotor_index = new Fl_Input(270, 100, 210, 25, "Locomotor index:");
 		rp_locomotor_index->align(FL_ALIGN_LEFT);
+		rp_locomotor_show = new Fl_Button(10, 100, 100, 25, "Show Image");
+		rp_locomotor_show->callback((Fl_Callback *)show_locomotor_imgCB, 0);
 
 		rp_battery_index = new Fl_Input(270, 130, 210, 25, "Battery index:");
 		rp_battery_index->align(FL_ALIGN_LEFT);
+		rp_battery_show = new Fl_Button(10, 130, 100, 25, "Show Image");
+		rp_battery_show->callback((Fl_Callback *)show_battery_imgCB, 0);
 
 		rp_name = new Fl_Input(270, 160, 210, 25, "Model name:");
 		rp_name->align(FL_ALIGN_LEFT);
@@ -592,6 +621,7 @@ class robot_model_dialog
 		Fl_Window *dialog;
 		Fl_Return_Button *rp_create, *rp_cancel, *rp_show;
 		Fl_Input *rp_head_index, *rp_torso_index, *rp_arm_index, *rp_locomotor_index, *rp_battery_index, *rp_model_number, *rp_name;
+		Fl_Button *rp_head_show, *rp_torso_show, *rp_arm_show, *rp_locomotor_show, *rp_battery_show;
 		int a;
 };
 robot_model_dialog *robot_model_dlg;
@@ -631,6 +661,7 @@ void create_robot_modelCB(Fl_Widget* w, void* p)
 void show_robot_partsCB(Fl_Widget* w, void* p)
 {
 	Fl_Window *win = new Fl_Window(640,480);
+
 	stringstream os;
 	int i = 0;
 	os << "Heads: \n";
@@ -670,6 +701,81 @@ void show_robot_partsCB(Fl_Widget* w, void* p)
 	win->resizable(*disp);
 	win->show();
 	buff->text((os.str()).c_str());
+}
+void show_head_imgCB(Fl_Widget* w, void* p)
+{
+    int num = robot_model_dlg->head()-1;
+    if(num == 999 || num < 0 || num > store.get_catalog()->head_vector_size()-1)
+    {
+        fl_message("Please Enter a part index in the box\n and select Show Image to view it");
+        return;
+    }
+    string filename = "../img/" + (store.get_catalog()->get_head(robot_model_dlg->head()-1)->get_image_filename());
+    Fl_Window *win = new Fl_Window(500+10, 500+10);
+    Fl_Box *box = new Fl_Box(10, 10, 500, 500);
+    Fl_PNG_Image *png = new Fl_PNG_Image(filename.c_str());
+    box->image(*png);
+    win->show();
+}
+void show_torso_imgCB(Fl_Widget* w, void* p)
+{
+    int num = robot_model_dlg->torso()-1;
+    if(num == 999 || num < 0 || num > store.get_catalog()->torso_vector_size()-1)
+    {
+        fl_message("Please Enter a part index in the box\n and select Show Image to view it");
+        return;
+    }
+    string filename = "../img/" + (store.get_catalog()->get_torso(robot_model_dlg->torso()-1)->get_image_filename());
+    Fl_Window *win = new Fl_Window(500+10, 500+10);
+    Fl_Box *box = new Fl_Box(10, 10, 500, 500);
+    Fl_PNG_Image *png = new Fl_PNG_Image(filename.c_str());
+    box->image(*png);
+    win->show();
+}
+void show_arm_imgCB(Fl_Widget* w, void* p)
+{
+    int num = robot_model_dlg->arm()-1;
+    if(num == 999 || num < 0 || num > store.get_catalog()->arm_vector_size()-1)
+    {
+        fl_message("Please Enter a part index in the box\n and select Show Image to view it");
+        return;
+    }
+    string filename = "../img/" + (store.get_catalog()->get_arm(robot_model_dlg->arm()-1)->get_image_filename());
+    Fl_Window *win = new Fl_Window(500+10, 500+10);
+    Fl_Box *box = new Fl_Box(10, 10, 500, 500);
+    Fl_PNG_Image *png = new Fl_PNG_Image(filename.c_str());
+    box->image(*png);
+    win->show();
+}
+void show_locomotor_imgCB(Fl_Widget* w, void* p)
+{
+    int num = robot_model_dlg->locomotor()-1;
+    if(num == 999 || num < 0 || num > store.get_catalog()->locomotor_vector_size()-1)
+    {
+        fl_message("Please Enter a part index in the box\n and select Show Image to view it");
+        return;
+    }
+    string filename = "../img/" + (store.get_catalog()->get_locomotor(robot_model_dlg->locomotor()-1)->get_image_filename());
+    Fl_Window *win = new Fl_Window(500+10, 500+10);
+    Fl_Box *box = new Fl_Box(10, 10, 500, 500);
+    Fl_PNG_Image *png = new Fl_PNG_Image(filename.c_str());
+    box->image(*png);
+    win->show();
+}
+void show_battery_imgCB(Fl_Widget* w, void* p)
+{
+    int num = robot_model_dlg->battery()-1;
+    if(num == 999 || num < 0 || num > store.get_catalog()->battery_vector_size()-1)
+    {
+        fl_message("Please Enter a part index in the box\n and select Show Image to view it");
+        return;
+    }
+    string filename = "../img/" + (store.get_catalog()->get_battery(robot_model_dlg->battery()-1)->get_image_filename());
+    Fl_Window *win = new Fl_Window(500+10, 500+10);
+    Fl_Box *box = new Fl_Box(10, 10, 500, 500);
+    Fl_PNG_Image *png = new Fl_PNG_Image(filename.c_str());
+    box->image(*png);
+    win->show();
 }
 
 ////////////////////////////////////////////////
@@ -743,14 +849,77 @@ void cancel_sales_associateCB(Fl_Widget* w, void* p)
 	sales_associate_dlg->hide();
 }
 
+void show_sales_associatesCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i< store.sales_associates_size(); i++)
+	{
+		os << store.sales_associates_to_string(i) << "\n"
+		<< "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Sales Associates");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
 
 ///////////////////////////////////////////////////
 //	show robot models callback
 //////////////////////////////////////////////////
+class show_robot_models_dialog
+{
+public:
+    show_robot_models_dialog(){}
 
+    void show() {
+        dialog = new Fl_Window(640, 520);
+        rp_model_show = new Fl_Button(10, 480, 150, 25, "Show Image");
+        rp_model_show->callback((Fl_Callback *)show_model_imgCB, 0);
+        rp_model_number = new Fl_Input(400, 480, 210, 25, "Model Number: ");
+        rp_model_number->align(FL_ALIGN_LEFT);
+        int i = 0;
+        for(i = 0; i< store.get_catalog()->robot_model_vector_size(); i++)
+        {
+            os << store.get_catalog()->robot_model_to_string(i) << "\n"
+            << "===========================" << '\n';
+        }
+        Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+        Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot Models");
+        disp->buffer(buff);
+        dialog->resizable(*disp);
+        dialog->show();
+        buff->text((os.str()).c_str());
+    }
+    void hide() {dialog->hide();}
+    void clear() {rp_model_number->value(NULL);}
+    int model_number() {bool valid = int_validation(rp_model_number->value());
+		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
+private:
+    Fl_Window *dialog;
+    Fl_Button *rp_model_show;
+    Fl_Input *rp_model_number;
+    Fl_Text_Buffer *buff;
+    Fl_Text_Display *disp;
+    int i;
+    stringstream os;
+};
+show_robot_models_dialog *show_robot_models_dlg;
+void show_robot_models_dialogCB(Fl_Widget* w, void* p)
+{
+    show_robot_models_dlg->show();
+}
+void hide_robot_models_dialogCB(Fl_Widget* w, void* p)
+{
+    show_robot_models_dlg->hide();
+}
+/*
 void show_robot_modelsCB(Fl_Widget* w, void* p)
 {
-	Fl_Window *win = new Fl_Window(640, 480);
+	Fl_Window *win = new Fl_Window(640, 520);
 	stringstream os;
 	int i = 0;
 	for(i = 0; i< store.get_catalog()->robot_model_vector_size(); i++)
@@ -765,6 +934,32 @@ void show_robot_modelsCB(Fl_Widget* w, void* p)
 	win->show();
 	buff->text((os.str()).c_str());
 }
+*/
+void show_model_imgCB(Fl_Widget* w, void* p)
+{
+    int num;
+    num = show_robot_models_dlg->model_number();
+
+    if(num == -999)
+    {
+        fl_message("Please Enter a valid model number and select\n Show Image to view model image.");
+        return;
+    }
+    for(int i = 0; i < store.get_catalog()->model_vector_size(); i++){
+        if(num == store.get_catalog()->get_model(i)->get_model_number()){
+            string filename = "../img/full_white_can_w_antennae2.jpg"; //would normally get image filename but I just realized that models don't have those
+            Fl_Window *win = new Fl_Window(400+10, 400+10);
+            Fl_Box *box = new Fl_Box(10, 10, 400, 400);
+            Fl_JPEG_Image *jpeg = new Fl_JPEG_Image(filename.c_str());
+            box->image(*jpeg);
+            win->show();
+            return;
+        }
+    }
+    fl_message("Please Enter a valid model number and select\n Show Image to view model image.");
+    return;
+
+}
 
 /////////////////////////////////////////////////////
 //	Creating customer
@@ -775,23 +970,20 @@ class customer_dialog
 		public:
 		  customer_dialog()
 		  {
- 		  dialog = new Fl_Window(310,260, "Customer");
+ 		  dialog = new Fl_Window(310,140, "Customer");
 		  rp_name = new Fl_Input(140,10,150,25, "Name:");
 		  rp_name->align(FL_ALIGN_LEFT);
 
-		  rp_number = new Fl_Input(140,40,150,25, "Number:");
-		  rp_number->align(FL_ALIGN_LEFT);
-
-		  rp_phonenumber = new Fl_Input(140,70,150,25, "Phone number:");
+		  rp_phonenumber = new Fl_Input(140,40,150,25, "Phone number:");
 		  rp_phonenumber->align(FL_ALIGN_LEFT);
 
-		  rp_email = new Fl_Input(140,100,150,25, "Email:");
+		  rp_email = new Fl_Input(140,70,150,25, "Email:");
 		  rp_email->align(FL_ALIGN_LEFT);
 
-		  rp_create = new Fl_Return_Button(100,230,100,25, "Create");
+		  rp_create = new Fl_Return_Button(100,100,100,25, "Create");
 		  rp_create->callback((Fl_Callback *)create_customerCB, 0);
 
-		  rp_cancel = new Fl_Button(210,230,95,25, "Cancel");
+		  rp_cancel = new Fl_Button(210,100,95,25, "Cancel");
 		  rp_cancel->callback((Fl_Callback *)cancel_customerCB, 0);
 
 		  dialog->end();
@@ -799,10 +991,8 @@ class customer_dialog
 		  }
 		void show() {dialog->show();}
 	  	void hide() {dialog->hide();}
-	        void clear() {rp_name->value(NULL);rp_number->value(NULL);}
-	        string name() {return rp_name->value();}
-	        int number() {bool valid = int_validation(rp_number->value());
-		       if (valid){return atoi(rp_number->value());} else{return -999;}}
+	    void clear() {rp_name->value(NULL);rp_phonenumber->value(NULL);rp_email->value(NULL);}
+	    string name() {return rp_name->value();}
 		string phonenumber() {return rp_phonenumber->value();}
 		string email() {return rp_email->value();}
 
@@ -810,7 +1000,6 @@ class customer_dialog
 	private:
 	  Fl_Window *dialog;
 	  Fl_Input *rp_name;
-	  Fl_Input *rp_number;
 	  Fl_Input *rp_phonenumber;
 	  Fl_Input *rp_email;
 	  Fl_Return_Button *rp_create;
@@ -821,16 +1010,11 @@ customer_dialog *customer_dlg;
 
 void create_customerCB(Fl_Widget* w, void* p)
 {
-	if(customer_dlg->number() == -999)
-	{
-		fl_message("Invalid Input.");
-	}
-	else
-	{
-	Customer customer(customer_dlg->name(), customer_dlg->number(),customer_dlg->phonenumber(),customer_dlg->email());
-	store.add_customer(customer);
-	fl_message("Customer created.");
-	}
+		srand(time(NULL));
+		int num = rand() % 10000;
+		Customer customer(customer_dlg->name(),num,customer_dlg->phonenumber(),customer_dlg->email());
+		store.add_customer(customer);
+		fl_message("Customer created.");
 	customer_dlg->hide();
 	customer_dlg->clear();
 }
@@ -845,6 +1029,23 @@ void cancel_customerCB(Fl_Widget* w, void* p)
 	customer_dlg->hide();
 }
 
+void show_customersCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i< store.customers_size(); i++)
+	{
+		os << store.customer_to_string(i) << "\n"
+		<< "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Robot Customers");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
 //===============================
 //         Creating order
 //===============================
@@ -866,13 +1067,19 @@ class create_order
 		  rp_sales_name = new Fl_Input(220,100,150,25, "Sales associate number:");
 		  rp_sales_name->align(FL_ALIGN_LEFT);
 
-		  rp_show = new Fl_Return_Button(75, 230, 100, 25, "Show Models");
-		  rp_show->callback((Fl_Callback *)show_robot_modelsCB, 0);
+		  rp_show = new Fl_Return_Button(55, 200, 120, 25, "Show Models");
+		  rp_show->callback((Fl_Callback *)show_robot_models_dialogCB, 0);
 
-		  rp_create = new Fl_Return_Button(180,230,100,25, "Create");
+		  rp_show_customers = new Fl_Return_Button(10, 230, 160, 25, "Show Customers");
+		  rp_show_customers->callback((Fl_Callback *)show_customersCB, 0);
+
+		  rp_show_associates = new Fl_Return_Button(175, 230, 200, 25, "Show Sales Associates");
+		  rp_show_associates->callback((Fl_Callback *)show_sales_associatesCB, 0);
+
+		  rp_create = new Fl_Return_Button(185,200,100,25, "Create");
 		  rp_create->callback((Fl_Callback *)create_orderCB, 0);
 
-		  rp_cancel = new Fl_Return_Button(285,230,95,25, "Cancel");
+		  rp_cancel = new Fl_Return_Button(285,200,90,25, "Cancel");
 		  rp_cancel->callback((Fl_Callback *)cancel_order_dialogCB, 0);
 
 		  dialog->end();
@@ -894,7 +1101,7 @@ class create_order
 	private :
 		Fl_Window *dialog;
 		Fl_Input *rp_model_number, *rp_amount, *rp_customer_name, *rp_sales_name;
-		Fl_Return_Button *rp_create, *rp_cancel, *rp_show;
+		Fl_Return_Button *rp_create, *rp_cancel, *rp_show, *rp_show_customers, *rp_show_associates;
 };
 
 create_order *order_dlg;
@@ -903,13 +1110,19 @@ void create_orderCB(Fl_Widget* w, void* p)
 	time_t t =time(0);
 	struct tm *now = localtime(&t);
 	stringstream os;
+	srand(time(NULL));
 	int num = rand() % 10000;
 	os <<(now->tm_year + 1900)<< '-'
 	<<(now->tm_mon + 1)<<'-'<<(now->tm_mday);
-	if ((order_dlg->model_number() != -999 || order_dlg->amount() != -999 || order_dlg->customer_number() != -999 ||
-		order_dlg->sales_number() != -999) || (order_dlg->model_number() > store.order_vector_size() ||
+	if ((order_dlg->model_number() == -999 || order_dlg->amount() == -999 || order_dlg->customer_number() == -999 ||
+		order_dlg->sales_number() == -999) || (order_dlg->model_number() > store.order_vector_size() ||
 		order_dlg->customer_number() > store.customers_size() || order_dlg->sales_number() > store.sales_associates_size())
 		|| (order_dlg->model_number() < 1 || order_dlg->customer_number() < 1 || order_dlg->sales_number() < 1))
+	{
+		fl_message("Invalid Input");
+		order_dlg->hide();
+	}
+	else
 	{
 		Order make_order(num,(os.str()),*(store.get_catalog()->get_model(order_dlg->model_number()-1)),
 					 order_dlg->amount(),*(store.get_customer(order_dlg->customer_number() - 1)), 1,
@@ -917,9 +1130,7 @@ void create_orderCB(Fl_Widget* w, void* p)
 		store.add_order(make_order);
 		fl_message("Order created");
 		order_dlg->hide();
-		order_dlg->clear();
 	}
-	order_dlg->hide();
 	order_dlg->clear();
 }
 
@@ -938,7 +1149,7 @@ void show_ordersCB(Fl_Widget* w, void* p)
 	Fl_Window *win = new Fl_Window(640, 480);
 	stringstream os;
 	int i = 0;
-	for(i = 0; i< store.order_vector_size(); i++)
+	for(i = 0; i <store.order_vector_size(); i++)
 	{
 		os << store.order_to_string(i) << "\n"
 		<< "===========================" << '\n';
@@ -950,6 +1161,62 @@ void show_ordersCB(Fl_Widget* w, void* p)
 	win->show();
 	buff->text((os.str()).c_str());
 }
+
+void test_windowCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640,480);
+	stringstream os;
+	int i = 0;
+	for(i = 0; i < store.order_vector_size(); i++)
+	{
+		os << store.get_order(i) << "\n";
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Test");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
+
+
+//==========================================
+//	  Display employee sales report
+//==========================================
+
+void show_sales_reportCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640, 480);
+	stringstream os;
+	int i,j = 0;
+	for(i = 0; i < store.sales_associates_size(); i++)
+	{
+		os << store.get_associate(i)->get_name() << "\n";
+		for(j = 0; j < store.order_vector_size(); j++)
+		{
+
+			if (store.get_associate(i)->get_employee_number() ==
+			    store.get_order(j)->get_sales_associate().get_employee_number())
+			{
+				os << store.get_order(j)->to_string() << "\n";
+			}
+
+		}
+		os << "===========================" << '\n';
+	}
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Employee sales report");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+
+}
+
+
+
+
+
 
 //===============================
 //         Manage order
@@ -1094,6 +1361,43 @@ void cancel_orderCB(Fl_Widget* w, void* p)
     manage_order_dlg->hide();
     manage_order_dlg->clear();
 }
+
+void open_fileCB(Fl_Widget* w, void* p)
+{
+	Fl_File_Chooser chooser(".","*",Fl_File_Chooser::MULTI, "File Browser");
+	chooser.show();
+	while(chooser.shown())
+	{
+		Fl::wait();
+	}
+	if (chooser.count() > 1 || chooser.count() < 1)
+	{
+		fl_message("Please select 1 file");
+	}
+	else
+	{
+		store.open(chooser.value());
+	}
+}
+
+void save_fileCB(Fl_Widget* w, void* p)
+{
+	Fl_File_Chooser chooser(".","*",Fl_File_Chooser::MULTI, "File Browser");
+	chooser.show();
+	while(chooser.shown())
+	{
+		Fl::wait();
+	}
+	if (chooser.count() > 1 || chooser.count() < 1)
+	{
+		fl_message("Please select 1 file");
+	}
+	else
+	{
+		store.save(chooser.value());
+	}
+}
+
 //===============================
 //     Validation functions
 //===============================

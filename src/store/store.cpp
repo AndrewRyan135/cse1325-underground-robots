@@ -252,6 +252,16 @@ string Store::order_to_string(int index)
 	return orders[index].to_string();
 }
 
+string Store::customer_to_string(int index)
+{
+    return customers[index].to_string();
+}
+
+string Store::sales_associates_to_string(int index)
+{
+    return sales_associates[index].to_string();
+}
+
 Customer* Store::get_customer(int index)
 {
 	return &customers[index];
