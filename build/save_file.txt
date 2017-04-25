@@ -3,14 +3,14 @@ a head
 123
 43.1
 thats it
-head.file
+head_orange2.png
 123.54
 2
 a torso
 1342
 324.5
 yep
-torso.file
+torso_orange2.png
 4
 5
 3
@@ -18,21 +18,21 @@ an arm
 43
 55.5
 wow
-arm.file
+arm_left_orange2.png
 20
 4
 a locomotor
 76
 34.3
 ya
-foot.file
+locomotor_orange2.png
 54.83
 5
 a battery
 234
 77.4
 Z
-bat.file
+battery_green2.png
 5354.3
 345.7
 6

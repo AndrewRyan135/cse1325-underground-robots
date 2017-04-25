@@ -45,13 +45,13 @@ Fl_Menu_Item menuitems[] = {
 		{0},
 	{"&Report", 0,0,0,FL_SUBMENU},
 		{"&Show Robot Parts", FL_ALT + 'v', (Fl_Callback *)show_robot_partsCB},
-		{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_modelsCB},
+		{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_models_dialogCB},
 		{"Show Orders", FL_ALT + FL_SHIFT + 'o', (Fl_Callback *)show_ordersCB},
 
 		{"Show &Customers", FL_ALT + 'c', (Fl_Callback *)show_customersCB},
 
 		{"Orders by &employees",FL_ALT + 'e', (Fl_Callback *)show_sales_reportCB},
-		{"&Test order output", FL_ALT + 't', (Fl_Callback *)test_windowCB},
+		//{"&Test order output", FL_ALT + 't', (Fl_Callback *)test_windowCB},
 
 		{0},
 	{"&Create", 0,0,0,FL_SUBMENU},
@@ -76,6 +76,9 @@ int main()
 	robot_locomotor_dlg = new robot_locomotor_dialog{};
 	robot_battery_dlg = new robot_battery_dialog{};
 	robot_model_dlg = new robot_model_dialog{};
+
+	show_robot_models_dlg = new show_robot_models_dialog{};
+
 	sales_associate_dlg = new sales_associate_dialog{};
 	customer_dlg = new customer_dialog{};
 	order_dlg = new create_order{};
