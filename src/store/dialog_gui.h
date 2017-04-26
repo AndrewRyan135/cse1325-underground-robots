@@ -893,8 +893,9 @@ public:
         dialog->resizable(*disp);
         dialog->show();
         buff->text((os.str()).c_str());
+        os.str("");
     }
-    void hide() {dialog->hide();}
+    void hide(){dialog->hide();}
     void clear() {rp_model_number->value(NULL);}
     int model_number() {bool valid = int_validation(rp_model_number->value());
 		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
