@@ -82,7 +82,52 @@ void cancel_orderCB(Fl_Widget* w, void* p);
 void cancel_order_management_dialogCB(Fl_Widget* w, void* p);
 void show_sales_reportCB(Fl_Widget* w, void* p);
 void test_windowCB(Fl_Widget* w, void* p);
+//testing copy/paste
 
+class Input : public Fl_Input //new Fl_Input widget that incorporates copy/paste
+{
+    static void Copy_CB(Fl_Widget*, void* p)
+    {
+        Input *in = (Input*)p;
+        in->copy(0);
+        in->copy(1);
+    }
+    static void Paste_CB(Fl_Widget*, void* p)
+    {
+        Input *in = (Input*)p;
+        Fl::paste(*in, 1);
+    }
+public:
+    int handle(int e)
+    {
+    switch(e){
+    case FL_PUSH:
+    {
+        if(Fl::event_button() == FL_RIGHT_MOUSE){
+            Fl_Menu_Item rclick_menu[] = {
+                {"Copy", 0, Copy_CB, (void*)this},
+                {"Paste", 0, Paste_CB, (void*)this},
+                {0}
+            };
+
+            const Fl_Menu_Item *m = rclick_menu->popup(Fl::event_x(), Fl::event_y(), 0, 0, 0);
+            if(m) m->do_callback(0, m->user_data());
+            return(1);
+        }
+        break;
+        }
+    case FL_RELEASE:
+        {
+        if(Fl::event_button() == FL_RIGHT_MOUSE){
+            return(1);
+        }
+        break;
+        }
+    }
+    return(Fl_Input::handle(e));
+    }
+    Input(int X, int Y, int W, int H, const char*L=0):Fl_Input(X, Y, W, H, L){}
+};
 
 
 void Quit(Fl_Widget* w, void* p)
@@ -138,8 +183,12 @@ class robot_head_dialog
 	public :
 		robot_head_dialog() {
 		dialog = new Fl_Window(480, 360, "Robot Head");
-		rp_name = new Fl_Input(270, 10, 210, 25, "Name:");
+		//rp_name = new Fl_Input(270, 10, 210, 25, "Name:");
+		//rp_name->align(FL_ALIGN_LEFT);
+		//testing copy/paste
+		rp_name = new Input(270, 10, 210, 25, "Name:");
 		rp_name->align(FL_ALIGN_LEFT);
+
 
 		rp_model_number = new Fl_Input(270, 40, 210, 25, "Model Number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
@@ -180,8 +229,9 @@ class robot_head_dialog
 			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
-		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
+		Fl_Input /* *rp_name,*/ *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
 		Fl_Return_Button *rp_create, *rp_cancel;
+		Input *rp_name;//new type of input that includes copy/paste
 		int a, b;
 		double c;
 };
