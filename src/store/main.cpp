@@ -37,7 +37,7 @@ bool double_validation(string input);
 //void save_data();
 
 //robot_part_dialog *robot_part_dlg;
-Fl_Menu_Item menuitems[] = {
+Fl_Menu_Item manager_menuitems[] = {
 	{"&File", 0,0,0,FL_SUBMENU},
 		{"&Open", FL_ALT + 'o', (Fl_Callback *) open_fileCB},
 		{"&Save", FL_ALT + 's', (Fl_Callback *) save_fileCB},
@@ -67,8 +67,38 @@ Fl_Menu_Item menuitems[] = {
 	{0}
 };
 
+Fl_Menu_Item sales_associate_menuitems[] = {
+	{"&File", 0,0,0,FL_SUBMENU},
+		{"&Open", FL_ALT + 'o', (Fl_Callback *) open_fileCB},
+		{"&Save", FL_ALT + 's', (Fl_Callback *) save_fileCB},
+		{"&Quit", FL_ALT + 'q', (Fl_Callback *) Quit},
+		{0},
+	{"&Report", 0,0,0,FL_SUBMENU},
+		{"&Show Robot Parts", FL_ALT + 'v', (Fl_Callback *)show_robot_partsCB},
+		{"Show &Models",FL_ALT + 'm', (Fl_Callback *)show_robot_models_dialogCB},
+		{"Show &Customers", FL_ALT + 'c', (Fl_Callback *)show_customersCB},
+		{0},
+	{"&Create", 0,0,0,FL_SUBMENU},
+		{"Robot &Part", FL_ALT + 'p', (Fl_Callback *) robot_part_dialog_showCB},
+		{"Robot &Model", FL_ALT + 'r', (Fl_Callback *)robot_model_dialog_showCB},
+		{"Sales &Associate", FL_ALT + 'a', (Fl_Callback *)sales_associate_dialog_showCB},
+		{"Customer", FL_ALT + 'c', (Fl_Callback *)customer_dialog_showCB},
+		{"Order", FL_ALT + + 'o', (Fl_Callback *)show_order_dialogCB},
+		{0},
+		{0}
+};
+
 int main()
 {
+	string sales_associate_password = "123abc";
+	string manager_password = "pizza";
+	string input_password;
+	
+	Fl_Window *login;
+	login = new Fl_Window(0,0,"test");
+	login->end();
+	login->show();
+
 	robot_part_dlg = new robot_part_dialog{};
 	robot_head_dlg = new robot_head_dialog{};
 	robot_torso_dlg = new robot_torso_dialog{};
@@ -83,14 +113,41 @@ int main()
 	customer_dlg = new customer_dialog{};
 	order_dlg = new create_order{};
 	manage_order_dlg = new manage_order_dialog{};
+	while(true)
+	{
+		input_password = fl_password("Enter password: ", "");
+		login->hide();
+		login->clear();
 
-		Fl_Window *win;
-		Fl_Menu_Bar *menubar;
-		fl_register_images();
-		win = new Fl_Window(640,480, "Robbie Robot Shop");
-		menubar = new Fl_Menu_Bar(0,0,640,30);
-		menubar->menu(menuitems);
-		win->end();
-		win->show();
-		return Fl::run();
+		if(input_password == manager_password)
+		{
+			Fl_Window *win;
+			Fl_Menu_Bar *menubar;
+			fl_register_images();
+			win = new Fl_Window(640,480, "Robbie Robot Shop (Manager)");
+			menubar = new Fl_Menu_Bar(0,0,640,30);
+			menubar->menu(manager_menuitems);
+			win->end();
+			win->show();
+			return Fl::run();
+		}
+		else if(input_password == sales_associate_password)
+		{
+			Fl_Window *win;
+			Fl_Menu_Bar *menubar;
+			fl_register_images();
+			win = new Fl_Window(640,480, "Robbie Robot Shop (Sales associate)");
+			menubar = new Fl_Menu_Bar(0,0,640,30);
+			menubar->menu(sales_associate_menuitems);
+			win->end();
+			win->show();
+			return Fl::run();
+		}
+		else
+		{
+			fl_message("Wrong password, try again.");
+		}
+	
+	}
+				
 }
