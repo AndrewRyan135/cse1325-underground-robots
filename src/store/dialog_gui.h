@@ -82,7 +82,97 @@ void cancel_orderCB(Fl_Widget* w, void* p);
 void cancel_order_management_dialogCB(Fl_Widget* w, void* p);
 void show_sales_reportCB(Fl_Widget* w, void* p);
 void test_windowCB(Fl_Widget* w, void* p);
+//testing copy/paste
 
+class Input : public Fl_Input //new Fl_Input widget that incorporates copy/paste
+{
+    static void Copy_CB(Fl_Widget*, void* p)
+    {
+        Input *in = (Input*)p;
+        in->copy(0);
+        in->copy(1);
+    }
+    static void Paste_CB(Fl_Widget*, void* p)
+    {
+        Input *in = (Input*)p;
+        Fl::paste(*in, 1);
+    }
+public:
+    int handle(int e)
+    {
+    switch(e){
+    case FL_PUSH:
+    {
+        if(Fl::event_button() == FL_RIGHT_MOUSE){
+            Fl_Menu_Item rclick_menu[] = {
+                {"Copy", 0, Copy_CB, (void*)this},
+                {"Paste", 0, Paste_CB, (void*)this},
+                {0}
+            };
+
+            const Fl_Menu_Item *m = rclick_menu->popup(Fl::event_x(), Fl::event_y(), 0, 0, 0);
+            if(m) m->do_callback(0, m->user_data());
+            return(1);
+        }
+        break;
+        }
+    case FL_RELEASE:
+        {
+        if(Fl::event_button() == FL_RIGHT_MOUSE){
+            return(1);
+        }
+        break;
+        }
+    }
+    return(Fl_Input::handle(e));
+    }
+    Input(int X, int Y, int W, int H, const char*L=0):Fl_Input(X, Y, W, H, L){}
+};
+//Copy/Paste class for Multiline Input
+class Multiline_Input : public Fl_Multiline_Input
+{
+    static void Copy_CB(Fl_Widget*, void* p)
+    {
+        Input *in = (Input*)p;
+        in->copy(0);
+        in->copy(1);
+    }
+    static void Paste_CB(Fl_Widget*, void* p)
+    {
+        Input *in = (Input*)p;
+        Fl::paste(*in, 1);
+    }
+public:
+    int handle(int e)
+    {
+    switch(e){
+    case FL_PUSH:
+    {
+        if(Fl::event_button() == FL_RIGHT_MOUSE){
+            Fl_Menu_Item rclick_menu[] = {
+                {"Copy", 0, Copy_CB, (void*)this},
+                {"Paste", 0, Paste_CB, (void*)this},
+                {0}
+            };
+
+            const Fl_Menu_Item *m = rclick_menu->popup(Fl::event_x(), Fl::event_y(), 0, 0, 0);
+            if(m) m->do_callback(0, m->user_data());
+            return(1);
+        }
+        break;
+        }
+    case FL_RELEASE:
+        {
+        if(Fl::event_button() == FL_RIGHT_MOUSE){
+            return(1);
+        }
+        break;
+        }
+    }
+    return(Fl_Input::handle(e));
+    }
+    Multiline_Input(int X, int Y, int W, int H, const char*L=0):Fl_Multiline_Input(X, Y, W, H, L){}
+};
 
 
 void Quit(Fl_Widget* w, void* p)
@@ -138,22 +228,24 @@ class robot_head_dialog
 	public :
 		robot_head_dialog() {
 		dialog = new Fl_Window(480, 360, "Robot Head");
-		rp_name = new Fl_Input(270, 10, 210, 25, "Name:");
+
+		rp_name = new Input(270, 10, 210, 25, "Name:");
 		rp_name->align(FL_ALIGN_LEFT);
 
-		rp_model_number = new Fl_Input(270, 40, 210, 25, "Model Number:");
+
+		rp_model_number = new Input(270, 40, 210, 25, "Model Number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
-		rp_cost = new Fl_Input(270, 70, 210, 25, "Cost:");
+		rp_cost = new Input(270, 70, 210, 25, "Cost:");
 		rp_cost->align(FL_ALIGN_LEFT);
 
-		rp_description = new Fl_Multiline_Input(270, 100, 210, 75, "Description:");
+		rp_description = new Multiline_Input(270, 100, 210, 75, "Description:");
 		rp_description->align(FL_ALIGN_LEFT);
 
-		rp_file_name = new Fl_Input(270, 180, 210, 25, "File name:");
+		rp_file_name = new Input(270, 180, 210, 25, "File name:");
 		rp_file_name->align(FL_ALIGN_LEFT);
 
-		rp_power = new Fl_Input(270, 220, 210, 25, "Power:");
+		rp_power = new Input(270, 220, 210, 25, "Power:");
 		rp_power->align(FL_ALIGN_LEFT);
 
 		rp_create = new Fl_Return_Button(270, 250, 100, 25, "Create:");
@@ -180,8 +272,9 @@ class robot_head_dialog
 			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
-		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
+		Input *rp_name, *rp_model_number, *rp_cost, *rp_file_name, *rp_power;
 		Fl_Return_Button *rp_create, *rp_cancel;
+		Multiline_Input *rp_description;
 		int a, b;
 		double c;
 };
@@ -218,25 +311,25 @@ class robot_torso_dialog
 	public :
 		robot_torso_dialog() {
 		dialog = new Fl_Window(480, 360, "Robot torso");
-		rp_name = new Fl_Input(270, 10, 210, 25, "Name:");
+		rp_name = new Input(270, 10, 210, 25, "Name:");
 		rp_name->align(FL_ALIGN_LEFT);
 
-		rp_model_number = new Fl_Input(270, 40, 210, 25, "Model Number:");
+		rp_model_number = new Input(270, 40, 210, 25, "Model Number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
-		rp_cost = new Fl_Input(270, 70, 210, 25, "Cost:");
+		rp_cost = new Input(270, 70, 210, 25, "Cost:");
 		rp_cost->align(FL_ALIGN_LEFT);
 
-		rp_description = new Fl_Multiline_Input(270, 100, 210, 75, "Description:");
+		rp_description = new Multiline_Input(270, 100, 210, 75, "Description:");
 		rp_description->align(FL_ALIGN_LEFT);
 
-		rp_file_name = new Fl_Input(270, 180, 210, 25, "File name:");
+		rp_file_name = new Input(270, 180, 210, 25, "File name:");
 		rp_file_name->align(FL_ALIGN_LEFT);
 
-		rp_battery = new Fl_Input(270, 220, 210, 25, "Battery compartments:");
+		rp_battery = new Input(270, 220, 210, 25, "Battery compartments:");
 		rp_battery->align(FL_ALIGN_LEFT);
 
-		rp_max_arms = new Fl_Input(270, 250, 210, 25, "Max arms:");
+		rp_max_arms = new Input(270, 250, 210, 25, "Max arms:");
 		rp_max_arms->align(FL_ALIGN_LEFT);
 
 		rp_create = new Fl_Return_Button(270, 280, 100, 25, "Create:");
@@ -265,7 +358,8 @@ class robot_torso_dialog
 	  	        if(valid) {return atoi(rp_max_arms->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
-		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_battery, *rp_max_arms;
+		Input *rp_name, *rp_model_number, *rp_cost, *rp_file_name, *rp_battery, *rp_max_arms;
+		Multiline_Input *rp_description;
 		Fl_Return_Button *rp_create, *rp_cancel;
 		int a, b, c, d;
 };
@@ -303,22 +397,22 @@ class robot_arm_dialog
 	public :
 		robot_arm_dialog() {
 		dialog = new Fl_Window(480, 360, "Robot Arm");
-		rp_name = new Fl_Input(270, 10, 210, 25, "Name:");
+		rp_name = new Input(270, 10, 210, 25, "Name:");
 		rp_name->align(FL_ALIGN_LEFT);
 
-		rp_model_number = new Fl_Input(270, 40, 210, 25, "Model Number:");
+		rp_model_number = new Input(270, 40, 210, 25, "Model Number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
-		rp_cost = new Fl_Input(270, 70, 210, 25, "Cost:");
+		rp_cost = new Input(270, 70, 210, 25, "Cost:");
 		rp_cost->align(FL_ALIGN_LEFT);
 
-		rp_description = new Fl_Multiline_Input(270, 100, 210, 75, "Description:");
+		rp_description = new Multiline_Input(270, 100, 210, 75, "Description:");
 		rp_description->align(FL_ALIGN_LEFT);
 
-		rp_file_name = new Fl_Input(270, 180, 210, 25, "File name:");
+		rp_file_name = new Input(270, 180, 210, 25, "File name:");
 		rp_file_name->align(FL_ALIGN_LEFT);
 
-		rp_power = new Fl_Input(270, 220, 210, 25, "Max arm power:");
+		rp_power = new Input(270, 220, 210, 25, "Max arm power:");
 		rp_power->align(FL_ALIGN_LEFT);
 
 		rp_create = new Fl_Return_Button(270, 250, 100, 25, "Create:");
@@ -345,7 +439,8 @@ class robot_arm_dialog
 			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
-		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
+		Input *rp_name, *rp_model_number, *rp_cost, *rp_file_name, *rp_power;
+		Multiline_Input *rp_description;
 		Fl_Return_Button *rp_create, *rp_cancel;
 		int a, b;
 		double c;
@@ -383,22 +478,22 @@ class robot_locomotor_dialog
 	public :
 		robot_locomotor_dialog() {
 		dialog = new Fl_Window(480, 360, "Robot locomotor");
-		rp_name = new Fl_Input(270, 10, 210, 25, "Name:");
+		rp_name = new Input(270, 10, 210, 25, "Name:");
 		rp_name->align(FL_ALIGN_LEFT);
 
-		rp_model_number = new Fl_Input(270, 40, 210, 25, "Model Number:");
+		rp_model_number = new Input(270, 40, 210, 25, "Model Number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
-		rp_cost = new Fl_Input(270, 70, 210, 25, "Cost:");
+		rp_cost = new Input(270, 70, 210, 25, "Cost:");
 		rp_cost->align(FL_ALIGN_LEFT);
 
-		rp_description = new Fl_Multiline_Input(270, 100, 210, 75, "Description:");
+		rp_description = new Multiline_Input(270, 100, 210, 75, "Description:");
 		rp_description->align(FL_ALIGN_LEFT);
 
-		rp_file_name = new Fl_Input(270, 180, 210, 25, "File name:");
+		rp_file_name = new Input(270, 180, 210, 25, "File name:");
 		rp_file_name->align(FL_ALIGN_LEFT);
 
-		rp_power = new Fl_Input(270, 220, 210, 25, "Max locomotor power:");
+		rp_power = new Input(270, 220, 210, 25, "Max locomotor power:");
 		rp_power->align(FL_ALIGN_LEFT);
 
 		rp_create = new Fl_Return_Button(270, 250, 100, 25, "Create:");
@@ -425,7 +520,8 @@ class robot_locomotor_dialog
 			if (valid){return atof(rp_power->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
-		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power;
+		Input *rp_name, *rp_model_number, *rp_cost, *rp_file_name, *rp_power;
+		Multiline_Input *rp_description;
 		Fl_Return_Button *rp_create, *rp_cancel;
 		int a, b;
 		double c;
@@ -463,25 +559,25 @@ class robot_battery_dialog
 	public :
 		robot_battery_dialog() {
 		dialog = new Fl_Window(480, 360, "Robot battery");
-		rp_name = new Fl_Input(270, 10, 210, 25, "Name:");
+		rp_name = new Input(270, 10, 210, 25, "Name:");
 		rp_name->align(FL_ALIGN_LEFT);
 
-		rp_model_number = new Fl_Input(270, 40, 210, 25, "Model Number:");
+		rp_model_number = new Input(270, 40, 210, 25, "Model Number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
-		rp_cost = new Fl_Input(270, 70, 210, 25, "Cost:");
+		rp_cost = new Input(270, 70, 210, 25, "Cost:");
 		rp_cost->align(FL_ALIGN_LEFT);
 
-		rp_description = new Fl_Multiline_Input(270, 100, 210, 75, "Description:");
+		rp_description = new Multiline_Input(270, 100, 210, 75, "Description:");
 		rp_description->align(FL_ALIGN_LEFT);
 
-		rp_file_name = new Fl_Input(270, 180, 210, 25, "File name:");
+		rp_file_name = new Input(270, 180, 210, 25, "File name:");
 		rp_file_name->align(FL_ALIGN_LEFT);
 
-		rp_power = new Fl_Input(270, 220, 210, 25, "Power available:");
+		rp_power = new Input(270, 220, 210, 25, "Power available:");
 		rp_power->align(FL_ALIGN_LEFT);
 
-		rp_energy = new Fl_Input(270, 250, 210, 25, "Energy available:");
+		rp_energy = new Input(270, 250, 210, 25, "Energy available:");
 		rp_energy->align(FL_ALIGN_LEFT);
 
 		rp_create = new Fl_Return_Button(270, 280, 100, 25, "Create:");
@@ -510,7 +606,8 @@ class robot_battery_dialog
 			if (valid){return atof(rp_energy->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
-		Fl_Input *rp_name, *rp_model_number, *rp_cost, *rp_description, *rp_file_name, *rp_power, *rp_energy;
+		Input *rp_name, *rp_model_number, *rp_cost, *rp_file_name, *rp_power, *rp_energy;
+		Multiline_Input *rp_description;
 		Fl_Return_Button *rp_create, *rp_cancel;
 		int a, b;
 		double c, d;
@@ -557,35 +654,35 @@ class robot_model_dialog
 	public :
 		robot_model_dialog() {
 		dialog = new Fl_Window(480, 260, "Robot Model");
-		rp_head_index = new Fl_Input(270, 10, 210, 25, "Head index:");
+		rp_head_index = new Input(270, 10, 210, 25, "Head index:");
 		rp_head_index->align(FL_ALIGN_LEFT);
 		rp_head_show = new Fl_Button(10, 10, 100, 25, "Show Image");
 		rp_head_show->callback((Fl_Callback *)show_head_imgCB, 0);
 
-		rp_torso_index = new Fl_Input(270, 40, 210, 25, "Torso index:");
+		rp_torso_index = new Input(270, 40, 210, 25, "Torso index:");
 		rp_torso_index->align(FL_ALIGN_LEFT);
 		rp_torso_show = new Fl_Button(10, 40, 100, 25, "Show Image");
 		rp_torso_show->callback((Fl_Callback *)show_torso_imgCB, 0);
 
-		rp_arm_index = new Fl_Input(270, 70, 210, 25, "Arm index:");
+		rp_arm_index = new Input(270, 70, 210, 25, "Arm index:");
 		rp_arm_index->align(FL_ALIGN_LEFT);
 		rp_arm_show = new Fl_Button(10, 70, 100, 25, "Show Image");
 		rp_arm_show->callback((Fl_Callback *)show_arm_imgCB, 0);
 
-		rp_locomotor_index = new Fl_Input(270, 100, 210, 25, "Locomotor index:");
+		rp_locomotor_index = new Input(270, 100, 210, 25, "Locomotor index:");
 		rp_locomotor_index->align(FL_ALIGN_LEFT);
 		rp_locomotor_show = new Fl_Button(10, 100, 100, 25, "Show Image");
 		rp_locomotor_show->callback((Fl_Callback *)show_locomotor_imgCB, 0);
 
-		rp_battery_index = new Fl_Input(270, 130, 210, 25, "Battery index:");
+		rp_battery_index = new Input(270, 130, 210, 25, "Battery index:");
 		rp_battery_index->align(FL_ALIGN_LEFT);
 		rp_battery_show = new Fl_Button(10, 130, 100, 25, "Show Image");
 		rp_battery_show->callback((Fl_Callback *)show_battery_imgCB, 0);
 
-		rp_name = new Fl_Input(270, 160, 210, 25, "Model name:");
+		rp_name = new Input(270, 160, 210, 25, "Model name:");
 		rp_name->align(FL_ALIGN_LEFT);
 
-		rp_model_number = new Fl_Input(270, 190, 210, 25, "Model number:");
+		rp_model_number = new Input(270, 190, 210, 25, "Model number:");
 		rp_model_number->align(FL_ALIGN_LEFT);
 
 		rp_show = new Fl_Return_Button(160, 230, 100, 25, "Show Parts");
@@ -620,7 +717,7 @@ class robot_model_dialog
 	private :
 		Fl_Window *dialog;
 		Fl_Return_Button *rp_create, *rp_cancel, *rp_show;
-		Fl_Input *rp_head_index, *rp_torso_index, *rp_arm_index, *rp_locomotor_index, *rp_battery_index, *rp_model_number, *rp_name;
+		Input *rp_head_index, *rp_torso_index, *rp_arm_index, *rp_locomotor_index, *rp_battery_index, *rp_model_number, *rp_name;
 		Fl_Button *rp_head_show, *rp_torso_show, *rp_arm_show, *rp_locomotor_show, *rp_battery_show;
 		int a;
 };
@@ -789,10 +886,10 @@ class sales_associate_dialog
 	  sales_associate_dialog()
 	  {
 		  dialog = new Fl_Window(300,100, "Sales associate");
-		  rp_name = new Fl_Input(140,10,150,25, "Name:");
+		  rp_name = new Input(140,10,150,25, "Name:");
 		  rp_name->align(FL_ALIGN_LEFT);
 
-		  rp_number = new Fl_Input(140,40,150,25, "Employee number:");
+		  rp_number = new Input(140,40,150,25, "Employee number:");
 		  rp_number->align(FL_ALIGN_LEFT);
 
 		  rp_create = new Fl_Return_Button(95,70,100,25, "Create");
@@ -814,8 +911,8 @@ class sales_associate_dialog
 
 	private:
 	  Fl_Window *dialog;
-	  Fl_Input *rp_name;
-	  Fl_Input *rp_number;
+	  Input *rp_name;
+	  Input *rp_number;
 	  Fl_Return_Button *rp_create;
 	  Fl_Button *rp_cancel;
 
@@ -879,7 +976,7 @@ public:
         dialog = new Fl_Window(640, 520);
         rp_model_show = new Fl_Button(10, 480, 150, 25, "Show Image");
         rp_model_show->callback((Fl_Callback *)show_model_imgCB, 0);
-        rp_model_number = new Fl_Input(400, 480, 210, 25, "Model Number: ");
+        rp_model_number = new Input(400, 480, 210, 25, "Model Number: ");
         rp_model_number->align(FL_ALIGN_LEFT);
         int i = 0;
         for(i = 0; i< store.get_catalog()->robot_model_vector_size(); i++)
@@ -893,15 +990,16 @@ public:
         dialog->resizable(*disp);
         dialog->show();
         buff->text((os.str()).c_str());
+        os.str("");
     }
-    void hide() {dialog->hide();}
+    void hide(){dialog->hide();}
     void clear() {rp_model_number->value(NULL);}
     int model_number() {bool valid = int_validation(rp_model_number->value());
 		       if (valid){return atoi(rp_model_number->value());} else{return -999;}}
 private:
     Fl_Window *dialog;
     Fl_Button *rp_model_show;
-    Fl_Input *rp_model_number;
+    Input *rp_model_number;
     Fl_Text_Buffer *buff;
     Fl_Text_Display *disp;
     int i;
@@ -971,13 +1069,13 @@ class customer_dialog
 		  customer_dialog()
 		  {
  		  dialog = new Fl_Window(310,140, "Customer");
-		  rp_name = new Fl_Input(140,10,150,25, "Name:");
+		  rp_name = new Input(140,10,150,25, "Name:");
 		  rp_name->align(FL_ALIGN_LEFT);
 
-		  rp_phonenumber = new Fl_Input(140,40,150,25, "Phone number:");
+		  rp_phonenumber = new Input(140,40,150,25, "Phone number:");
 		  rp_phonenumber->align(FL_ALIGN_LEFT);
 
-		  rp_email = new Fl_Input(140,70,150,25, "Email:");
+		  rp_email = new Input(140,70,150,25, "Email:");
 		  rp_email->align(FL_ALIGN_LEFT);
 
 		  rp_create = new Fl_Return_Button(100,100,100,25, "Create");
@@ -999,9 +1097,9 @@ class customer_dialog
 
 	private:
 	  Fl_Window *dialog;
-	  Fl_Input *rp_name;
-	  Fl_Input *rp_phonenumber;
-	  Fl_Input *rp_email;
+	  Input *rp_name;
+	  Input *rp_phonenumber;
+	  Input *rp_email;
 	  Fl_Return_Button *rp_create;
 	  Fl_Button *rp_cancel;
 };
@@ -1055,16 +1153,16 @@ class create_order
 	public :
 		create_order() {
 		  dialog = new Fl_Window(380,260, "Create Order");
-		  rp_model_number = new Fl_Input(220,10,150,25, "Model Index:");
+		  rp_model_number = new Input(220,10,150,25, "Model Index:");
 		  rp_model_number->align(FL_ALIGN_LEFT);
 
-		  rp_amount = new Fl_Input(220,40,150,25, "Quantity:");
+		  rp_amount = new Input(220,40,150,25, "Quantity:");
 		  rp_amount->align(FL_ALIGN_LEFT);
 
-		  rp_customer_name = new Fl_Input(220,70,150,25, "Customer number:");
+		  rp_customer_name = new Input(220,70,150,25, "Customer number:");
 		  rp_customer_name->align(FL_ALIGN_LEFT);
 
-		  rp_sales_name = new Fl_Input(220,100,150,25, "Sales associate number:");
+		  rp_sales_name = new Input(220,100,150,25, "Sales associate number:");
 		  rp_sales_name->align(FL_ALIGN_LEFT);
 
 		  rp_show = new Fl_Return_Button(55, 200, 120, 25, "Show Models");
@@ -1100,7 +1198,7 @@ class create_order
 					  if(valid){return atoi(rp_sales_name->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
-		Fl_Input *rp_model_number, *rp_amount, *rp_customer_name, *rp_sales_name;
+		Input *rp_model_number, *rp_amount, *rp_customer_name, *rp_sales_name;
 		Fl_Return_Button *rp_create, *rp_cancel, *rp_show, *rp_show_customers, *rp_show_associates;
 };
 
@@ -1161,7 +1259,7 @@ void show_ordersCB(Fl_Widget* w, void* p)
 	win->show();
 	buff->text((os.str()).c_str());
 }
-
+/*
 void test_windowCB(Fl_Widget* w, void* p)
 {
 	Fl_Window *win = new Fl_Window(640,480);
@@ -1178,7 +1276,7 @@ void test_windowCB(Fl_Widget* w, void* p)
 	win->show();
 	buff->text((os.str()).c_str());
 }
-
+*/
 
 //==========================================
 //	  Display employee sales report
@@ -1226,7 +1324,7 @@ class manage_order_dialog
 public:
     manage_order_dialog() {
 		  dialog = new Fl_Window(380,260, "Manage Order");
-		  rp_order_number = new Fl_Input(220,10,150,25, "Order Index:");//type order#
+		  rp_order_number = new Input(220,10,150,25, "Order Number:");//type order#
 		  rp_order_number->align(FL_ALIGN_LEFT);
 
 
@@ -1269,7 +1367,7 @@ public:
                             if (valid){return atoi(rp_order_number->value());}else{return -999;}}
 private:
     Fl_Window *dialog;
-    Fl_Input *rp_order_number;
+    Input *rp_order_number;
     Fl_Return_Button *rp_show, *rp_save, *rp_cancel;
     Fl_Button *rp_state1, *rp_state2, *rp_state3, *rp_state4, *rp_state5, *rp_cancel_order;
 };
