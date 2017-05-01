@@ -1136,7 +1136,7 @@ void create_orderCB(Fl_Widget* w, void* p)
 	   << "Cost:\t\t\t" << '$' << store.get_catalog()->get_model(order_dlg->model_number()-1)->cost() << '\n'
 	   << "===============================" << '\n';
 	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
-	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Test");
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Invoice");
 	disp->buffer(buff);
 	win->resizable(*disp);
 	win->show();

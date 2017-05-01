@@ -87,8 +87,38 @@ int main()
 		Fl_Window *win;
 		Fl_Menu_Bar *menubar;
 		fl_register_images();
-		win = new Fl_Window(640,480, "Robbie Robot Shop");
-		menubar = new Fl_Menu_Bar(0,0,640,30);
+		win = new Fl_Window(680,480, "Robbie Robot Shop");
+		menubar = new Fl_Menu_Bar(0,0,680,30);
+		string help_text = R"(
+                        		===========================
+		                           		   HELP
+                        		===========================
+
+
+Customers:
+    	Customers are able to view robot models in order to view prospective purchases. 
+    	When an order is created the customer will be provided an invoice of the order 
+    	so that can pay for the product and review the order.		
+
+Sales Assocaites:
+    	Sales associates will handeling the order proccess for the customer once the 
+    	customer selects a model. The Sales Associate will then provide the invlice to 
+    	the customer.
+    	Additionally, the Sales Associates will also be able to view there sales reports.
+
+Product Manager:
+    	The Product Manager is able to create new robot parts, as well as assembeling 
+    	these parts into robot models.
+
+Pointed-haired Boss:
+    	The boss is able to view all orders that have been created and adjust the statuses 
+    	of the orders as well as viewing the sales reports for each Sales Associate.)";
+		Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+		Fl_Text_Display *disp = new Fl_Text_Display(5,40,680-10,480-40);
+		disp->buffer(buff);
+		win->resizable(*disp);
+		win->show();
+		buff->text(help_text.c_str());
 		menubar->menu(menuitems);
 		win->end();
 		win->show();
