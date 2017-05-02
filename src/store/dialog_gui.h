@@ -82,7 +82,7 @@ void cancel_orderCB(Fl_Widget* w, void* p);
 void cancel_order_management_dialogCB(Fl_Widget* w, void* p);
 void show_sales_reportCB(Fl_Widget* w, void* p);
 void test_windowCB(Fl_Widget* w, void* p);
-//testing copy/paste
+void show_invoiceCB(Fl_Widget* w, void* p);
 
 class Input : public Fl_Input //new Fl_Input widget that incorporates copy/paste
 {
@@ -953,7 +953,7 @@ void show_sales_associatesCB(Fl_Widget* w, void* p)
 	int i = 0;
 	for(i = 0; i< store.sales_associates_size(); i++)
 	{
-		os << store.sales_associates_to_string(i) << "\n"
+		os << "Index: " << i+1 << '\n' << store.sales_associates_to_string(i) << "\n"
 		<< "===========================" << '\n';
 	}
 	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
@@ -981,7 +981,7 @@ public:
         int i = 0;
         for(i = 0; i< store.get_catalog()->robot_model_vector_size(); i++)
         {
-            os << store.get_catalog()->robot_model_to_string(i) << "\n"
+            os << "Index: " << i+1 << '\n' << store.get_catalog()->robot_model_to_string(i) << "\n"
             << "===========================" << '\n';
         }
         Fl_Text_Buffer *buff = new Fl_Text_Buffer();
@@ -1134,7 +1134,7 @@ void show_customersCB(Fl_Widget* w, void* p)
 	int i = 0;
 	for(i = 0; i< store.customers_size(); i++)
 	{
-		os << store.customer_to_string(i) << "\n"
+		os << "Index: " << i+1 << '\n' << store.customer_to_string(i) << "\n"
 		<< "===========================" << '\n';
 	}
 	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
@@ -1186,16 +1186,16 @@ class create_order
 
 		void show() {dialog->show();}
 	  	void hide() {dialog->hide();}
-	    void clear() {rp_model_number->value(NULL);rp_amount->value(NULL);rp_customer_name->value(NULL);
-	    			  rp_sales_name->value(NULL);}
+	    void clear() {rp_model_number->value(NULL);rp_amount->value(NULL);rp_customer_number->value(NULL);
+	    			  rp_sales_number->value(NULL);}
 	    int model_number() {bool valid = int_validation(rp_model_number->value());
 		                    if (valid){return atoi(rp_model_number->value());} else{return -999;}}
 		int amount() {bool valid = int_validation(rp_amount->value());
 					  if(valid){return atoi(rp_amount->value());} else{return -999;}}
-		int customer_number() {bool valid = int_validation(rp_customer_name->value());
-					  if(valid){return atoi(rp_customer_name->value());} else{return -999;}}
-		int sales_number() {bool valid = int_validation(rp_sales_name->value());
-					  if(valid){return atoi(rp_sales_name->value());} else{return -999;}}
+		int customer_number() {bool valid = int_validation(rp_customer_number->value());
+					  if(valid){return atoi(rp_customer_number->value());} else{return -999;}}
+		int sales_number() {bool valid = int_validation(rp_sales_number->value());
+					  if(valid){return atoi(rp_sales_number->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
 		Input *rp_model_number, *rp_amount, *rp_customer_name, *rp_sales_name;
@@ -1227,6 +1227,17 @@ void create_orderCB(Fl_Widget* w, void* p)
 					 *(store.get_associate(order_dlg->sales_number() - 1)));
 		store.add_order(make_order);
 		fl_message("Order created");
+		Fl_Window *win = new Fl_Window(640,480);
+	stringstream os;
+	os << store.order_to_string(order_dlg->model_number()-1) << '\n'
+	   << "Cost:\t\t\t" << '$' << store.get_catalog()->get_model(order_dlg->model_number()-1)->cost() << '\n'
+	   << "===============================" << '\n';
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Invoice");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
 		order_dlg->hide();
 	}
 	order_dlg->clear();
@@ -1259,6 +1270,22 @@ void show_ordersCB(Fl_Widget* w, void* p)
 	win->show();
 	buff->text((os.str()).c_str());
 }
+
+void show_invoiceCB(Fl_Widget* w, void* p)
+{
+	Fl_Window *win = new Fl_Window(640,480);
+	stringstream os;
+	os << store.order_to_string(order_dlg->model_number()-1) << '\n'
+	   << store.get_catalog()->get_model(order_dlg->model_number()-1)->cost() << '\n'
+	   << "===============================" << '\n';
+	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Test");
+	disp->buffer(buff);
+	win->resizable(*disp);
+	win->show();
+	buff->text((os.str()).c_str());
+}
+
 /*
 void test_windowCB(Fl_Widget* w, void* p)
 {
