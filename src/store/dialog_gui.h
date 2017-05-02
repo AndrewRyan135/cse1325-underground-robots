@@ -1159,11 +1159,11 @@ class create_order
 		  rp_amount = new Input(220,40,150,25, "Quantity:");
 		  rp_amount->align(FL_ALIGN_LEFT);
 
-		  rp_customer_name = new Input(220,70,150,25, "Customer number:");
-		  rp_customer_name->align(FL_ALIGN_LEFT);
+		  rp_customer_number = new Input(220,70,150,25, "Customer Index:");
+		  rp_customer_number->align(FL_ALIGN_LEFT);
 
-		  rp_sales_name = new Input(220,100,150,25, "Sales associate number:");
-		  rp_sales_name->align(FL_ALIGN_LEFT);
+		  rp_sales_number = new Input(220,100,150,25, "Sales Associate Index:");
+		  rp_sales_number->align(FL_ALIGN_LEFT);
 
 		  rp_show = new Fl_Return_Button(55, 200, 120, 25, "Show Models");
 		  rp_show->callback((Fl_Callback *)show_robot_models_dialogCB, 0);
@@ -1198,7 +1198,7 @@ class create_order
 					  if(valid){return atoi(rp_sales_number->value());} else{return -999;}}
 	private :
 		Fl_Window *dialog;
-		Input *rp_model_number, *rp_amount, *rp_customer_name, *rp_sales_name;
+		Input *rp_model_number, *rp_amount, *rp_customer_number, *rp_sales_number;
 		Fl_Return_Button *rp_create, *rp_cancel, *rp_show, *rp_show_customers, *rp_show_associates;
 };
 
@@ -1279,7 +1279,7 @@ void show_invoiceCB(Fl_Widget* w, void* p)
 	   << store.get_catalog()->get_model(order_dlg->model_number()-1)->cost() << '\n'
 	   << "===============================" << '\n';
 	Fl_Text_Buffer *buff = new Fl_Text_Buffer();
-	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "Test");
+	Fl_Text_Display *disp = new Fl_Text_Display(20,20,640-40,480-40, "");
 	disp->buffer(buff);
 	win->resizable(*disp);
 	win->show();
